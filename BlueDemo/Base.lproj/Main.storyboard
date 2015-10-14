@@ -27,27 +27,27 @@
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="f8p-Rd-sH5">
                                 <rect key="frame" x="80" y="64" width="440" height="19"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="OffFlag" translatesAutoresizingMaskIntoConstraints="NO" id="7aH-Gt-iaW" userLabel="OffFlag1">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="OffFlag" highlightedImage="OnFlag" translatesAutoresizingMaskIntoConstraints="NO" id="7aH-Gt-iaW" userLabel="OffFlag1">
                                         <rect key="frame" x="0.0" y="0.0" width="14" height="19"/>
                                         <animations/>
                                     </imageView>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="OffFlag" translatesAutoresizingMaskIntoConstraints="NO" id="lBf-ss-eb2" userLabel="OffFlag2">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="OffFlag" highlightedImage="OnFlag" translatesAutoresizingMaskIntoConstraints="NO" id="lBf-ss-eb2" userLabel="OffFlag2">
                                         <rect key="frame" x="85" y="0.0" width="14" height="19"/>
                                         <animations/>
                                     </imageView>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="OffFlag" translatesAutoresizingMaskIntoConstraints="NO" id="AkO-gb-k17" userLabel="OffFlag3">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="OffFlag" highlightedImage="OnFlag" translatesAutoresizingMaskIntoConstraints="NO" id="AkO-gb-k17" userLabel="OffFlag3">
                                         <rect key="frame" x="171" y="0.0" width="14" height="19"/>
                                         <animations/>
                                     </imageView>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="OffFlag" translatesAutoresizingMaskIntoConstraints="NO" id="yGU-Ns-ZTx" userLabel="OffFlag4">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="OffFlag" highlightedImage="OnFlag" translatesAutoresizingMaskIntoConstraints="NO" id="yGU-Ns-ZTx" userLabel="OffFlag4">
                                         <rect key="frame" x="256" y="0.0" width="14" height="19"/>
                                         <animations/>
                                     </imageView>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="OffFlag" translatesAutoresizingMaskIntoConstraints="NO" id="vWS-2E-AVg" userLabel="OffFlag5">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="OffFlag" highlightedImage="OnFlag" translatesAutoresizingMaskIntoConstraints="NO" id="vWS-2E-AVg" userLabel="OffFlag5">
                                         <rect key="frame" x="341" y="0.0" width="14" height="19"/>
                                         <animations/>
                                     </imageView>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="OffFlag" translatesAutoresizingMaskIntoConstraints="NO" id="6NM-aJ-aCm" userLabel="OffFlag6">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="OffFlag" highlightedImage="OnFlag" translatesAutoresizingMaskIntoConstraints="NO" id="6NM-aJ-aCm" userLabel="OffFlag6">
                                         <rect key="frame" x="426" y="0.0" width="14" height="19"/>
                                         <animations/>
                                     </imageView>
@@ -57,7 +57,7 @@
                                     <constraint firstAttribute="height" constant="19" id="Vg6-cV-cr0"/>
                                 </constraints>
                             </stackView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BBC-Ie-Be5" userLabel="onOffBtn1">
+                            <button opaque="NO" tag="10001" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BBC-Ie-Be5" userLabel="onOffBtn1">
                                 <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                 <animations/>
                                 <constraints>
@@ -67,8 +67,13 @@
                                     </constraint>
                                     <constraint firstAttribute="width" secondItem="BBC-Ie-Be5" secondAttribute="height" multiplier="1:1" id="4rz-qo-Nbb"/>
                                 </constraints>
-                                <state key="normal" backgroundImage="btnOff"/>
-                                <state key="selected" backgroundImage="btnOn"/>
+                                <state key="normal" image="btnOff">
+                                    <color key="titleColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="selected" image="btnOn">
+                                    <color key="titleColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted" image="btnOn"/>
                                 <variation key="default">
                                     <mask key="constraints">
                                         <exclude reference="0zd-jT-OLE"/>
@@ -87,36 +92,65 @@
                                         <include reference="4rz-qo-Nbb"/>
                                     </mask>
                                 </variation>
+                                <connections>
+                                    <action selector="onOffBtnTouchDown:" destination="BYZ-38-t0r" eventType="touchDown" id="pop-bb-DWf"/>
+                                    <action selector="onOffBtnTouchUpInside:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Y0S-Yp-vj6"/>
+                                </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BlS-Em-8hh" userLabel="onOffBtn2">
+                            <button opaque="NO" tag="10002" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BlS-Em-8hh" userLabel="onOffBtn2">
                                 <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                 <animations/>
-                                <state key="normal" backgroundImage="btnOff"/>
-                                <state key="selected" backgroundImage="btnOn"/>
+                                <state key="normal" image="btnOff"/>
+                                <state key="selected" image="btnOn"/>
+                                <state key="highlighted" image="btnOn"/>
+                                <connections>
+                                    <action selector="onOffBtnTouchDown:" destination="BYZ-38-t0r" eventType="touchDown" id="1gh-Zm-gTR"/>
+                                    <action selector="onOffBtnTouchUpInside:" destination="BYZ-38-t0r" eventType="touchUpInside" id="zr4-68-SQl"/>
+                                </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sAh-ML-LFt" userLabel="onOffBtn3">
+                            <button opaque="NO" tag="10003" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sAh-ML-LFt" userLabel="onOffBtn3">
                                 <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                 <animations/>
-                                <state key="normal" backgroundImage="btnOff"/>
-                                <state key="selected" backgroundImage="btnOn"/>
+                                <state key="normal" image="btnOff"/>
+                                <state key="selected" image="btnOn"/>
+                                <state key="highlighted" image="btnOn"/>
+                                <connections>
+                                    <action selector="onOffBtnTouchDown:" destination="BYZ-38-t0r" eventType="touchDown" id="Jzf-EZ-lNS"/>
+                                    <action selector="onOffBtnTouchUpInside:" destination="BYZ-38-t0r" eventType="touchUpInside" id="mUf-R8-8w0"/>
+                                </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qmy-4U-zZZ" userLabel="onOffBtn4">
+                            <button opaque="NO" tag="10004" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qmy-4U-zZZ" userLabel="onOffBtn4">
                                 <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                 <animations/>
-                                <state key="normal" backgroundImage="btnOff"/>
-                                <state key="selected" backgroundImage="btnOn"/>
+                                <state key="normal" image="btnOff"/>
+                                <state key="selected" image="btnOn"/>
+                                <state key="highlighted" image="btnOn"/>
+                                <connections>
+                                    <action selector="onOffBtnTouchDown:" destination="BYZ-38-t0r" eventType="touchDown" id="44g-AN-4cD"/>
+                                    <action selector="onOffBtnTouchUpInside:" destination="BYZ-38-t0r" eventType="touchUpInside" id="D7D-xF-mLI"/>
+                                </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WxH-y7-9Yr" userLabel="onOffBtn5">
+                            <button opaque="NO" tag="10005" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WxH-y7-9Yr" userLabel="onOffBtn5">
                                 <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                 <animations/>
-                                <state key="normal" backgroundImage="btnOff"/>
-                                <state key="selected" backgroundImage="btnOn"/>
+                                <state key="normal" image="btnOff"/>
+                                <state key="selected" image="btnOn"/>
+                                <state key="highlighted" image="btnOn"/>
+                                <connections>
+                                    <action selector="onOffBtnTouchDown:" destination="BYZ-38-t0r" eventType="touchDown" id="4Sw-My-cFB"/>
+                                    <action selector="onOffBtnTouchUpInside:" destination="BYZ-38-t0r" eventType="touchUpInside" id="V6L-oE-Qll"/>
+                                </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="s1A-SI-tF2" userLabel="onOffBtn6">
+                            <button opaque="NO" tag="10006" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="s1A-SI-tF2" userLabel="onOffBtn6">
                                 <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                 <animations/>
-                                <state key="normal" backgroundImage="btnOff"/>
-                                <state key="selected" backgroundImage="btnOn"/>
+                                <state key="normal" image="btnOff"/>
+                                <state key="selected" image="btnOn"/>
+                                <state key="highlighted" image="btnOn"/>
+                                <connections>
+                                    <action selector="onOffBtnTouchDown:" destination="BYZ-38-t0r" eventType="touchDown" id="Z2z-VS-ZPx"/>
+                                    <action selector="onOffBtnTouchUpInside:" destination="BYZ-38-t0r" eventType="touchUpInside" id="mXh-in-NaW"/>
+                                </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="one" translatesAutoresizingMaskIntoConstraints="NO" id="omT-Az-PtD">
                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
@@ -224,7 +258,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                 <animations/>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bt5-BM-JvW" userLabel="modelBtn1">
+                            <button opaque="NO" tag="20001" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bt5-BM-JvW" userLabel="modelBtn1">
                                 <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                 <animations/>
                                 <constraints>
@@ -254,36 +288,54 @@
                                         <include reference="WnV-tL-nJ4"/>
                                     </mask>
                                 </variation>
+                                <connections>
+                                    <action selector="modelBtnClick:" destination="BYZ-38-t0r" eventType="touchUpInside" id="9E5-Wz-uyx"/>
+                                </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SoF-8c-Q8R" userLabel="modelBtn2">
+                            <button opaque="NO" tag="20002" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SoF-8c-Q8R" userLabel="modelBtn2">
                                 <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                 <animations/>
                                 <state key="normal" image="btnModel"/>
                                 <state key="selected" image="btnModel_selected"/>
+                                <connections>
+                                    <action selector="modelBtnClick:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Z3o-an-7Tr"/>
+                                </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="epP-vT-JTS" userLabel="modelBtn3">
+                            <button opaque="NO" tag="20003" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="epP-vT-JTS" userLabel="modelBtn3">
                                 <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                 <animations/>
                                 <state key="normal" image="btnModel"/>
                                 <state key="selected" image="btnModel_selected"/>
+                                <connections>
+                                    <action selector="modelBtnClick:" destination="BYZ-38-t0r" eventType="touchUpInside" id="pLb-Jr-Gw7"/>
+                                </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kjg-O9-LzI" userLabel="modelBtn4">
+                            <button opaque="NO" tag="20004" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kjg-O9-LzI" userLabel="modelBtn4">
                                 <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                 <animations/>
                                 <state key="normal" image="btnModel"/>
                                 <state key="selected" image="btnModel_selected"/>
+                                <connections>
+                                    <action selector="modelBtnClick:" destination="BYZ-38-t0r" eventType="touchUpInside" id="oVF-tx-VZ9"/>
+                                </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2yP-Pb-LY0" userLabel="modelBtn5">
+                            <button opaque="NO" tag="20005" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2yP-Pb-LY0" userLabel="modelBtn5">
                                 <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                 <animations/>
                                 <state key="normal" image="btnModel"/>
                                 <state key="selected" image="btnModel_selected"/>
+                                <connections>
+                                    <action selector="modelBtnClick:" destination="BYZ-38-t0r" eventType="touchUpInside" id="GIo-lE-IEG"/>
+                                </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lrH-Ak-4ee" userLabel="modelBtn6">
+                            <button opaque="NO" tag="20006" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lrH-Ak-4ee" userLabel="modelBtn6">
                                 <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                 <animations/>
                                 <state key="normal" image="btnModel"/>
                                 <state key="selected" image="btnModel_selected"/>
+                                <connections>
+                                    <action selector="modelBtnClick:" destination="BYZ-38-t0r" eventType="touchUpInside" id="yEr-jw-VT0"/>
+                                </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="strobe" highlightedImage="strobe_highlighted" translatesAutoresizingMaskIntoConstraints="NO" id="J2Z-hw-X1h" userLabel="strobe1">
                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
@@ -1207,6 +1259,7 @@
     </scenes>
     <resources>
         <image name="OffFlag" width="14" height="9"/>
+        <image name="OnFlag" width="14" height="9"/>
         <image name="anzoLogo" width="80" height="20"/>
         <image name="bg" width="1104" height="621"/>
         <image name="btnModel" width="38" height="23"/>

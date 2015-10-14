@@ -38,8 +38,16 @@ static char lockSendCode[] = {0x4d, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00 , 0
 // 解锁设备数据
 static char unlockSendCode[] = {0x4d, 0x00, 0x02, 0x00, 0x00, 0x00, 0x00, 0x00 , 0x00, 0x00, 0x00};
 
+
+// 模式类型枚举
+typedef enum {
+    kStrobe,
+    kFlash,
+    kMomenyary
+} ModelTypes;
+
 // 模式三索引
-static const NSInteger kMomenyary = 2;
+//static const NSInteger kMomenyary = 2;
 
 @interface OperationViewController ()<CBCentralManagerDelegate, CBPeripheralDelegate>
 
@@ -58,8 +66,6 @@ static const NSInteger kMomenyary = 2;
 // 记录哪盏灯亮着（控制的是全部灯 则该字节为 1+2+4+8+16+32；控制第一个灯	则该字节为1）
 @property (nonatomic, assign) NSInteger whickLamp;
 
-// 记录label显示的字
-@property (nonatomic, strong) NSArray *statusTexts;
 // 记录label要发送的16进制值
 @property (nonatomic, strong) NSArray *statusHex;
 // 记录label的当前状态
@@ -109,28 +115,6 @@ static const NSInteger kMomenyary = 2;
 @property (weak, nonatomic) IBOutlet UIImageView *momentaryIv6;
 
 
-
-@property (weak, nonatomic) IBOutlet UIButton *btnOnOff1;
-@property (weak, nonatomic) IBOutlet UIButton *btnOnOff2;
-@property (weak, nonatomic) IBOutlet UIButton *btnOnOff3;
-@property (weak, nonatomic) IBOutlet UIButton *btnOnOff4;
-@property (weak, nonatomic) IBOutlet UIButton *btnOnOff5;
-@property (weak, nonatomic) IBOutlet UIButton *btnOnOff6;
-
-@property (weak, nonatomic) IBOutlet UIButton *btnStatus1;
-@property (weak, nonatomic) IBOutlet UIButton *btnStatus2;
-@property (weak, nonatomic) IBOutlet UIButton *btnStatus3;
-@property (weak, nonatomic) IBOutlet UIButton *btnStatus4;
-@property (weak, nonatomic) IBOutlet UIButton *btnStatus5;
-@property (weak, nonatomic) IBOutlet UIButton *btnStatus6;
-
-@property (weak, nonatomic) IBOutlet UILabel *labelStatus1;
-@property (weak, nonatomic) IBOutlet UILabel *labelStatus2;
-@property (weak, nonatomic) IBOutlet UILabel *labelStatus3;
-@property (weak, nonatomic) IBOutlet UILabel *labelStatus4;
-@property (weak, nonatomic) IBOutlet UILabel *labelStatus5;
-@property (weak, nonatomic) IBOutlet UILabel *labelStatus6;
-
 //@property (weak, nonatomic) IBOutlet UISwitch *lockSwichBtn;
 
 @end
@@ -151,13 +135,6 @@ static const NSInteger kMomenyary = 2;
     return _statusHex;
 }
 
-- (NSArray *)statusTexts {
-    if (!_statusTexts) {
-        _statusTexts = @[@"STROBE", @"FLASH", @"MOMENYARY", @"关"];
-    }
-    return _statusTexts;
-}
-
 - (NSMutableArray *)allLabelStatus {
     if (!_allLabelStatus) {
         _allLabelStatus = [NSMutableArray arrayWithArray:@[@0, @0, @0, @0, @0, @0]];
@@ -170,6 +147,13 @@ static const NSInteger kMomenyary = 2;
     
     // 1.创建中心设备
     _manager = [[CBCentralManager alloc] initWithDelegate:self queue:nil];
+    
+    self.strobeIv1.highlighted = YES;
+    self.strobeIv2.highlighted = YES;
+    self.strobeIv3.highlighted = YES;
+    self.strobeIv4.highlighted = YES;
+    self.strobeIv5.highlighted = YES;
+    self.strobeIv6.highlighted = YES;
 }
 
 - (void)dealloc {
@@ -268,64 +252,101 @@ static const NSInteger kMomenyary = 2;
 
 
 #pragma mark - 按钮点击处理
-// 松开触发
-- (IBAction)offOnbtnClick:(UIButton *)btn {
-
-    switch (btn.tag) {
-        case 10001:
+// 灯开关松开时触发
+- (IBAction)onOffBtnTouchUpInside:(UIButton *)btn {
+    /**
+     *  由于在模式三的时候开关是：按下开，松开关，所以需要松开立刻改变按钮状态
+     */
+    switch (btn.tag - 10000) {
+        case 1:
             if ([self.allLabelStatus[0] integerValue] == kMomenyary) {
                 
-                // 当是模式3的时候，松手变成模式“关”
-                [self changeStatusWithArrayIndex:0 Num:[self.allLabelStatus[0] integerValue]];
-                // 修改显示的文字
-                self.labelStatus1.text = self.statusTexts[[self.allLabelStatus[0] integerValue]];
+                // 松开肯定是关闭
+                _whickLamp -= 1;
+                offOnAndStatusbtnSendCode[3] = _whickLamp;
+                // 修改开关状态
+                btn.selected = NO;
+                
+                self.offFlay1.highlighted = btn.isSelected;
+                
+                // 修改model按钮
+                self.modelBtn1.selected = btn.isSelected;
+                
+                // 发送数据
                 [self writePeripheral:self.mPeripheral characteristic:self.FFFAcharacteristic value:[self convertCode:offOnAndStatusbtnSendCode]];
+
             }
             
             
             break;
-        case 10002:
+        case 2:
             if ([self.allLabelStatus[1] integerValue] == kMomenyary) {
-                // 当是模式3的时候，松手变成模式“关”
-                [self changeStatusWithArrayIndex:1 Num:[self.allLabelStatus[1] integerValue]];
-                // 修改显示的文字
-                self.labelStatus1.text = self.statusTexts[[self.allLabelStatus[1] integerValue]];
+                
+                _whickLamp -= 2;
+                offOnAndStatusbtnSendCode[3] = _whickLamp;
+                
+                btn.selected = NO;
+                
+                self.offFlay2.highlighted = btn.isSelected;
+                
+                self.modelBtn2.selected = btn.isSelected;
+                
                 [self writePeripheral:self.mPeripheral characteristic:self.FFFAcharacteristic value:[self convertCode:offOnAndStatusbtnSendCode]];
             }
             break;
-        case 10003:
+        case 3:
             if ([self.allLabelStatus[2] integerValue] == kMomenyary) {
-                // 当是模式3的时候，松手变成模式“关”
-                [self changeStatusWithArrayIndex:2 Num:[self.allLabelStatus[2] integerValue]];
-                // 修改显示的文字
-                self.labelStatus1.text = self.statusTexts[[self.allLabelStatus[2] integerValue]];
+                _whickLamp -= 4;
+                offOnAndStatusbtnSendCode[3] = _whickLamp;
+                
+                btn.selected = NO;
+                
+                self.offFlay3.highlighted = btn.isSelected;
+                
+                self.modelBtn3.selected = btn.isSelected;
+                
                 [self writePeripheral:self.mPeripheral characteristic:self.FFFAcharacteristic value:[self convertCode:offOnAndStatusbtnSendCode]];
             }
             break;
-        case 10004:
+        case 4:
             if ([self.allLabelStatus[3] integerValue] == kMomenyary) {
-                // 当是模式3的时候，松手变成模式“关”
-                [self changeStatusWithArrayIndex:3 Num:[self.allLabelStatus[3] integerValue]];
-                // 修改显示的文字
-                self.labelStatus1.text = self.statusTexts[[self.allLabelStatus[3] integerValue]];
+                _whickLamp -= 8;
+                offOnAndStatusbtnSendCode[3] = _whickLamp;
+                
+                btn.selected = NO;
+                
+                self.offFlay4.highlighted = btn.isSelected;
+                
+                self.modelBtn4.selected = btn.isSelected;
+                
                 [self writePeripheral:self.mPeripheral characteristic:self.FFFAcharacteristic value:[self convertCode:offOnAndStatusbtnSendCode]];
             }
             break;
-        case 10005:
+        case 5:
             if ([self.allLabelStatus[4] integerValue] == kMomenyary) {
-                // 当是模式3的时候，松手变成模式“关”
-                [self changeStatusWithArrayIndex:4 Num:[self.allLabelStatus[4] integerValue]];
-                // 修改显示的文字
-                self.labelStatus1.text = self.statusTexts[[self.allLabelStatus[4] integerValue]];
+                _whickLamp -= 16;
+                offOnAndStatusbtnSendCode[3] = _whickLamp;
+                
+                btn.selected = NO;
+                
+                self.offFlay5.highlighted = btn.isSelected;
+                
+                self.modelBtn5.selected = btn.isSelected;
+                
                 [self writePeripheral:self.mPeripheral characteristic:self.FFFAcharacteristic value:[self convertCode:offOnAndStatusbtnSendCode]];
             }
             break;
-        case 10006:
+        case 6:
             if ([self.allLabelStatus[5] integerValue] == kMomenyary) {
-                // 当是模式3的时候，松手变成模式“关”
-                [self changeStatusWithArrayIndex:5 Num:[self.allLabelStatus[5] integerValue]];
-                // 修改显示的文字
-                self.labelStatus1.text = self.statusTexts[[self.allLabelStatus[5] integerValue]];
+                _whickLamp -= 32;
+                offOnAndStatusbtnSendCode[3] = _whickLamp;
+                
+                btn.selected = NO;
+                
+                self.offFlay6.highlighted = btn.isSelected;
+                
+                self.modelBtn6.selected = btn.isSelected;
+                
                 [self writePeripheral:self.mPeripheral characteristic:self.FFFAcharacteristic value:[self convertCode:offOnAndStatusbtnSendCode]];
             }
             break;
@@ -334,73 +355,190 @@ static const NSInteger kMomenyary = 2;
     }
 }
 
-// 按下时触发
+// 灯开关按下时触发
 - (IBAction)onOffBtnTouchDown:(UIButton *)btn {
-    // 修改灯开关的标志位
-    switch (btn.tag) {
-        case 10001:
+    // 判断标识位
+    switch (btn.tag - 10000) {
+        case 1:
+            // 根据是否选中，修改发送数据
             if (btn.selected) {
                 _whickLamp -= 1;
             } else {
                 _whickLamp += 1;
             }
             offOnAndStatusbtnSendCode[3] = _whickLamp;
-            btn.selected = !btn.selected;
             
+            if ([self.allLabelStatus[0] integerValue] != kMomenyary) {
+                // 修改开关状态
+                btn.selected = !btn.selected;
+                
+                self.offFlay1.highlighted = btn.isSelected;
+                
+                // 修改model按钮
+                self.modelBtn1.selected = btn.isSelected;
+            } else {
+                
+                if (!btn.highlighted) {
+                    btn.selected = !btn.selected;
+                }
+                
+                self.offFlay1.highlighted = btn.highlighted;
+                
+                // 修改model按钮
+                self.modelBtn1.selected = btn.highlighted;
+                
+            }
+            
+            // 发送数据
             [self writePeripheral:self.mPeripheral characteristic:self.FFFAcharacteristic value:[self convertCode:offOnAndStatusbtnSendCode]];
             break;
-        case 10002:
+        case 2:
             if (btn.selected) {
                 _whickLamp -= 2;
             } else {
                 _whickLamp += 2;
             }
             offOnAndStatusbtnSendCode[3] = _whickLamp;
-            btn.selected = !btn.selected;
+            if ([self.allLabelStatus[1] integerValue] != kMomenyary) {
+                // 修改开关状态
+                btn.selected = !btn.selected;
+                
+                self.offFlay2.highlighted = btn.isSelected;
+                
+                // 修改model按钮
+                self.modelBtn2.selected = btn.isSelected;
+            } else {
+                
+                if (!btn.highlighted) {
+                    btn.selected = !btn.selected;
+                }
+                
+                self.offFlay2.highlighted = btn.highlighted;
+                
+                // 修改model按钮
+                self.modelBtn2.selected = btn.highlighted;
+                
+            }
             
             [self writePeripheral:self.mPeripheral characteristic:self.FFFAcharacteristic value:[self convertCode:offOnAndStatusbtnSendCode]];
             break;
-        case 10003:
+        case 3:
             if (btn.selected) {
                 _whickLamp -= 4;
             } else {
                 _whickLamp += 4;
             }
             offOnAndStatusbtnSendCode[3] = _whickLamp;
-            btn.selected = !btn.selected;
+            if ([self.allLabelStatus[2] integerValue] != kMomenyary) {
+                // 修改开关状态
+                btn.selected = !btn.selected;
+                
+                self.offFlay3.highlighted = btn.isSelected;
+                
+                // 修改model按钮
+                self.modelBtn3.selected = btn.isSelected;
+            } else {
+                
+                if (!btn.highlighted) {
+                    btn.selected = !btn.selected;
+                }
+                
+                self.offFlay3.highlighted = btn.highlighted;
+                
+                // 修改model按钮
+                self.modelBtn3.selected = btn.highlighted;
+                
+            }
             
             [self writePeripheral:self.mPeripheral characteristic:self.FFFAcharacteristic value:[self convertCode:offOnAndStatusbtnSendCode]];
             break;
-        case 10004:
+        case 4:
             if (btn.selected) {
                 _whickLamp -= 8;
             } else {
                 _whickLamp += 8;
             }
             offOnAndStatusbtnSendCode[3] = _whickLamp;
-            btn.selected = !btn.selected;
+            if ([self.allLabelStatus[3] integerValue] != kMomenyary) {
+                // 修改开关状态
+                btn.selected = !btn.selected;
+                
+                self.offFlay4.highlighted = btn.isSelected;
+                
+                // 修改model按钮
+                self.modelBtn4.selected = btn.isSelected;
+            } else {
+                
+                if (!btn.highlighted) {
+                    btn.selected = !btn.selected;
+                }
+                
+                self.offFlay4.highlighted = btn.highlighted;
+                
+                // 修改model按钮
+                self.modelBtn4.selected = btn.highlighted;
+                
+            }
             
             [self writePeripheral:self.mPeripheral characteristic:self.FFFAcharacteristic value:[self convertCode:offOnAndStatusbtnSendCode]];
             break;
-        case 10005:
+        case 5:
             if (btn.selected) {
                 _whickLamp -= 16;
             } else {
                 _whickLamp += 16;
             }
             offOnAndStatusbtnSendCode[3] = _whickLamp;
-            btn.selected = !btn.selected;
+            if ([self.allLabelStatus[4] integerValue] != kMomenyary) {
+                // 修改开关状态
+                btn.selected = !btn.selected;
+                
+                self.offFlay5.highlighted = btn.isSelected;
+                
+                // 修改model按钮
+                self.modelBtn5.selected = btn.isSelected;
+            } else {
+                
+                if (!btn.highlighted) {
+                    btn.selected = !btn.selected;
+                }
+                
+                self.offFlay5.highlighted = btn.highlighted;
+                
+                // 修改model按钮
+                self.modelBtn5.selected = btn.highlighted;
+                
+            }
             
             [self writePeripheral:self.mPeripheral characteristic:self.FFFAcharacteristic value:[self convertCode:offOnAndStatusbtnSendCode]];
             break;
-        case 10006:
+        case 6:
             if (btn.selected) {
                 _whickLamp -= 32;
             } else {
                 _whickLamp += 32;
             }
             offOnAndStatusbtnSendCode[3] = _whickLamp;
-            btn.selected = !btn.selected;
+            if ([self.allLabelStatus[5] integerValue] != kMomenyary) {
+                // 修改开关状态
+                btn.selected = !btn.selected;
+                
+                self.offFlay6.highlighted = btn.isSelected;
+                
+                // 修改model按钮
+                self.modelBtn6.selected = btn.isSelected;
+            } else {
+                
+                if (!btn.highlighted) {
+                    btn.selected = !btn.selected;
+                }
+                
+                self.offFlay6.highlighted = btn.highlighted;
+                
+                // 修改model按钮
+                self.modelBtn6.selected = btn.highlighted;
+                
+            }
             
             [self writePeripheral:self.mPeripheral characteristic:self.FFFAcharacteristic value:[self convertCode:offOnAndStatusbtnSendCode]];
             break;
@@ -409,75 +547,237 @@ static const NSInteger kMomenyary = 2;
     }
 }
 
-- (IBAction)statusBtnClick:(UIButton *)btn {
+- (IBAction)modelBtnClick:(UIButton *)btn {
     // 修改模式
-    switch (btn.tag) {
-        case 20001:
+    switch (btn.tag - 20000) {
+        case 1:
+            
             // 改变模式，修改发送的数据
             [self changeStatusWithArrayIndex:0 Num:[self.allLabelStatus[0] integerValue]];
-            // 修改显示的文字
-            self.labelStatus1.text = self.statusTexts[[self.allLabelStatus[0] integerValue]];
+            
+            // 如果是模式4关闭
+//            if ([self.allLabelStatus[0] integerValue] == kMomenyary + 1) {
+//                self.modelBtn1.selected = NO;
+//            } else {
+//                self.modelBtn1.selected = YES;
+//            }
+            
+            // 改变模式图片
+            // 全不高亮
+            self.strobeIv1.highlighted = NO;
+            self.flashIv1.highlighted = NO;
+            self.momentaryIv1.highlighted = NO;
+            // 根据存储的模式判断高亮
+            switch ([self.allLabelStatus[0] integerValue]) {
+                case kStrobe:
+                    self.strobeIv1.highlighted = YES;
+                    break;
+                case kFlash:
+                    self.flashIv1.highlighted = YES;
+                    break;
+                case kMomenyary:
+                    self.momentaryIv1.highlighted = YES;
+                    break;
+                default:
+                    break;
+            }
+            
             // 当开关开着才发送数据
-            if (self.btnOnOff1.isSelected) {
+            if (self.onOffBtn1.isSelected) {
                 [self writePeripheral:self.mPeripheral characteristic:self.FFFAcharacteristic value:[self convertCode:offOnAndStatusbtnSendCode]];
             }
             // 当开关开着，并且按钮是模式3，立刻关闭按钮
-            if (self.btnOnOff1.isSelected && [self.allLabelStatus[0] integerValue] == kMomenyary) {
-                [self onOffBtnTouchDown:self.btnOnOff1];
+            if (self.onOffBtn1.isSelected && [self.allLabelStatus[0] integerValue] == kMomenyary) {
+                [self onOffBtnTouchDown:self.onOffBtn1];
             }
             break;
-        case 20002:
+        case 2:
             
             [self changeStatusWithArrayIndex:1 Num:[self.allLabelStatus[1] integerValue]];
-            self.labelStatus2.text = self.statusTexts[[self.allLabelStatus[1] integerValue]];
-            if (self.btnOnOff2.isSelected) {
+
+            // 如果是模式4关闭
+//            if ([self.allLabelStatus[1] integerValue] == kMomenyary + 1) {
+//                self.modelBtn2.selected = NO;
+//            } else {
+//                self.modelBtn2.selected = YES;
+//            }
+            
+            // 改变模式图片
+            // 全不高亮
+            self.strobeIv2.highlighted = NO;
+            self.flashIv2.highlighted = NO;
+            self.momentaryIv2.highlighted = NO;
+            // 根据存储的模式判断高亮
+            switch ([self.allLabelStatus[1] integerValue]) {
+                case kStrobe:
+                    self.strobeIv2.highlighted = YES;
+                    break;
+                case kFlash:
+                    self.flashIv2.highlighted = YES;
+                    break;
+                case kMomenyary:
+                    self.momentaryIv2.highlighted = YES;
+                    break;
+                default:
+                    break;
+            }
+            
+            if (self.onOffBtn2.selected) {
                 [self writePeripheral:self.mPeripheral characteristic:self.FFFAcharacteristic value:[self convertCode:offOnAndStatusbtnSendCode]];
             }
-            if (self.btnOnOff2.isSelected && [self.allLabelStatus[1] integerValue] == kMomenyary) {
-                [self onOffBtnTouchDown:self.btnOnOff2];
+            if (self.onOffBtn2.selected && [self.allLabelStatus[1] integerValue] == kMomenyary) {
+                [self onOffBtnTouchDown:self.onOffBtn2];
             }
             break;
-        case 20003:
+        case 3:
             
             [self changeStatusWithArrayIndex:2 Num:[self.allLabelStatus[2] integerValue]];
-            self.labelStatus3.text = self.statusTexts[[self.allLabelStatus[2] integerValue]];
-            if (self.btnOnOff3.isSelected) {
+
+            // 如果是模式4关闭
+//            if ([self.allLabelStatus[2] integerValue] == kMomenyary + 1) {
+//                self.modelBtn3.selected = NO;
+//            } else {
+//                self.modelBtn3.selected = YES;
+//            }
+            
+            // 改变模式图片
+            // 全不高亮
+            self.strobeIv3.highlighted = NO;
+            self.flashIv3.highlighted = NO;
+            self.momentaryIv3.highlighted = NO;
+            // 根据存储的模式判断高亮
+            switch ([self.allLabelStatus[2] integerValue]) {
+                case kStrobe:
+                    self.strobeIv3.highlighted = YES;
+                    break;
+                case kFlash:
+                    self.flashIv3.highlighted = YES;
+                    break;
+                case kMomenyary:
+                    self.momentaryIv3.highlighted = YES;
+                    break;
+                default:
+                    break;
+            }
+            
+            if (self.onOffBtn3.isSelected) {
                 [self writePeripheral:self.mPeripheral characteristic:self.FFFAcharacteristic value:[self convertCode:offOnAndStatusbtnSendCode]];
             }
-            if (self.btnOnOff3.isSelected && [self.allLabelStatus[2] integerValue] == kMomenyary) {
-                [self onOffBtnTouchDown:self.btnOnOff3];
+            if (self.onOffBtn3.isSelected && [self.allLabelStatus[2] integerValue] == kMomenyary) {
+                [self onOffBtnTouchDown:self.onOffBtn3];
             }
             break;
-        case 20004:
+        case 4:
             
             
             [self changeStatusWithArrayIndex:3 Num:[self.allLabelStatus[3] integerValue]];
-            self.labelStatus4.text = self.statusTexts[[self.allLabelStatus[3] integerValue]];
-            if (self.btnOnOff4.isSelected) {
+
+            // 如果是模式4关闭
+//            if ([self.allLabelStatus[3] integerValue] == kMomenyary + 1) {
+//                self.modelBtn4.selected = NO;
+//            } else {
+//                self.modelBtn4.selected = YES;
+//            }
+            
+            // 改变模式图片
+            // 全不高亮
+            self.strobeIv4.highlighted = NO;
+            self.flashIv4.highlighted = NO;
+            self.momentaryIv4.highlighted = NO;
+            // 根据存储的模式判断高亮
+            switch ([self.allLabelStatus[3] integerValue]) {
+                case kStrobe:
+                    self.strobeIv4.highlighted = YES;
+                    break;
+                case kFlash:
+                    self.flashIv4.highlighted = YES;
+                    break;
+                case kMomenyary:
+                    self.momentaryIv4.highlighted = YES;
+                    break;
+                default:
+                    break;
+            }
+            
+            if (self.onOffBtn4.isSelected) {
                 [self writePeripheral:self.mPeripheral characteristic:self.FFFAcharacteristic value:[self convertCode:offOnAndStatusbtnSendCode]];
             }
-            if (self.btnOnOff4.isSelected && [self.allLabelStatus[3] integerValue] == kMomenyary) {
-                [self onOffBtnTouchDown:self.btnOnOff4];
+            if (self.onOffBtn4.isSelected && [self.allLabelStatus[3] integerValue] == kMomenyary) {
+                [self onOffBtnTouchDown:self.onOffBtn4];
             }
             break;
-        case 20005:
+        case 5:
             [self changeStatusWithArrayIndex:4 Num:[self.allLabelStatus[4] integerValue]];
-            self.labelStatus5.text = self.statusTexts[[self.allLabelStatus[4] integerValue]];
-            if (self.btnOnOff5.isSelected) {
+
+            // 如果是模式4关闭
+//            if ([self.allLabelStatus[4] integerValue] == kMomenyary + 1) {
+//                self.modelBtn5.selected = NO;
+//            } else {
+//                self.modelBtn5.selected = YES;
+//            }
+            
+            // 改变模式图片
+            // 全不高亮
+            self.strobeIv5.highlighted = NO;
+            self.flashIv5.highlighted = NO;
+            self.momentaryIv5.highlighted = NO;
+            // 根据存储的模式判断高亮
+            switch ([self.allLabelStatus[4] integerValue]) {
+                case kStrobe:
+                    self.strobeIv5.highlighted = YES;
+                    break;
+                case kFlash:
+                    self.flashIv5.highlighted = YES;
+                    break;
+                case kMomenyary:
+                    self.momentaryIv5.highlighted = YES;
+                    break;
+                default:
+                    break;
+            }
+            
+            if (self.onOffBtn5.selected) {
                 [self writePeripheral:self.mPeripheral characteristic:self.FFFAcharacteristic value:[self convertCode:offOnAndStatusbtnSendCode]];
             }
-            if (self.btnOnOff5.isSelected && [self.allLabelStatus[4] integerValue] == kMomenyary ) {
-                [self onOffBtnTouchDown:self.btnOnOff5];
+            if (self.onOffBtn5.selected && [self.allLabelStatus[4] integerValue] == kMomenyary ) {
+                [self onOffBtnTouchDown:self.onOffBtn5];
             }
             break;
-        case 20006:
+        case 6:
             [self changeStatusWithArrayIndex:5 Num:[self.allLabelStatus[5] integerValue]];
-            self.labelStatus6.text = self.statusTexts[[self.allLabelStatus[5] integerValue]];
-            if (self.btnOnOff6.isSelected) {
+
+            // 如果是模式4关闭
+//            if ([self.allLabelStatus[5] integerValue] == kMomenyary + 1) {
+//                self.modelBtn6.selected = NO;
+//            } else {
+//                self.modelBtn6.selected = YES;
+//            }
+            
+            // 改变模式图片
+            // 全不高亮
+            self.strobeIv6.highlighted = NO;
+            self.flashIv6.highlighted = NO;
+            self.momentaryIv6.highlighted = NO;
+            // 根据存储的模式判断高亮
+            switch ([self.allLabelStatus[5] integerValue]) {
+                case kStrobe:
+                    self.strobeIv6.highlighted = YES;
+                    break;
+                case kFlash:
+                    self.flashIv6.highlighted = YES;
+                    break;
+                case kMomenyary:
+                    self.momentaryIv6.highlighted = YES;
+                    break;
+                default:
+                    break;
+            }
+            
+            if (self.onOffBtn6.isSelected) {
                 [self writePeripheral:self.mPeripheral characteristic:self.FFFAcharacteristic value:[self convertCode:offOnAndStatusbtnSendCode]];
             }
-            if (self.btnOnOff6.isSelected && [self.allLabelStatus[5] integerValue] == kMomenyary) {
-                [self onOffBtnTouchDown:self.btnOnOff6];
+            if (self.onOffBtn6.isSelected && [self.allLabelStatus[5] integerValue] == kMomenyary) {
+                [self onOffBtnTouchDown:self.onOffBtn6];
             }
             break;
         default:
@@ -507,8 +807,8 @@ static const NSInteger kMomenyary = 2;
     
     num += 1;
     
-    // 大于3重置
-    if (num > self.statusHex.count - 1) {
+    // 大于等于3重置
+    if (num >= self.statusHex.count - 1) {
         num = 0;
     }
     
