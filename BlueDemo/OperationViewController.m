@@ -272,6 +272,9 @@ typedef enum {
                 // 修改model按钮
                 self.modelBtn1.selected = btn.isSelected;
                 
+                // 修改发送数据，改为关
+                offOnAndStatusbtnSendCode[4 + 0] = [self.statusHex[kMomenyary + 1] integerValue];
+                
                 // 发送数据
                 [self writePeripheral:self.mPeripheral characteristic:self.FFFAcharacteristic value:[self convertCode:offOnAndStatusbtnSendCode]];
 
@@ -291,6 +294,8 @@ typedef enum {
                 
                 self.modelBtn2.selected = btn.isSelected;
                 
+                offOnAndStatusbtnSendCode[4 + 1] = [self.statusHex[kMomenyary + 1] integerValue];
+                
                 [self writePeripheral:self.mPeripheral characteristic:self.FFFAcharacteristic value:[self convertCode:offOnAndStatusbtnSendCode]];
             }
             break;
@@ -304,6 +309,8 @@ typedef enum {
                 self.offFlay3.highlighted = btn.isSelected;
                 
                 self.modelBtn3.selected = btn.isSelected;
+                
+                offOnAndStatusbtnSendCode[4 + 2] = [self.statusHex[kMomenyary + 1] integerValue];
                 
                 [self writePeripheral:self.mPeripheral characteristic:self.FFFAcharacteristic value:[self convertCode:offOnAndStatusbtnSendCode]];
             }
@@ -319,6 +326,8 @@ typedef enum {
                 
                 self.modelBtn4.selected = btn.isSelected;
                 
+                offOnAndStatusbtnSendCode[4 + 3] = [self.statusHex[kMomenyary + 1] integerValue];
+                
                 [self writePeripheral:self.mPeripheral characteristic:self.FFFAcharacteristic value:[self convertCode:offOnAndStatusbtnSendCode]];
             }
             break;
@@ -333,6 +342,8 @@ typedef enum {
                 
                 self.modelBtn5.selected = btn.isSelected;
                 
+                offOnAndStatusbtnSendCode[4 + 4] = [self.statusHex[kMomenyary + 1] integerValue];
+                
                 [self writePeripheral:self.mPeripheral characteristic:self.FFFAcharacteristic value:[self convertCode:offOnAndStatusbtnSendCode]];
             }
             break;
@@ -346,6 +357,8 @@ typedef enum {
                 self.offFlay6.highlighted = btn.isSelected;
                 
                 self.modelBtn6.selected = btn.isSelected;
+                
+                offOnAndStatusbtnSendCode[4 + 5] = [self.statusHex[kMomenyary + 1] integerValue];
                 
                 [self writePeripheral:self.mPeripheral characteristic:self.FFFAcharacteristic value:[self convertCode:offOnAndStatusbtnSendCode]];
             }
@@ -378,6 +391,9 @@ typedef enum {
                 self.modelBtn1.selected = btn.isSelected;
             } else {
                 
+                // 是模式三时，修改发送数据
+                offOnAndStatusbtnSendCode[4 + 0] = [self.statusHex[kMomenyary] integerValue];
+                
                 if (!btn.highlighted) {
                     btn.selected = !btn.selected;
                 }
@@ -409,6 +425,8 @@ typedef enum {
                 self.modelBtn2.selected = btn.isSelected;
             } else {
                 
+                offOnAndStatusbtnSendCode[4 + 1] = [self.statusHex[kMomenyary] integerValue];
+                
                 if (!btn.highlighted) {
                     btn.selected = !btn.selected;
                 }
@@ -438,6 +456,8 @@ typedef enum {
                 // 修改model按钮
                 self.modelBtn3.selected = btn.isSelected;
             } else {
+                
+                offOnAndStatusbtnSendCode[4 + 2] = [self.statusHex[kMomenyary] integerValue];
                 
                 if (!btn.highlighted) {
                     btn.selected = !btn.selected;
@@ -469,6 +489,8 @@ typedef enum {
                 self.modelBtn4.selected = btn.isSelected;
             } else {
                 
+                offOnAndStatusbtnSendCode[4 + 3] = [self.statusHex[kMomenyary] integerValue];
+                
                 if (!btn.highlighted) {
                     btn.selected = !btn.selected;
                 }
@@ -499,6 +521,8 @@ typedef enum {
                 self.modelBtn5.selected = btn.isSelected;
             } else {
                 
+                offOnAndStatusbtnSendCode[4 + 4] = [self.statusHex[kMomenyary] integerValue];
+                
                 if (!btn.highlighted) {
                     btn.selected = !btn.selected;
                 }
@@ -528,6 +552,8 @@ typedef enum {
                 // 修改model按钮
                 self.modelBtn6.selected = btn.isSelected;
             } else {
+                
+                offOnAndStatusbtnSendCode[4 + 5] = [self.statusHex[kMomenyary] integerValue];
                 
                 if (!btn.highlighted) {
                     btn.selected = !btn.selected;
