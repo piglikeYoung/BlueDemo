@@ -61,7 +61,9 @@
                                 <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                 <animations/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="40" id="0zd-jT-OLE"/>
+                                    <constraint firstAttribute="width" constant="40" id="0zd-jT-OLE">
+                                        <variation key="heightClass=compact-widthClass=compact" constant="55"/>
+                                    </constraint>
                                     <constraint firstAttribute="width" secondItem="BBC-Ie-Be5" secondAttribute="height" multiplier="1:1" id="4rz-qo-Nbb"/>
                                 </constraints>
                                 <state key="normal" backgroundImage="btnOff"/>
@@ -208,7 +210,9 @@
                                 <animations/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="bt5-BM-JvW" secondAttribute="height" multiplier="38:23" id="E5O-zo-zQz"/>
-                                    <constraint firstAttribute="height" constant="23" id="WnV-tL-nJ4"/>
+                                    <constraint firstAttribute="height" constant="23" id="WnV-tL-nJ4">
+                                        <variation key="heightClass=compact-widthClass=compact" constant="30"/>
+                                    </constraint>
                                 </constraints>
                                 <state key="normal" image="btnModel"/>
                                 <state key="selected" image="btnModel_selected"/>
@@ -238,7 +242,8 @@
                                         <exclude reference="iXc-9E-TwQ"/>
                                     </mask>
                                 </variation>
-                                <variation key="heightClass=compact-widthClass=compact">
+                                <variation key="heightClass=compact-widthClass=compact" misplaced="YES">
+                                    <rect key="frame" x="98.5" y="156" width="50.5" height="30"/>
                                     <mask key="constraints">
                                         <exclude reference="iXc-9E-TwQ"/>
                                     </mask>
@@ -357,7 +362,8 @@
                                         <exclude reference="ipS-Lo-sEo"/>
                                     </mask>
                                 </variation>
-                                <variation key="heightClass=compact-widthClass=compact">
+                                <variation key="heightClass=compact-widthClass=compact" misplaced="YES">
+                                    <rect key="frame" x="106" y="196" width="35" height="14"/>
                                     <mask key="constraints">
                                         <exclude reference="2N4-jh-b0D"/>
                                         <include reference="ipS-Lo-sEo"/>
@@ -483,7 +489,8 @@
                                         <exclude reference="vGs-H2-7a7"/>
                                     </mask>
                                 </variation>
-                                <variation key="heightClass=compact-widthClass=compact">
+                                <variation key="heightClass=compact-widthClass=compact" misplaced="YES">
+                                    <rect key="frame" x="109" y="220" width="30.5" height="14"/>
                                     <mask key="constraints">
                                         <exclude reference="vGs-H2-7a7"/>
                                     </mask>
@@ -588,7 +595,8 @@
                                         <exclude reference="tNw-7H-nmF"/>
                                     </mask>
                                 </variation>
-                                <variation key="heightClass=compact-widthClass=compact">
+                                <variation key="heightClass=compact-widthClass=compact" misplaced="YES">
+                                    <rect key="frame" x="95" y="244" width="57.5" height="14"/>
                                     <mask key="constraints">
                                         <exclude reference="tNw-7H-nmF"/>
                                     </mask>
@@ -677,8 +685,7 @@
                                         <exclude reference="Qxr-Nr-xEG"/>
                                     </mask>
                                 </variation>
-                                <variation key="heightClass=compact-widthClass=compact" misplaced="YES">
-                                    <rect key="frame" x="155" y="354" width="90" height="23"/>
+                                <variation key="heightClass=compact-widthClass=compact">
                                     <mask key="constraints">
                                         <include reference="NkF-lI-61n"/>
                                         <exclude reference="Qxr-Nr-xEG"/>
