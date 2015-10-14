@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6211" systemVersion="14A298i" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8191" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6204"/>
+        <deployment version="2304" identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Operation View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModuleProvider="" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="OperationViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -15,11 +17,71 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="bg" translatesAutoresizingMaskIntoConstraints="NO" id="zvv-kM-pEu">
+                                <rect key="frame" x="14" y="-8" width="600" height="600"/>
+                                <animations/>
+                            </imageView>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="f8p-Rd-sH5">
+                                <rect key="frame" x="80" y="64" width="440" height="19"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="OffFlag" translatesAutoresizingMaskIntoConstraints="NO" id="7aH-Gt-iaW">
+                                        <rect key="frame" x="0.0" y="0.0" width="14" height="19"/>
+                                        <animations/>
+                                    </imageView>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="OffFlag" translatesAutoresizingMaskIntoConstraints="NO" id="lBf-ss-eb2">
+                                        <rect key="frame" x="85" y="0.0" width="14" height="19"/>
+                                        <animations/>
+                                    </imageView>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="OffFlag" translatesAutoresizingMaskIntoConstraints="NO" id="AkO-gb-k17">
+                                        <rect key="frame" x="171" y="0.0" width="14" height="19"/>
+                                        <animations/>
+                                    </imageView>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="OffFlag" translatesAutoresizingMaskIntoConstraints="NO" id="yGU-Ns-ZTx">
+                                        <rect key="frame" x="256" y="0.0" width="14" height="19"/>
+                                        <animations/>
+                                    </imageView>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="OffFlag" translatesAutoresizingMaskIntoConstraints="NO" id="vWS-2E-AVg">
+                                        <rect key="frame" x="341" y="0.0" width="14" height="19"/>
+                                        <animations/>
+                                    </imageView>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="OffFlag" translatesAutoresizingMaskIntoConstraints="NO" id="6NM-aJ-aCm">
+                                        <rect key="frame" x="426" y="0.0" width="14" height="19"/>
+                                        <animations/>
+                                    </imageView>
+                                </subviews>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="19" id="Vg6-cV-cr0"/>
+                                </constraints>
+                            </stackView>
+                        </subviews>
+                        <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="zvv-kM-pEu" secondAttribute="trailing" id="BP1-7u-cY3"/>
+                            <constraint firstItem="zvv-kM-pEu" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="CnY-Xq-VKz"/>
+                            <constraint firstItem="f8p-Rd-sH5" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="60" id="F22-pw-sEg">
+                                <variation key="heightClass=compact" constant="60"/>
+                                <variation key="heightClass=compact-widthClass=compact" constant="45"/>
+                            </constraint>
+                            <constraint firstAttribute="trailingMargin" secondItem="f8p-Rd-sH5" secondAttribute="trailing" constant="60" id="Hi3-SI-ZOy">
+                                <variation key="heightClass=compact" constant="60"/>
+                                <variation key="heightClass=compact-widthClass=compact" constant="45"/>
+                            </constraint>
+                            <constraint firstItem="f8p-Rd-sH5" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="44" id="Q9m-CD-5XO"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="zvv-kM-pEu" secondAttribute="bottom" id="ZAD-JJ-yBt"/>
+                            <constraint firstItem="zvv-kM-pEu" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="ub9-hg-FEJ"/>
+                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="240" y="367"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="OffFlag" width="14" height="9"/>
+        <image name="bg" width="1104" height="621"/>
+    </resources>
 </document>
