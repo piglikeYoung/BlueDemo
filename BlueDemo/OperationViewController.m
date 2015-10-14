@@ -8,6 +8,9 @@
 
 #import "OperationViewController.h"
 
+// 蓝牙外设名称
+static NSString *const deviceName = @"XIANGXI-CSL-5233";
+
 // 需要MacAddress的长度
 static const NSInteger kMacAddressLength = 6;
 // 蓝牙传输数据的长度
@@ -35,13 +38,22 @@ static char lockSendCode[] = {0x4d, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00 , 0
 // 解锁设备数据
 static char unlockSendCode[] = {0x4d, 0x00, 0x02, 0x00, 0x00, 0x00, 0x00, 0x00 , 0x00, 0x00, 0x00};
 
-// 模式三
+// 模式三索引
 static const NSInteger kMomenyary = 2;
 
-@interface OperationViewController ()<CBPeripheralDelegate>
+@interface OperationViewController ()<CBCentralManagerDelegate, CBPeripheralDelegate>
 
+// 系统蓝牙设备管理对象，可以把他理解为主设备，通过他，可以去扫描和链接外设
+@property (nonatomic, strong) CBCentralManager *manager;
+// 蓝牙设备
+@property (nonatomic, strong) CBPeripheral *mPeripheral;
+
+// 特征对象
 @property (nonatomic, strong) CBCharacteristic *FFFAcharacteristic;
 @property (nonatomic, strong) CBCharacteristic *FFFBcharacteristic;
+
+// 保存扫描到的蓝牙设备
+@property (nonatomic, strong) NSMutableArray *mPeripheralList;
 
 // 记录哪盏灯亮着（控制的是全部灯 则该字节为 1+2+4+8+16+32；控制第一个灯	则该字节为1）
 @property (nonatomic, assign) NSInteger whickLamp;
@@ -52,6 +64,51 @@ static const NSInteger kMomenyary = 2;
 @property (nonatomic, strong) NSArray *statusHex;
 // 记录label的当前状态
 @property (nonatomic, strong) NSMutableArray *allLabelStatus;
+
+
+@property (weak, nonatomic) IBOutlet UIImageView *offFlay1;
+@property (weak, nonatomic) IBOutlet UIImageView *offFlay2;
+@property (weak, nonatomic) IBOutlet UIImageView *offFlay3;
+@property (weak, nonatomic) IBOutlet UIImageView *offFlay4;
+@property (weak, nonatomic) IBOutlet UIImageView *offFlay5;
+@property (weak, nonatomic) IBOutlet UIImageView *offFlay6;
+
+@property (weak, nonatomic) IBOutlet UIButton *onOffBtn1;
+@property (weak, nonatomic) IBOutlet UIButton *onOffBtn2;
+@property (weak, nonatomic) IBOutlet UIButton *onOffBtn3;
+@property (weak, nonatomic) IBOutlet UIButton *onOffBtn4;
+@property (weak, nonatomic) IBOutlet UIButton *onOffBtn5;
+@property (weak, nonatomic) IBOutlet UIButton *onOffBtn6;
+
+@property (weak, nonatomic) IBOutlet UIButton *modelBtn1;
+@property (weak, nonatomic) IBOutlet UIButton *modelBtn2;
+@property (weak, nonatomic) IBOutlet UIButton *modelBtn3;
+@property (weak, nonatomic) IBOutlet UIButton *modelBtn4;
+@property (weak, nonatomic) IBOutlet UIButton *modelBtn5;
+@property (weak, nonatomic) IBOutlet UIButton *modelBtn6;
+
+@property (weak, nonatomic) IBOutlet UIImageView *strobeIv1;
+@property (weak, nonatomic) IBOutlet UIImageView *strobeIv2;
+@property (weak, nonatomic) IBOutlet UIImageView *strobeIv3;
+@property (weak, nonatomic) IBOutlet UIImageView *strobeIv4;
+@property (weak, nonatomic) IBOutlet UIImageView *strobeIv5;
+@property (weak, nonatomic) IBOutlet UIImageView *strobeIv6;
+
+@property (weak, nonatomic) IBOutlet UIImageView *flashIv1;
+@property (weak, nonatomic) IBOutlet UIImageView *flashIv2;
+@property (weak, nonatomic) IBOutlet UIImageView *flashIv3;
+@property (weak, nonatomic) IBOutlet UIImageView *flashIv4;
+@property (weak, nonatomic) IBOutlet UIImageView *flashIv5;
+@property (weak, nonatomic) IBOutlet UIImageView *flashIv6;
+
+@property (weak, nonatomic) IBOutlet UIImageView *momentaryIv1;
+@property (weak, nonatomic) IBOutlet UIImageView *momentaryIv2;
+@property (weak, nonatomic) IBOutlet UIImageView *momentaryIv3;
+@property (weak, nonatomic) IBOutlet UIImageView *momentaryIv4;
+@property (weak, nonatomic) IBOutlet UIImageView *momentaryIv5;
+@property (weak, nonatomic) IBOutlet UIImageView *momentaryIv6;
+
+
 
 @property (weak, nonatomic) IBOutlet UIButton *btnOnOff1;
 @property (weak, nonatomic) IBOutlet UIButton *btnOnOff2;
@@ -74,11 +131,18 @@ static const NSInteger kMomenyary = 2;
 @property (weak, nonatomic) IBOutlet UILabel *labelStatus5;
 @property (weak, nonatomic) IBOutlet UILabel *labelStatus6;
 
-@property (weak, nonatomic) IBOutlet UISwitch *lockSwichBtn;
+//@property (weak, nonatomic) IBOutlet UISwitch *lockSwichBtn;
 
 @end
 
 @implementation OperationViewController
+
+- (NSMutableArray *)mPeripheralList {
+    if (!_mPeripheralList) {
+        _mPeripheralList = [NSMutableArray array];
+    }
+    return _mPeripheralList;
+}
 
 - (NSArray *)statusHex {
     if (!_statusHex) {
@@ -104,25 +168,32 @@ static const NSInteger kMomenyary = 2;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    
-    _mPeripheral.delegate = self;
-    [_mPeripheral discoverServices:nil];
+    // 1.创建中心设备
+    _manager = [[CBCentralManager alloc] initWithDelegate:self queue:nil];
 }
 
 - (void)dealloc {
+    // 停止扫描并断开连接
+    [self disconnectPeripheral:_manager peripheral:_mPeripheral];
+    
+    if (self.mPeripheralList.count > 0) {
+        [self.mPeripheralList removeAllObjects];
+    }
+    
     if (self.mPeripheral) {
         self.mPeripheral = nil;
     }
+    
+    if (self.manager) {
+        self.manager = nil;
+    }
 }
 
+#pragma mark 横屏设置
 - (BOOL) shouldAutorotate{
-    
     return YES;
     
 }
-
-
-
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
     return UIInterfaceOrientationMaskLandscapeRight;
 }
@@ -130,6 +201,71 @@ static const NSInteger kMomenyary = 2;
 - (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {
     return UIInterfaceOrientationLandscapeRight;
 }
+
+#pragma mark - 私有方法
+// 写数据
+-(void)writePeripheral:(CBPeripheral *)peripheral
+        characteristic:(CBCharacteristic *)characteristic
+                 value:(NSData *)value{
+    
+    //打印出 characteristic 的权限，可以看到有很多种，这是一个NS_OPTIONS，就是可以同时用于好几个值，常见的有read，write，notify，indicate，知知道这几个基本就够用了，前连个是读写权限，后两个都是通知，两种不同的通知方式。
+    /*
+     typedef NS_OPTIONS(NSUInteger, CBCharacteristicProperties) {
+     CBCharacteristicPropertyBroadcast												= 0x01,
+     CBCharacteristicPropertyRead													= 0x02,
+     CBCharacteristicPropertyWriteWithoutResponse									= 0x04,
+     CBCharacteristicPropertyWrite													= 0x08,
+     CBCharacteristicPropertyNotify													= 0x10,
+     CBCharacteristicPropertyIndicate												= 0x20,
+     CBCharacteristicPropertyAuthenticatedSignedWrites								= 0x40,
+     CBCharacteristicPropertyExtendedProperties										= 0x80,
+     CBCharacteristicPropertyNotifyEncryptionRequired NS_ENUM_AVAILABLE(NA, 6_0)		= 0x100,
+     CBCharacteristicPropertyIndicateEncryptionRequired NS_ENUM_AVAILABLE(NA, 6_0)	= 0x200
+     };
+     
+     */
+    NSLog(@"%lu", (unsigned long)characteristic.properties);
+    
+    
+    //只有 characteristic.properties 有write的权限才可以写
+    if(characteristic.properties & CBCharacteristicPropertyWrite){
+        /*
+         最好一个type参数可以为CBCharacteristicWriteWithResponse或type:CBCharacteristicWriteWithResponse,区别是是否会有反馈
+         */
+        [peripheral writeValue:value forCharacteristic:characteristic type:CBCharacteristicWriteWithResponse];
+    }else{
+        NSLog(@"该字段不可写！");
+    }
+    
+    
+}
+
+// 设置通知
+-(void)notifyCharacteristic:(CBPeripheral *)peripheral
+             characteristic:(CBCharacteristic *)characteristic{
+    //设置通知，数据通知会进入：didUpdateValueForCharacteristic方法
+    [peripheral setNotifyValue:YES forCharacteristic:characteristic];
+    
+}
+
+// 取消通知
+-(void)cancelNotifyCharacteristic:(CBPeripheral *)peripheral
+                   characteristic:(CBCharacteristic *)characteristic{
+    
+    [peripheral setNotifyValue:NO forCharacteristic:characteristic];
+}
+
+// 停止扫描并断开连接
+-(void)disconnectPeripheral:(CBCentralManager *)centralManager
+                 peripheral:(CBPeripheral *)peripheral{
+    //停止扫描
+    [centralManager stopScan];
+    //断开连接
+    [centralManager cancelPeripheralConnection:peripheral];
+    
+}
+
+
 
 #pragma mark - 按钮点击处理
 // 松开触发
@@ -451,6 +587,108 @@ static const NSInteger kMomenyary = 2;
     return [NSData dataWithBytes:codes length:kDataLength];
 }
 
+
+#pragma mark - CBCentralManagerDelegate
+/*
+ 主设备状态改变的委托，在初始化CBCentralManager的适合会打开设备，只有当设备正确打开后才能使用
+ */
+-(void)centralManagerDidUpdateState:(CBCentralManager *)central{
+    
+    switch (central.state) {
+        case CBCentralManagerStateUnknown:
+            NSLog(@">>>CBCentralManagerStateUnknown");
+            break;
+        case CBCentralManagerStateResetting:
+            NSLog(@">>>CBCentralManagerStateResetting");
+            break;
+        case CBCentralManagerStateUnsupported:
+            NSLog(@">>>CBCentralManagerStateUnsupported");
+            break;
+        case CBCentralManagerStateUnauthorized:
+            NSLog(@">>>CBCentralManagerStateUnauthorized");
+            break;
+        case CBCentralManagerStatePoweredOff:
+            NSLog(@">>>CBCentralManagerStatePoweredOff");
+            break;
+        case CBCentralManagerStatePoweredOn:
+            NSLog(@">>>CBCentralManagerStatePoweredOn");
+            //开始扫描周围的外设
+            /*
+             第一个参数nil就是扫描周围所有的外设，扫描到外设后会进入
+             - (void)centralManager:(CBCentralManager *)central didDiscoverPeripheral:(CBPeripheral *)peripheral advertisementData:(NSDictionary *)advertisementData RSSI:(NSNumber *)RSSI;
+             */
+            [self.manager scanForPeripheralsWithServices:nil options:nil];
+            
+            break;
+        default:
+            break;
+    }
+    
+}
+
+// 扫描到设备会进入方法
+-(void)centralManager:(CBCentralManager *)central didDiscoverPeripheral:(CBPeripheral *)peripheral advertisementData:(NSDictionary *)advertisementData RSSI:(NSNumber *)RSSI{
+    
+    NSLog(@"扫描到设备:%@",peripheral);
+    NSLog(@"信号强度:%@",RSSI);
+    
+    // 添加到数组
+    if (![self.mPeripheralList containsObject:peripheral]) {
+        [self.mPeripheralList addObject:peripheral];
+    }
+    
+    // 判断如果名称相同，就连接设备
+    if ([peripheral.name isEqualToString:deviceName]) {
+        [self.manager connectPeripheral:peripheral options:nil];
+    }
+}
+
+
+/*
+ 连接到Peripherals失败
+ */
+-(void)centralManager:(CBCentralManager *)central didFailToConnectPeripheral:(CBPeripheral *)peripheral error:(NSError *)error {
+    NSLog(@">>>连接到名称为（%@）的设备-失败,原因:%@",[peripheral name],[error localizedDescription]);
+}
+
+/*
+ Peripherals断开连接
+ */
+- (void)centralManager:(CBCentralManager *)central didDisconnectPeripheral:(CBPeripheral *)peripheral error:(NSError *)error{
+    NSLog(@">>>外设连接断开连接 %@: %@\n", [peripheral name], [error localizedDescription]);
+    
+    if (self.mPeripheralList.count > 0) {
+        [self.mPeripheralList removeAllObjects];
+    }
+    
+    if (self.mPeripheral) {
+        self.mPeripheral = nil;
+    }
+    
+    // 重新扫描
+    if (!self.manager.isScanning) {
+        [self.manager scanForPeripheralsWithServices:nil options:nil];
+    }
+    
+    
+}
+/*
+ 连接到Peripherals-成功
+ */
+- (void)centralManager:(CBCentralManager *)central didConnectPeripheral:(CBPeripheral *)peripheral {
+    NSLog(@">>>连接到名称为（%@）的设备-成功",peripheral.name);
+    
+    // 停止扫描
+    [self.manager stopScan];
+    
+    // 强引用设备，不让它释放
+    self.mPeripheral = peripheral;
+    // 设置代理
+    self.mPeripheral.delegate = self;
+    // 扫描俯卧
+    [self.mPeripheral discoverServices:nil];
+}
+
 #pragma mark - CBPeripheralDelegate
 /*
  扫描到Services
@@ -574,7 +812,6 @@ static const NSInteger kMomenyary = 2;
 //                [alertView show];
 //                return;
             }
-            self.lockSwichBtn.on = lockFlag;
         }else{
             NSLog(@"未发现特征值.");
         }
@@ -615,67 +852,6 @@ static const NSInteger kMomenyary = 2;
     NSLog(@"characteristic uuid:%@  value:%@",[NSString stringWithFormat:@"%@",descriptor.UUID],descriptor.value);
 }
 
-//写数据
--(void)writePeripheral:(CBPeripheral *)peripheral
-        characteristic:(CBCharacteristic *)characteristic
-                 value:(NSData *)value{
-    
-    //打印出 characteristic 的权限，可以看到有很多种，这是一个NS_OPTIONS，就是可以同时用于好几个值，常见的有read，write，notify，indicate，知知道这几个基本就够用了，前连个是读写权限，后两个都是通知，两种不同的通知方式。
-    /*
-     typedef NS_OPTIONS(NSUInteger, CBCharacteristicProperties) {
-     CBCharacteristicPropertyBroadcast												= 0x01,
-     CBCharacteristicPropertyRead													= 0x02,
-     CBCharacteristicPropertyWriteWithoutResponse									= 0x04,
-     CBCharacteristicPropertyWrite													= 0x08,
-     CBCharacteristicPropertyNotify													= 0x10,
-     CBCharacteristicPropertyIndicate												= 0x20,
-     CBCharacteristicPropertyAuthenticatedSignedWrites								= 0x40,
-     CBCharacteristicPropertyExtendedProperties										= 0x80,
-     CBCharacteristicPropertyNotifyEncryptionRequired NS_ENUM_AVAILABLE(NA, 6_0)		= 0x100,
-     CBCharacteristicPropertyIndicateEncryptionRequired NS_ENUM_AVAILABLE(NA, 6_0)	= 0x200
-     };
-     
-     */
-    NSLog(@"%lu", (unsigned long)characteristic.properties);
-    
-    
-    //只有 characteristic.properties 有write的权限才可以写
-    if(characteristic.properties & CBCharacteristicPropertyWrite){
-        /*
-         最好一个type参数可以为CBCharacteristicWriteWithResponse或type:CBCharacteristicWriteWithResponse,区别是是否会有反馈
-         */
-        [peripheral writeValue:value forCharacteristic:characteristic type:CBCharacteristicWriteWithResponse];
-    }else{
-        NSLog(@"该字段不可写！");
-    }
-    
-    
-}
-
-//设置通知
--(void)notifyCharacteristic:(CBPeripheral *)peripheral
-             characteristic:(CBCharacteristic *)characteristic{
-    //设置通知，数据通知会进入：didUpdateValueForCharacteristic方法
-    [peripheral setNotifyValue:YES forCharacteristic:characteristic];
-    
-}
-
-//取消通知
--(void)cancelNotifyCharacteristic:(CBPeripheral *)peripheral
-                   characteristic:(CBCharacteristic *)characteristic{
-    
-    [peripheral setNotifyValue:NO forCharacteristic:characteristic];
-}
-
-//停止扫描并断开连接
--(void)disconnectPeripheral:(CBCentralManager *)centralManager
-                 peripheral:(CBPeripheral *)peripheral{
-    //停止扫描
-    [centralManager stopScan];
-    //断开连接
-    [centralManager cancelPeripheralConnection:peripheral];
-    
-}
 
 
 

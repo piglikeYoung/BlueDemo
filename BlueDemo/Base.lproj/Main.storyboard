@@ -1161,6 +1161,44 @@
                             </mask>
                         </variation>
                     </view>
+                    <connections>
+                        <outlet property="flashIv1" destination="xKW-bI-n2E" id="Nvx-LP-cia"/>
+                        <outlet property="flashIv2" destination="hsu-f9-kxi" id="sUo-B5-Lj5"/>
+                        <outlet property="flashIv3" destination="v8O-fb-3JN" id="Uvn-9t-SCE"/>
+                        <outlet property="flashIv4" destination="XQd-sV-NLN" id="ZlS-eL-sAY"/>
+                        <outlet property="flashIv5" destination="Ub7-7n-ojD" id="SFN-uF-e8d"/>
+                        <outlet property="flashIv6" destination="xp7-lD-z84" id="3Om-43-lgr"/>
+                        <outlet property="modelBtn1" destination="bt5-BM-JvW" id="yVa-ix-fXf"/>
+                        <outlet property="modelBtn2" destination="SoF-8c-Q8R" id="eb3-cc-Oi4"/>
+                        <outlet property="modelBtn3" destination="epP-vT-JTS" id="HbX-ZU-HN0"/>
+                        <outlet property="modelBtn4" destination="Kjg-O9-LzI" id="BtJ-l2-C2i"/>
+                        <outlet property="modelBtn5" destination="2yP-Pb-LY0" id="xrz-co-nH7"/>
+                        <outlet property="modelBtn6" destination="lrH-Ak-4ee" id="F7W-mw-jdk"/>
+                        <outlet property="momentaryIv1" destination="mMx-io-tII" id="OwD-e4-vpd"/>
+                        <outlet property="momentaryIv2" destination="jzW-za-4G5" id="QQU-h4-tgA"/>
+                        <outlet property="momentaryIv3" destination="0M4-5s-KKa" id="WLj-yv-D9l"/>
+                        <outlet property="momentaryIv4" destination="eTx-Cf-MwE" id="9Nm-lg-tbd"/>
+                        <outlet property="momentaryIv5" destination="Sjc-VR-gLJ" id="fbB-K5-Sls"/>
+                        <outlet property="momentaryIv6" destination="UWa-Xh-nyt" id="Yn8-1t-SVa"/>
+                        <outlet property="offFlay1" destination="7aH-Gt-iaW" id="uYI-ir-bd3"/>
+                        <outlet property="offFlay2" destination="lBf-ss-eb2" id="hxt-Hf-cez"/>
+                        <outlet property="offFlay3" destination="AkO-gb-k17" id="8ES-UM-eul"/>
+                        <outlet property="offFlay4" destination="yGU-Ns-ZTx" id="437-VQ-dFJ"/>
+                        <outlet property="offFlay5" destination="vWS-2E-AVg" id="XrK-DE-miM"/>
+                        <outlet property="offFlay6" destination="6NM-aJ-aCm" id="o4c-G6-FhF"/>
+                        <outlet property="onOffBtn1" destination="BBC-Ie-Be5" id="Zmx-8D-53s"/>
+                        <outlet property="onOffBtn2" destination="BlS-Em-8hh" id="wse-Nt-lOK"/>
+                        <outlet property="onOffBtn3" destination="sAh-ML-LFt" id="SOY-Rb-NjU"/>
+                        <outlet property="onOffBtn4" destination="qmy-4U-zZZ" id="IPe-Ca-qj9"/>
+                        <outlet property="onOffBtn5" destination="WxH-y7-9Yr" id="hf9-0J-gSf"/>
+                        <outlet property="onOffBtn6" destination="s1A-SI-tF2" id="htF-OZ-TaR"/>
+                        <outlet property="strobeIv1" destination="J2Z-hw-X1h" id="1SW-XR-7RE"/>
+                        <outlet property="strobeIv2" destination="b30-dB-1mc" id="GIF-zD-dXw"/>
+                        <outlet property="strobeIv3" destination="rs5-7I-Pwc" id="KFu-my-8uZ"/>
+                        <outlet property="strobeIv4" destination="rCt-3p-Za1" id="FOw-sW-VMy"/>
+                        <outlet property="strobeIv5" destination="cPH-s5-063" id="SEP-zX-iUw"/>
+                        <outlet property="strobeIv6" destination="DmO-cy-NEk" id="GCX-yn-9nq"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>

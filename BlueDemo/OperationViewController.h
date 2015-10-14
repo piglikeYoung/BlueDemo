@@ -11,6 +11,4 @@
 
 @interface OperationViewController : UIViewController
 
-@property (nonatomic, strong) CBPeripheral *mPeripheral;
-
 @end
