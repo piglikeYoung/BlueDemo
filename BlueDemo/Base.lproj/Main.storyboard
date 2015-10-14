@@ -5,6 +5,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
     <scenes>
         <!--Operation View Controller-->
@@ -661,6 +662,29 @@
                                     </mask>
                                 </variation>
                             </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="anzoLogo" translatesAutoresizingMaskIntoConstraints="NO" id="sig-1b-8TD">
+                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="sig-1b-8TD" secondAttribute="height" multiplier="161:41" id="NkF-lI-61n"/>
+                                    <constraint firstAttribute="width" constant="161" id="Qxr-Nr-xEG">
+                                        <variation key="heightClass=compact-widthClass=compact" constant="90"/>
+                                    </constraint>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="NkF-lI-61n"/>
+                                        <exclude reference="Qxr-Nr-xEG"/>
+                                    </mask>
+                                </variation>
+                                <variation key="heightClass=compact-widthClass=compact" misplaced="YES">
+                                    <rect key="frame" x="155" y="354" width="90" height="23"/>
+                                    <mask key="constraints">
+                                        <include reference="NkF-lI-61n"/>
+                                        <exclude reference="Qxr-Nr-xEG"/>
+                                    </mask>
+                                </variation>
+                            </imageView>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -696,6 +720,7 @@
                             <constraint firstItem="sAh-ML-LFt" firstAttribute="width" secondItem="BBC-Ie-Be5" secondAttribute="width" id="CKA-kK-1rs"/>
                             <constraint firstItem="xKW-bI-n2E" firstAttribute="centerX" secondItem="J2Z-hw-X1h" secondAttribute="centerX" id="Cdf-PF-StT"/>
                             <constraint firstItem="zvv-kM-pEu" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="CnY-Xq-VKz"/>
+                            <constraint firstItem="sig-1b-8TD" firstAttribute="width" secondItem="zvv-kM-pEu" secondAttribute="width" multiplier="0.17" id="Cy3-hY-NIH"/>
                             <constraint firstItem="GTh-wD-7AF" firstAttribute="top" secondItem="omT-Az-PtD" secondAttribute="top" id="D2P-o6-Yuv"/>
                             <constraint firstItem="Xyx-eG-e7S" firstAttribute="centerX" secondItem="sAh-ML-LFt" secondAttribute="centerX" id="DFZ-qw-ozl"/>
                             <constraint firstItem="b30-dB-1mc" firstAttribute="centerX" secondItem="SoF-8c-Q8R" secondAttribute="centerX" id="DJ0-HZ-xsa"/>
@@ -820,6 +845,9 @@
                             <constraint firstItem="s1A-SI-tF2" firstAttribute="height" secondItem="BBC-Ie-Be5" secondAttribute="height" id="uGB-JF-1ze"/>
                             <constraint firstItem="zvv-kM-pEu" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="ub9-hg-FEJ"/>
                             <constraint firstItem="Sjc-VR-gLJ" firstAttribute="top" secondItem="mMx-io-tII" secondAttribute="top" id="uvD-sP-5tK"/>
+                            <constraint firstAttribute="bottomMargin" secondItem="sig-1b-8TD" secondAttribute="bottom" constant="10" id="v7X-vW-BNk">
+                                <variation key="heightClass=compact-widthClass=compact" constant="22"/>
+                            </constraint>
                             <constraint firstItem="sC6-fC-PEJ" firstAttribute="height" secondItem="omT-Az-PtD" secondAttribute="height" id="vE3-jp-rR4"/>
                             <constraint firstItem="b30-dB-1mc" firstAttribute="height" secondItem="J2Z-hw-X1h" secondAttribute="height" id="vLk-Jx-SCe"/>
                             <constraint firstItem="XQd-sV-NLN" firstAttribute="height" secondItem="xKW-bI-n2E" secondAttribute="height" id="ver-QG-ALS"/>
@@ -834,6 +862,7 @@
                             <constraint firstItem="UWa-Xh-nyt" firstAttribute="height" secondItem="mMx-io-tII" secondAttribute="height" id="xbf-hf-pfb"/>
                             <constraint firstItem="SoF-8c-Q8R" firstAttribute="width" secondItem="bt5-BM-JvW" secondAttribute="width" id="xnZ-gL-9bO"/>
                             <constraint firstItem="epP-vT-JTS" firstAttribute="centerX" secondItem="Xyx-eG-e7S" secondAttribute="centerX" id="ybL-4p-XNJ"/>
+                            <constraint firstItem="sig-1b-8TD" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="ysx-Uh-QHJ"/>
                             <constraint firstItem="Ub7-7n-ojD" firstAttribute="width" secondItem="Ub7-7n-ojD" secondAttribute="height" multiplier="46:21" id="zI4-cB-hib"/>
                             <constraint firstItem="DmO-cy-NEk" firstAttribute="top" secondItem="J2Z-hw-X1h" secondAttribute="top" id="zQx-7F-5gb"/>
                             <constraint firstItem="lrH-Ak-4ee" firstAttribute="width" secondItem="bt5-BM-JvW" secondAttribute="width" id="zVY-AA-FsW"/>
@@ -876,6 +905,7 @@
                                 <exclude reference="eTx-Cf-MwE"/>
                                 <exclude reference="Sjc-VR-gLJ"/>
                                 <exclude reference="UWa-Xh-nyt"/>
+                                <exclude reference="sig-1b-8TD"/>
                             </mask>
                             <mask key="constraints">
                                 <exclude reference="Dlx-eL-jj8"/>
@@ -1033,6 +1063,9 @@
                                 <exclude reference="bYU-vY-45U"/>
                                 <exclude reference="ibP-9z-lQC"/>
                                 <exclude reference="xbf-hf-pfb"/>
+                                <exclude reference="Cy3-hY-NIH"/>
+                                <exclude reference="v7X-vW-BNk"/>
+                                <exclude reference="ysx-Uh-QHJ"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=compact-widthClass=compact">
@@ -1073,6 +1106,7 @@
                                 <include reference="eTx-Cf-MwE"/>
                                 <include reference="Sjc-VR-gLJ"/>
                                 <include reference="UWa-Xh-nyt"/>
+                                <include reference="sig-1b-8TD"/>
                             </mask>
                             <mask key="constraints">
                                 <include reference="Dlx-eL-jj8"/>
@@ -1230,6 +1264,9 @@
                                 <include reference="bYU-vY-45U"/>
                                 <include reference="ibP-9z-lQC"/>
                                 <include reference="xbf-hf-pfb"/>
+                                <include reference="Cy3-hY-NIH"/>
+                                <include reference="v7X-vW-BNk"/>
+                                <include reference="ysx-Uh-QHJ"/>
                             </mask>
                         </variation>
                     </view>
@@ -1241,6 +1278,7 @@
     </scenes>
     <resources>
         <image name="OffFlag" width="14" height="9"/>
+        <image name="anzoLogo" width="80" height="20"/>
         <image name="bg" width="1104" height="621"/>
         <image name="btnModel" width="38" height="23"/>
         <image name="btnModel_selected" width="38" height="23"/>
