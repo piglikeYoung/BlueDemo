@@ -403,10 +403,12 @@ typedef enum {
             // 根据是否选中，修改发送数据
             if (btn.selected) {
                 _whickLamp -= 1;
+                offOnAndStatusbtnSendCode[3] = 1;
             } else {
                 _whickLamp += 1;
+                offOnAndStatusbtnSendCode[3] = _whickLamp;
             }
-            offOnAndStatusbtnSendCode[3] = _whickLamp;
+            
             
             if ([self.allLabelStatus[0] integerValue] != kMomenyary) {
                 // 修改开关状态
@@ -438,10 +440,12 @@ typedef enum {
         case 2:
             if (btn.selected) {
                 _whickLamp -= 2;
+                offOnAndStatusbtnSendCode[3] = 2;
             } else {
                 _whickLamp += 2;
+                offOnAndStatusbtnSendCode[3] = _whickLamp;
             }
-            offOnAndStatusbtnSendCode[3] = _whickLamp;
+            
             if ([self.allLabelStatus[1] integerValue] != kMomenyary) {
                 // 修改开关状态
                 btn.selected = !btn.selected;
@@ -470,10 +474,12 @@ typedef enum {
         case 3:
             if (btn.selected) {
                 _whickLamp -= 4;
+                offOnAndStatusbtnSendCode[3] = 4;
             } else {
                 _whickLamp += 4;
+                offOnAndStatusbtnSendCode[3] = _whickLamp;
             }
-            offOnAndStatusbtnSendCode[3] = _whickLamp;
+            
             if ([self.allLabelStatus[2] integerValue] != kMomenyary) {
                 // 修改开关状态
                 btn.selected = !btn.selected;
@@ -502,10 +508,12 @@ typedef enum {
         case 4:
             if (btn.selected) {
                 _whickLamp -= 8;
+                offOnAndStatusbtnSendCode[3] = 8;
             } else {
                 _whickLamp += 8;
+                offOnAndStatusbtnSendCode[3] = _whickLamp;
             }
-            offOnAndStatusbtnSendCode[3] = _whickLamp;
+            
             if ([self.allLabelStatus[3] integerValue] != kMomenyary) {
                 // 修改开关状态
                 btn.selected = !btn.selected;
@@ -534,10 +542,12 @@ typedef enum {
         case 5:
             if (btn.selected) {
                 _whickLamp -= 16;
+                offOnAndStatusbtnSendCode[3] = 16;
             } else {
                 _whickLamp += 16;
+                offOnAndStatusbtnSendCode[3] = _whickLamp;
             }
-            offOnAndStatusbtnSendCode[3] = _whickLamp;
+            
             if ([self.allLabelStatus[4] integerValue] != kMomenyary) {
                 // 修改开关状态
                 btn.selected = !btn.selected;
@@ -566,10 +576,12 @@ typedef enum {
         case 6:
             if (btn.selected) {
                 _whickLamp -= 32;
+                offOnAndStatusbtnSendCode[3] = 32;
             } else {
                 _whickLamp += 32;
+                offOnAndStatusbtnSendCode[3] = _whickLamp;
             }
-            offOnAndStatusbtnSendCode[3] = _whickLamp;
+            
             if ([self.allLabelStatus[5] integerValue] != kMomenyary) {
                 // 修改开关状态
                 btn.selected = !btn.selected;
