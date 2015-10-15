@@ -7,6 +7,7 @@
 //
 
 #import "OperationViewController.h"
+#import "MBProgressHUD+MJ.h"
 
 // 蓝牙外设名称
 static NSString *const deviceName = @"XIANGXI-CSL-5233";
@@ -156,7 +157,11 @@ typedef enum {
     self.strobeIv5.highlighted = YES;
     self.strobeIv6.highlighted = YES;
     
-    
+    [MBProgressHUD showMessage:@"正在扫描设备" toView:self.view];
+}
+
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    [MBProgressHUD hideHUDForView:self.view];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -227,7 +232,7 @@ typedef enum {
      };
      
      */
-    NSLog(@"%lu", (unsigned long)characteristic.properties);
+    JHLog(@"%lu", (unsigned long)characteristic.properties);
     
     
     //只有 characteristic.properties 有write的权限才可以写
@@ -237,7 +242,7 @@ typedef enum {
          */
         [peripheral writeValue:value forCharacteristic:characteristic type:CBCharacteristicWriteWithResponse];
     }else{
-        NSLog(@"该字段不可写！");
+        JHLog(@"该字段不可写！");
     }
     
     
@@ -927,8 +932,8 @@ typedef enum {
     }
     
     codes[10] = ch;
-    NSLog(@"%zd", [NSData dataWithBytes:codes length:kDataLength].length);
-    NSLog(@"%@", [[NSString alloc] initWithData:[NSData dataWithBytes:codes length:kDataLength]  encoding:NSUTF8StringEncoding]);
+    JHLog(@"%zd", [NSData dataWithBytes:codes length:kDataLength].length);
+    JHLog(@"%@", [[NSString alloc] initWithData:[NSData dataWithBytes:codes length:kDataLength]  encoding:NSUTF8StringEncoding]);
     return [NSData dataWithBytes:codes length:kDataLength];
 }
 
@@ -941,22 +946,22 @@ typedef enum {
     
     switch (central.state) {
         case CBCentralManagerStateUnknown:
-            NSLog(@">>>CBCentralManagerStateUnknown");
+            JHLog(@">>>CBCentralManagerStateUnknown");
             break;
         case CBCentralManagerStateResetting:
-            NSLog(@">>>CBCentralManagerStateResetting");
+            JHLog(@">>>CBCentralManagerStateResetting");
             break;
         case CBCentralManagerStateUnsupported:
-            NSLog(@">>>CBCentralManagerStateUnsupported");
+            JHLog(@">>>CBCentralManagerStateUnsupported");
             break;
         case CBCentralManagerStateUnauthorized:
-            NSLog(@">>>CBCentralManagerStateUnauthorized");
+            JHLog(@">>>CBCentralManagerStateUnauthorized");
             break;
         case CBCentralManagerStatePoweredOff:
-            NSLog(@">>>CBCentralManagerStatePoweredOff");
+            JHLog(@">>>CBCentralManagerStatePoweredOff");
             break;
         case CBCentralManagerStatePoweredOn:
-            NSLog(@">>>CBCentralManagerStatePoweredOn");
+            JHLog(@">>>CBCentralManagerStatePoweredOn");
             //开始扫描周围的外设
             /*
              第一个参数nil就是扫描周围所有的外设，扫描到外设后会进入
@@ -974,8 +979,8 @@ typedef enum {
 // 扫描到设备会进入方法
 -(void)centralManager:(CBCentralManager *)central didDiscoverPeripheral:(CBPeripheral *)peripheral advertisementData:(NSDictionary *)advertisementData RSSI:(NSNumber *)RSSI{
     
-    NSLog(@"扫描到设备:%@",peripheral);
-    NSLog(@"信号强度:%@",RSSI);
+    JHLog(@"扫描到设备:%@",peripheral);
+    JHLog(@"信号强度:%@",RSSI);
     
     // 添加到数组
     if (![self.mPeripheralList containsObject:peripheral]) {
@@ -984,6 +989,7 @@ typedef enum {
     
     // 判断如果名称相同，就连接设备
     if ([peripheral.name isEqualToString:deviceName]) {
+        [MBProgressHUD hideHUDForView:self.view];
         [self.manager connectPeripheral:peripheral options:nil];
     }
 }
@@ -993,14 +999,14 @@ typedef enum {
  连接到Peripherals失败
  */
 -(void)centralManager:(CBCentralManager *)central didFailToConnectPeripheral:(CBPeripheral *)peripheral error:(NSError *)error {
-    NSLog(@">>>连接到名称为（%@）的设备-失败,原因:%@",[peripheral name],[error localizedDescription]);
+    JHLog(@">>>连接到名称为（%@）的设备-失败,原因:%@",[peripheral name],[error localizedDescription]);
 }
 
 /*
  Peripherals断开连接
  */
 - (void)centralManager:(CBCentralManager *)central didDisconnectPeripheral:(CBPeripheral *)peripheral error:(NSError *)error{
-    NSLog(@">>>外设连接断开连接 %@: %@\n", [peripheral name], [error localizedDescription]);
+    JHLog(@">>>外设连接断开连接 %@: %@\n", [peripheral name], [error localizedDescription]);
     
     if (self.mPeripheralList.count > 0) {
         [self.mPeripheralList removeAllObjects];
@@ -1021,7 +1027,9 @@ typedef enum {
  连接到Peripherals-成功
  */
 - (void)centralManager:(CBCentralManager *)central didConnectPeripheral:(CBPeripheral *)peripheral {
-    NSLog(@">>>连接到名称为（%@）的设备-成功",peripheral.name);
+    JHLog(@">>>连接到名称为（%@）的设备-成功",peripheral.name);
+    
+    [MBProgressHUD showSuccess:[NSString stringWithFormat:@"连接到名称为（%@）的设备-成功",deviceName] toView:self.view];
     
     // 停止扫描
     [self.manager stopScan];
@@ -1040,7 +1048,7 @@ typedef enum {
  */
 -(void)peripheral:(CBPeripheral *)peripheral didDiscoverServices:(NSError *)error{
     if (error) {
-        NSLog(@">>>Discovered services for %@ with error: %@", peripheral.name, [error localizedDescription]);
+        JHLog(@">>>Discovered services for %@ with error: %@", peripheral.name, [error localizedDescription]);
         return;
     } else {
         // 遍历查找到的服务
@@ -1061,7 +1069,7 @@ typedef enum {
  */
 -(void)peripheral:(CBPeripheral *)peripheral didDiscoverCharacteristicsForService:(CBService *)service error:(NSError *)error{
     if (error) {
-        NSLog(@"error Discovered characteristics for %@ with error: %@", service.UUID, [error localizedDescription]);
+        JHLog(@"error Discovered characteristics for %@ with error: %@", service.UUID, [error localizedDescription]);
         return;
     }
     
@@ -1096,9 +1104,9 @@ typedef enum {
  */
 - (void)peripheral:(CBPeripheral *)peripheral didUpdateNotificationStateForCharacteristic:(CBCharacteristic *)characteristic error:(NSError *)error {
     
-    NSLog(@"收到特征更新通知...");
+    JHLog(@"收到特征更新通知...");
     if (error) {
-        NSLog(@"更新通知状态时发生错误，错误信息：%@",error.localizedDescription);
+        JHLog(@"更新通知状态时发生错误，错误信息：%@",error.localizedDescription);
     }
     
     // 给特征值设置新的值
@@ -1106,7 +1114,7 @@ typedef enum {
     if ([characteristic.UUID isEqual:characteristicUUID]) {
         if (characteristic.isNotifying) {
             if (characteristic.properties == CBCharacteristicPropertyNotify) {
-                NSLog(@"已订阅特征通知.");
+                JHLog(@"已订阅特征通知.");
                 return;
             }else if (characteristic.properties == CBCharacteristicPropertyRead) {
                 //从外围设备读取新值,调用此方法会触发代理方法：-(void)peripheral:(CBPeripheral *)peripheral didUpdateValueForCharacteristic:(CBCharacteristic *)characteristic error:(NSError *)error
@@ -1114,7 +1122,7 @@ typedef enum {
             }
             
         }else{
-            NSLog(@"停止已停止.");
+            JHLog(@"停止已停止.");
         }
     }
 }
@@ -1126,11 +1134,11 @@ typedef enum {
 -(void)peripheral:(CBPeripheral *)peripheral didUpdateValueForCharacteristic:(CBCharacteristic *)characteristic error:(NSError *)error{
     
     if (error) {
-        NSLog(@"更新特征值时发生错误，错误信息：%@",error.localizedDescription);
+        JHLog(@"更新特征值时发生错误，错误信息：%@",error.localizedDescription);
         return;
     }
     CBUUID *notifyCharacteristicUUID=[CBUUID UUIDWithString:kStartNotifyCharacteristicUUID];
-    NSLog(@"%@", characteristic.UUID.UUIDString);
+    JHLog(@"%@", characteristic.UUID.UUIDString);
     if ([characteristic.UUID isEqual:notifyCharacteristicUUID]) {
         
         NSString *backDataString = [[NSString alloc] initWithBytes:[characteristic.value bytes] length:kDataLength encoding:NSUTF8StringEncoding];
@@ -1138,7 +1146,7 @@ typedef enum {
             //打印出characteristic的UUID和值
             //!注意，value的类型是NSData，具体开发时，会根据外设协议制定的方式去解析数据
             
-            NSLog(@"返回的数据长度->%zd，值->%@", [characteristic.value length], backDataString);
+            JHLog(@"返回的数据长度->%zd，值->%@", [characteristic.value length], backDataString);
             for (int i = 0; i < kDataLength; i++) {
                 backCode[i] = [backDataString characterAtIndex:i];
             }
@@ -1158,7 +1166,7 @@ typedef enum {
 //                return;
             }
         }else{
-            NSLog(@"未发现特征值.");
+            JHLog(@"未发现特征值.");
         }
     }
 }
@@ -1170,10 +1178,10 @@ typedef enum {
 {
     //这个方法比较好，这个是你发数据到外设的某一个特征值上面，并且响应的类型是 CBCharacteristicWriteWithResponse ，上面的官方文档也有，如果确定发送到外设了，就会给你一个回应，当然，这个也是要看外设那边的特征值UUID的属性是怎么设置的,看官方文档，人家已经说了，条件是，特征值UUID的属性：CBCharacteristicWriteWithResponse
     if (!error) {
-        NSLog(@"说明发送成功，characteristic.uuid为：%@",[characteristic.UUID UUIDString]);
+        JHLog(@"说明发送成功，characteristic.uuid为：%@",[characteristic.UUID UUIDString]);
         [self.mPeripheral readValueForCharacteristic:self.FFFAcharacteristic];
     }else{
-        NSLog(@"发送失败了啊！characteristic.uuid为：%@",[characteristic.UUID UUIDString]);
+        JHLog(@"发送失败了啊！characteristic.uuid为：%@",[characteristic.UUID UUIDString]);
     }
     
 }
@@ -1184,9 +1192,9 @@ typedef enum {
 -(void)peripheral:(CBPeripheral *)peripheral didDiscoverDescriptorsForCharacteristic:(CBCharacteristic *)characteristic error:(NSError *)error{
     
     //打印出Characteristic和他的Descriptors
-    NSLog(@"characteristic uuid:%@",characteristic.UUID);
+    JHLog(@"characteristic uuid:%@",characteristic.UUID);
     for (CBDescriptor *d in characteristic.descriptors) {
-        NSLog(@"Descriptor uuid:%@",d.UUID);
+        JHLog(@"Descriptor uuid:%@",d.UUID);
     }
     
 }
@@ -1194,7 +1202,7 @@ typedef enum {
 -(void)peripheral:(CBPeripheral *)peripheral didUpdateValueForDescriptor:(CBDescriptor *)descriptor error:(NSError *)error{
     //打印出DescriptorsUUID 和value
     //这个descriptor都是对于characteristic的描述，一般都是字符串，所以这里我们转换成字符串去解析
-    NSLog(@"characteristic uuid:%@  value:%@",[NSString stringWithFormat:@"%@",descriptor.UUID],descriptor.value);
+    JHLog(@"characteristic uuid:%@  value:%@",[NSString stringWithFormat:@"%@",descriptor.UUID],descriptor.value);
 }
 
 

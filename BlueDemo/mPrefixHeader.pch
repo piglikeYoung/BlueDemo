@@ -1,0 +1,19 @@
+//
+//  mPrefixHeader.pch
+//  BlueDemo
+//
+//  Created by piglikeyoung on 15/10/15.
+//  Copyright © 2015年 pikeYoung. All rights reserved.
+//
+
+#ifndef mPrefixHeader_pch
+#define mPrefixHeader_pch
+
+#ifdef DEBUG
+#define JHLog(...) NSLog(__VA_ARGS__)
+#else
+#define JHLog(...)
+#endif
+
+#endif
+
