@@ -114,6 +114,7 @@ typedef enum {
 @property (weak, nonatomic) IBOutlet UIImageView *momentaryIv5;
 @property (weak, nonatomic) IBOutlet UIImageView *momentaryIv6;
 
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *stackViewTopCons;
 
 //@property (weak, nonatomic) IBOutlet UISwitch *lockSwichBtn;
 
@@ -154,7 +155,25 @@ typedef enum {
     self.strobeIv4.highlighted = YES;
     self.strobeIv5.highlighted = YES;
     self.strobeIv6.highlighted = YES;
+    
+    
 }
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    CGFloat screenHeight = [[UIScreen mainScreen] bounds].size.height;
+    // 针对不同手机，修改顶部距离
+    if (screenHeight == 667) {
+        self.stackViewTopCons.constant = 58;
+    } else if (screenHeight == 736){
+        self.stackViewTopCons.constant = 64;
+    } else {
+        self.stackViewTopCons.constant = 44;
+    }
+
+}
+
 
 - (void)dealloc {
     // 停止扫描并断开连接

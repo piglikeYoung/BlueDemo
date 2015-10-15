@@ -255,6 +255,7 @@
 				TargetAttributes = {
 					7D652F471BCDE4460019BCA9 = {
 						CreatedOnToolsVersion = 7.0.1;
+						DevelopmentTeam = 23NC32JMDE;
 					};
 					7D652F601BCDE4460019BCA9 = {
 						CreatedOnToolsVersion = 7.0.1;
@@ -469,10 +470,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = BlueDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = cn.pike.BlueDemo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.id4test.yjh;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -481,10 +483,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = BlueDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = cn.pike.BlueDemo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.id4test.yjh;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -556,6 +559,7 @@
 				7D652F771BCDE4460019BCA9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		7D652F781BCDE4460019BCA9 /* Build configuration list for PBXNativeTarget "BlueDemoTests" */ = {
 			isa = XCConfigurationList;
@@ -564,6 +568,7 @@
 				7D652F7A1BCDE4460019BCA9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		7D652F7B1BCDE4460019BCA9 /* Build configuration list for PBXNativeTarget "BlueDemoUITests" */ = {
 			isa = XCConfigurationList;
@@ -572,6 +577,7 @@
 				7D652F7D1BCDE4460019BCA9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
