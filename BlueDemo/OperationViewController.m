@@ -32,7 +32,7 @@ static char startCode[] = {0x4e, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 , 0x00
 static char backCode[] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 , 0x00, 0x00, 0x00};
 
 // 开关和模式按钮发送的数据
-static char offOnAndStatusbtnSendCode[] = {0x4c, 0x00, 0x00, 0x00, 0x01, 0x01, 0x01, 0x01 , 0x01, 0x01, 0x00};
+static char offOnAndStatusbtnSendCode[] = {0x4c, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 , 0x00, 0x00, 0x00};
 
 // 锁定设备数据
 static char lockSendCode[] = {0x4d, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00 , 0x00, 0x00, 0x00};
@@ -42,6 +42,7 @@ static char unlockSendCode[] = {0x4d, 0x00, 0x02, 0x00, 0x00, 0x00, 0x00, 0x00 ,
 
 // 模式类型枚举
 typedef enum {
+    kAllClose,
     kStrobe,
     kFlash,
     kMomenyary
@@ -132,7 +133,7 @@ typedef enum {
 
 - (NSArray *)statusHex {
     if (!_statusHex) {
-        _statusHex = @[@0x01, @0x02, @0x03, @0x04];
+        _statusHex = @[@0x00, @0x01, @0x02, @0x03, @0x04];
     }
     return _statusHex;
 }
@@ -149,13 +150,6 @@ typedef enum {
     
     // 1.创建中心设备
     _manager = [[CBCentralManager alloc] initWithDelegate:self queue:nil];
-    
-    self.strobeIv1.highlighted = YES;
-    self.strobeIv2.highlighted = YES;
-    self.strobeIv3.highlighted = YES;
-    self.strobeIv4.highlighted = YES;
-    self.strobeIv5.highlighted = YES;
-    self.strobeIv6.highlighted = YES;
     
     [MBProgressHUD showMessage:@"正在扫描设备" toView:self.view];
 }
