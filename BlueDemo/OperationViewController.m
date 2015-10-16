@@ -450,7 +450,8 @@ typedef enum {
                     // 修改model按钮
                     self.modelBtn1.selected = btn.isSelected;
                     
-                    // 灯对应的模式位默认是0x01，不用修改
+                    // 恢复之前的状态
+                    offOnAndStatusbtnSendCode[4 + 0] = [self.statusHex[[self.allLabelStatus[0] integerValue]] integerValue];
                     
                 } else {
                     // 是模式三，是根据开关高亮来修改标识和Model按钮
@@ -523,7 +524,8 @@ typedef enum {
                     // 修改model按钮
                     self.modelBtn2.selected = btn.isSelected;
                     
-                    // 灯对应的模式位默认是0x01，不用修改
+                    // 恢复之前的状态
+                    offOnAndStatusbtnSendCode[4 + 1] = [self.statusHex[[self.allLabelStatus[1] integerValue]] integerValue];
                     
                 } else {
                     // 是模式三，是根据开关高亮来修改标识和Model按钮
@@ -597,7 +599,8 @@ typedef enum {
                     // 修改model按钮
                     self.modelBtn3.selected = btn.isSelected;
                     
-                    // 灯对应的模式位默认是0x01，不用修改
+                    // 恢复之前的状态
+                    offOnAndStatusbtnSendCode[4 + 2] = [self.statusHex[[self.allLabelStatus[2] integerValue]] integerValue];
                     
                 } else {
                     // 是模式三，是根据开关高亮来修改标识和Model按钮
@@ -670,7 +673,8 @@ typedef enum {
                     // 修改model按钮
                     self.modelBtn4.selected = btn.isSelected;
                     
-                    // 灯对应的模式位默认是0x01，不用修改
+                    // 恢复之前的状态
+                    offOnAndStatusbtnSendCode[4 + 3] = [self.statusHex[[self.allLabelStatus[3] integerValue]] integerValue];
                     
                 } else {
                     // 是模式三，是根据开关高亮来修改标识和Model按钮
@@ -743,7 +747,8 @@ typedef enum {
                     // 修改model按钮
                     self.modelBtn5.selected = btn.isSelected;
                     
-                    // 灯对应的模式位默认是0x01，不用修改
+                    // 恢复之前的状态
+                    offOnAndStatusbtnSendCode[4 + 4] = [self.statusHex[[self.allLabelStatus[4] integerValue]] integerValue];
                     
                 } else {
                     // 是模式三，是根据开关高亮来修改标识和Model按钮
@@ -815,7 +820,8 @@ typedef enum {
                     // 修改model按钮
                     self.modelBtn6.selected = btn.isSelected;
                     
-                    // 灯对应的模式位默认是0x01，不用修改
+                    // 恢复之前的状态
+                    offOnAndStatusbtnSendCode[4 + 5] = [self.statusHex[[self.allLabelStatus[5] integerValue]] integerValue];
                     
                 } else {
                     // 是模式三，是根据开关高亮来修改标识和Model按钮
