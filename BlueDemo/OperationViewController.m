@@ -402,207 +402,435 @@ typedef enum {
         case 1:
             // 根据是否选中，修改发送数据
             if (btn.selected) {
+                // 关灯是操作具体那个开关
                 _whickLamp -= 1;
                 offOnAndStatusbtnSendCode[3] = 1;
-            } else {
-                _whickLamp += 1;
-                offOnAndStatusbtnSendCode[3] = _whickLamp;
-            }
-            
-            
-            if ([self.allLabelStatus[0] integerValue] != kMomenyary) {
-                // 修改开关状态
-                btn.selected = !btn.selected;
                 
-                self.offFlay1.highlighted = btn.isSelected;
+                offOnAndStatusbtnSendCode[4 + 0] = [self.statusHex[kMomenyary + 1] integerValue];
                 
-                // 修改model按钮
-                self.modelBtn1.selected = btn.isSelected;
-            } else {
-                
-                // 是模式三时，修改发送数据
-                offOnAndStatusbtnSendCode[4 + 0] = [self.statusHex[kMomenyary] integerValue];
-                
-                if (!btn.highlighted) {
+                // 判断是否模式三
+                if ([self.allLabelStatus[0] integerValue] != kMomenyary) {
+                    // 不是模式三
+                    
+                    // 修改开关是否选中
                     btn.selected = !btn.selected;
+                    // 修改开关状态标识
+                    self.offFlay1.highlighted = btn.isSelected;
+                    // 修改model按钮
+                    self.modelBtn1.selected = btn.isSelected;
+                    
+                    // 灯对应的模式位默认是0x01，不用修改
+                    
+                } else {
+                    // 是模式三，是根据开关高亮来修改标识和Model按钮
+                    if (!btn.highlighted) {
+                        btn.selected = !btn.selected;
+                    }
+                    
+                    self.offFlay1.highlighted = btn.highlighted;
+                    
+                    // 修改model按钮
+                    self.modelBtn1.selected = btn.highlighted;
                 }
                 
-                self.offFlay1.highlighted = btn.highlighted;
+            } else {
+                // 开灯是把所有打开的灯的值加起来
+                _whickLamp += 1;
+                offOnAndStatusbtnSendCode[3] = _whickLamp;
                 
-                // 修改model按钮
-                self.modelBtn1.selected = btn.highlighted;
                 
+                // 判断是否模式三
+                if ([self.allLabelStatus[0] integerValue] != kMomenyary) {
+                    // 不是模式三
+                    
+                    // 修改开关是否选中
+                    btn.selected = !btn.selected;
+                    // 修改开关状态标识
+                    self.offFlay1.highlighted = btn.isSelected;
+                    // 修改model按钮
+                    self.modelBtn1.selected = btn.isSelected;
+                    
+                    // 灯对应的模式位默认是0x01，不用修改
+                    
+                } else {
+                    // 是模式三，是根据开关高亮来修改标识和Model按钮
+                    if (!btn.highlighted) {
+                        btn.selected = !btn.selected;
+                    }
+                    
+                    self.offFlay1.highlighted = btn.highlighted;
+                    
+                    // 修改model按钮
+                    self.modelBtn1.selected = btn.highlighted;
+                    
+                    // 修改发送数据
+                    offOnAndStatusbtnSendCode[4 + 0] = [self.statusHex[kMomenyary] integerValue];
+                }
             }
             
             // 发送数据
             [self writePeripheral:self.mPeripheral characteristic:self.FFFAcharacteristic value:[self convertCode:offOnAndStatusbtnSendCode]];
             break;
         case 2:
+            
+            // 根据是否选中，修改发送数据
             if (btn.selected) {
+                // 关灯是操作具体那个开关
                 _whickLamp -= 2;
                 offOnAndStatusbtnSendCode[3] = 2;
-            } else {
-                _whickLamp += 2;
-                offOnAndStatusbtnSendCode[3] = _whickLamp;
-            }
-            
-            if ([self.allLabelStatus[1] integerValue] != kMomenyary) {
-                // 修改开关状态
-                btn.selected = !btn.selected;
                 
-                self.offFlay2.highlighted = btn.isSelected;
+                offOnAndStatusbtnSendCode[4 + 1] = [self.statusHex[kMomenyary + 1] integerValue];
                 
-                // 修改model按钮
-                self.modelBtn2.selected = btn.isSelected;
-            } else {
-                
-                offOnAndStatusbtnSendCode[4 + 1] = [self.statusHex[kMomenyary] integerValue];
-                
-                if (!btn.highlighted) {
+                // 判断是否模式三
+                if ([self.allLabelStatus[1] integerValue] != kMomenyary) {
+                    // 不是模式三
+                    
+                    // 修改开关是否选中
                     btn.selected = !btn.selected;
+                    // 修改开关状态标识
+                    self.offFlay2.highlighted = btn.isSelected;
+                    // 修改model按钮
+                    self.modelBtn2.selected = btn.isSelected;
+                    
+                    // 灯对应的模式位默认是0x01，不用修改
+                    
+                } else {
+                    // 是模式三，是根据开关高亮来修改标识和Model按钮
+                    if (!btn.highlighted) {
+                        btn.selected = !btn.selected;
+                    }
+                    
+                    self.offFlay2.highlighted = btn.highlighted;
+                    
+                    // 修改model按钮
+                    self.modelBtn2.selected = btn.highlighted;
                 }
                 
-                self.offFlay2.highlighted = btn.highlighted;
+            } else {
+                // 开灯是把所有打开的灯的值加起来
+                _whickLamp += 2;
+                offOnAndStatusbtnSendCode[3] = _whickLamp;
                 
-                // 修改model按钮
-                self.modelBtn2.selected = btn.highlighted;
                 
+                // 判断是否模式三
+                if ([self.allLabelStatus[1] integerValue] != kMomenyary) {
+                    // 不是模式三
+                    
+                    // 修改开关是否选中
+                    btn.selected = !btn.selected;
+                    // 修改开关状态标识
+                    self.offFlay2.highlighted = btn.isSelected;
+                    // 修改model按钮
+                    self.modelBtn2.selected = btn.isSelected;
+                    
+                    // 灯对应的模式位默认是0x01，不用修改
+                    
+                } else {
+                    // 是模式三，是根据开关高亮来修改标识和Model按钮
+                    if (!btn.highlighted) {
+                        btn.selected = !btn.selected;
+                    }
+                    
+                    self.offFlay2.highlighted = btn.highlighted;
+                    
+                    // 修改model按钮
+                    self.modelBtn2.selected = btn.highlighted;
+                    
+                    // 修改发送数据
+                    offOnAndStatusbtnSendCode[4 + 1] = [self.statusHex[kMomenyary] integerValue];
+                }
             }
+            
             
             [self writePeripheral:self.mPeripheral characteristic:self.FFFAcharacteristic value:[self convertCode:offOnAndStatusbtnSendCode]];
             break;
         case 3:
+            
+            
+            // 根据是否选中，修改发送数据
             if (btn.selected) {
+                // 关灯是操作具体那个开关
                 _whickLamp -= 4;
                 offOnAndStatusbtnSendCode[3] = 4;
-            } else {
-                _whickLamp += 4;
-                offOnAndStatusbtnSendCode[3] = _whickLamp;
-            }
-            
-            if ([self.allLabelStatus[2] integerValue] != kMomenyary) {
-                // 修改开关状态
-                btn.selected = !btn.selected;
                 
-                self.offFlay3.highlighted = btn.isSelected;
+                offOnAndStatusbtnSendCode[4 + 2] = [self.statusHex[kMomenyary + 1] integerValue];
                 
-                // 修改model按钮
-                self.modelBtn3.selected = btn.isSelected;
-            } else {
-                
-                offOnAndStatusbtnSendCode[4 + 2] = [self.statusHex[kMomenyary] integerValue];
-                
-                if (!btn.highlighted) {
+                // 判断是否模式三
+                if ([self.allLabelStatus[2] integerValue] != kMomenyary) {
+                    // 不是模式三
+                    
+                    // 修改开关是否选中
                     btn.selected = !btn.selected;
+                    // 修改开关状态标识
+                    self.offFlay3.highlighted = btn.isSelected;
+                    // 修改model按钮
+                    self.modelBtn3.selected = btn.isSelected;
+                    
+                    // 灯对应的模式位默认是0x01，不用修改
+                    
+                } else {
+                    // 是模式三，是根据开关高亮来修改标识和Model按钮
+                    if (!btn.highlighted) {
+                        btn.selected = !btn.selected;
+                    }
+                    
+                    self.offFlay3.highlighted = btn.highlighted;
+                    
+                    // 修改model按钮
+                    self.modelBtn3.selected = btn.highlighted;
                 }
                 
-                self.offFlay3.highlighted = btn.highlighted;
+            } else {
+                // 开灯是把所有打开的灯的值加起来
+                _whickLamp += 4;
+                offOnAndStatusbtnSendCode[3] = _whickLamp;
                 
-                // 修改model按钮
-                self.modelBtn3.selected = btn.highlighted;
                 
+                // 判断是否模式三
+                if ([self.allLabelStatus[2] integerValue] != kMomenyary) {
+                    // 不是模式三
+                    
+                    // 修改开关是否选中
+                    btn.selected = !btn.selected;
+                    // 修改开关状态标识
+                    self.offFlay3.highlighted = btn.isSelected;
+                    // 修改model按钮
+                    self.modelBtn3.selected = btn.isSelected;
+                    
+                    // 灯对应的模式位默认是0x01，不用修改
+                    
+                } else {
+                    // 是模式三，是根据开关高亮来修改标识和Model按钮
+                    if (!btn.highlighted) {
+                        btn.selected = !btn.selected;
+                    }
+                    
+                    self.offFlay3.highlighted = btn.highlighted;
+                    
+                    // 修改model按钮
+                    self.modelBtn3.selected = btn.highlighted;
+                    
+                    // 修改发送数据
+                    offOnAndStatusbtnSendCode[4 + 2] = [self.statusHex[kMomenyary] integerValue];
+                }
             }
             
             [self writePeripheral:self.mPeripheral characteristic:self.FFFAcharacteristic value:[self convertCode:offOnAndStatusbtnSendCode]];
             break;
         case 4:
+            
+            
+            // 根据是否选中，修改发送数据
             if (btn.selected) {
+                // 关灯是操作具体那个开关
                 _whickLamp -= 8;
                 offOnAndStatusbtnSendCode[3] = 8;
-            } else {
-                _whickLamp += 8;
-                offOnAndStatusbtnSendCode[3] = _whickLamp;
-            }
-            
-            if ([self.allLabelStatus[3] integerValue] != kMomenyary) {
-                // 修改开关状态
-                btn.selected = !btn.selected;
                 
-                self.offFlay4.highlighted = btn.isSelected;
+                offOnAndStatusbtnSendCode[4 + 3] = [self.statusHex[kMomenyary + 1] integerValue];
                 
-                // 修改model按钮
-                self.modelBtn4.selected = btn.isSelected;
-            } else {
-                
-                offOnAndStatusbtnSendCode[4 + 3] = [self.statusHex[kMomenyary] integerValue];
-                
-                if (!btn.highlighted) {
+                // 判断是否模式三
+                if ([self.allLabelStatus[3] integerValue] != kMomenyary) {
+                    // 不是模式三
+                    
+                    // 修改开关是否选中
                     btn.selected = !btn.selected;
+                    // 修改开关状态标识
+                    self.offFlay4.highlighted = btn.isSelected;
+                    // 修改model按钮
+                    self.modelBtn4.selected = btn.isSelected;
+                    
+                    // 灯对应的模式位默认是0x01，不用修改
+                    
+                } else {
+                    // 是模式三，是根据开关高亮来修改标识和Model按钮
+                    if (!btn.highlighted) {
+                        btn.selected = !btn.selected;
+                    }
+                    
+                    self.offFlay4.highlighted = btn.highlighted;
+                    
+                    // 修改model按钮
+                    self.modelBtn4.selected = btn.highlighted;
                 }
                 
-                self.offFlay4.highlighted = btn.highlighted;
+            } else {
+                // 开灯是把所有打开的灯的值加起来
+                _whickLamp += 8;
+                offOnAndStatusbtnSendCode[3] = _whickLamp;
                 
-                // 修改model按钮
-                self.modelBtn4.selected = btn.highlighted;
                 
+                // 判断是否模式三
+                if ([self.allLabelStatus[3] integerValue] != kMomenyary) {
+                    // 不是模式三
+                    
+                    // 修改开关是否选中
+                    btn.selected = !btn.selected;
+                    // 修改开关状态标识
+                    self.offFlay4.highlighted = btn.isSelected;
+                    // 修改model按钮
+                    self.modelBtn4.selected = btn.isSelected;
+                    
+                    // 灯对应的模式位默认是0x01，不用修改
+                    
+                } else {
+                    // 是模式三，是根据开关高亮来修改标识和Model按钮
+                    if (!btn.highlighted) {
+                        btn.selected = !btn.selected;
+                    }
+                    
+                    self.offFlay4.highlighted = btn.highlighted;
+                    
+                    // 修改model按钮
+                    self.modelBtn4.selected = btn.highlighted;
+                    
+                    // 修改发送数据
+                    offOnAndStatusbtnSendCode[4 + 3] = [self.statusHex[kMomenyary] integerValue];
+                }
             }
+            
             
             [self writePeripheral:self.mPeripheral characteristic:self.FFFAcharacteristic value:[self convertCode:offOnAndStatusbtnSendCode]];
             break;
         case 5:
+            
+            // 根据是否选中，修改发送数据
             if (btn.selected) {
+                // 关灯是操作具体那个开关
                 _whickLamp -= 16;
                 offOnAndStatusbtnSendCode[3] = 16;
-            } else {
-                _whickLamp += 16;
-                offOnAndStatusbtnSendCode[3] = _whickLamp;
-            }
-            
-            if ([self.allLabelStatus[4] integerValue] != kMomenyary) {
-                // 修改开关状态
-                btn.selected = !btn.selected;
                 
-                self.offFlay5.highlighted = btn.isSelected;
+                offOnAndStatusbtnSendCode[4 + 4] = [self.statusHex[kMomenyary + 1] integerValue];
                 
-                // 修改model按钮
-                self.modelBtn5.selected = btn.isSelected;
-            } else {
-                
-                offOnAndStatusbtnSendCode[4 + 4] = [self.statusHex[kMomenyary] integerValue];
-                
-                if (!btn.highlighted) {
+                // 判断是否模式三
+                if ([self.allLabelStatus[4] integerValue] != kMomenyary) {
+                    // 不是模式三
+                    
+                    // 修改开关是否选中
                     btn.selected = !btn.selected;
+                    // 修改开关状态标识
+                    self.offFlay5.highlighted = btn.isSelected;
+                    // 修改model按钮
+                    self.modelBtn5.selected = btn.isSelected;
+                    
+                    // 灯对应的模式位默认是0x01，不用修改
+                    
+                } else {
+                    // 是模式三，是根据开关高亮来修改标识和Model按钮
+                    if (!btn.highlighted) {
+                        btn.selected = !btn.selected;
+                    }
+                    
+                    self.offFlay5.highlighted = btn.highlighted;
+                    
+                    // 修改model按钮
+                    self.modelBtn5.selected = btn.highlighted;
                 }
                 
-                self.offFlay5.highlighted = btn.highlighted;
+            } else {
+                // 开灯是把所有打开的灯的值加起来
+                _whickLamp += 16;
+                offOnAndStatusbtnSendCode[3] = _whickLamp;
                 
-                // 修改model按钮
-                self.modelBtn5.selected = btn.highlighted;
                 
+                // 判断是否模式三
+                if ([self.allLabelStatus[4] integerValue] != kMomenyary) {
+                    // 不是模式三
+                    
+                    // 修改开关是否选中
+                    btn.selected = !btn.selected;
+                    // 修改开关状态标识
+                    self.offFlay5.highlighted = btn.isSelected;
+                    // 修改model按钮
+                    self.modelBtn5.selected = btn.isSelected;
+                    
+                    // 灯对应的模式位默认是0x01，不用修改
+                    
+                } else {
+                    // 是模式三，是根据开关高亮来修改标识和Model按钮
+                    if (!btn.highlighted) {
+                        btn.selected = !btn.selected;
+                    }
+                    
+                    self.offFlay5.highlighted = btn.highlighted;
+                    
+                    // 修改model按钮
+                    self.modelBtn5.selected = btn.highlighted;
+                    
+                    // 修改发送数据
+                    offOnAndStatusbtnSendCode[4 + 4] = [self.statusHex[kMomenyary] integerValue];
+                }
             }
             
             [self writePeripheral:self.mPeripheral characteristic:self.FFFAcharacteristic value:[self convertCode:offOnAndStatusbtnSendCode]];
             break;
         case 6:
+            
+            // 根据是否选中，修改发送数据
             if (btn.selected) {
+                // 关灯是操作具体那个开关
                 _whickLamp -= 32;
                 offOnAndStatusbtnSendCode[3] = 32;
-            } else {
-                _whickLamp += 32;
-                offOnAndStatusbtnSendCode[3] = _whickLamp;
-            }
-            
-            if ([self.allLabelStatus[5] integerValue] != kMomenyary) {
-                // 修改开关状态
-                btn.selected = !btn.selected;
                 
-                self.offFlay6.highlighted = btn.isSelected;
+                offOnAndStatusbtnSendCode[4 + 5] = [self.statusHex[kMomenyary + 1] integerValue];
                 
-                // 修改model按钮
-                self.modelBtn6.selected = btn.isSelected;
-            } else {
-                
-                offOnAndStatusbtnSendCode[4 + 5] = [self.statusHex[kMomenyary] integerValue];
-                
-                if (!btn.highlighted) {
+                // 判断是否模式三
+                if ([self.allLabelStatus[5] integerValue] != kMomenyary) {
+                    // 不是模式三
+                    
+                    // 修改开关是否选中
                     btn.selected = !btn.selected;
+                    // 修改开关状态标识
+                    self.offFlay6.highlighted = btn.isSelected;
+                    // 修改model按钮
+                    self.modelBtn6.selected = btn.isSelected;
+                    
+                    // 灯对应的模式位默认是0x01，不用修改
+                    
+                } else {
+                    // 是模式三，是根据开关高亮来修改标识和Model按钮
+                    if (!btn.highlighted) {
+                        btn.selected = !btn.selected;
+                    }
+                    
+                    self.offFlay6.highlighted = btn.highlighted;
+                    
+                    // 修改model按钮
+                    self.modelBtn6.selected = btn.highlighted;
                 }
                 
-                self.offFlay6.highlighted = btn.highlighted;
+            } else {
+                // 开灯是把所有打开的灯的值加起来
+                _whickLamp += 32;
+                offOnAndStatusbtnSendCode[3] = _whickLamp;
                 
-                // 修改model按钮
-                self.modelBtn6.selected = btn.highlighted;
                 
+                // 判断是否模式三
+                if ([self.allLabelStatus[5] integerValue] != kMomenyary) {
+                    // 不是模式三
+                    
+                    // 修改开关是否选中
+                    btn.selected = !btn.selected;
+                    // 修改开关状态标识
+                    self.offFlay6.highlighted = btn.isSelected;
+                    // 修改model按钮
+                    self.modelBtn6.selected = btn.isSelected;
+                    
+                    // 灯对应的模式位默认是0x01，不用修改
+                    
+                } else {
+                    // 是模式三，是根据开关高亮来修改标识和Model按钮
+                    if (!btn.highlighted) {
+                        btn.selected = !btn.selected;
+                    }
+                    
+                    self.offFlay6.highlighted = btn.highlighted;
+                    
+                    // 修改model按钮
+                    self.modelBtn6.selected = btn.highlighted;
+                    
+                    // 修改发送数据
+                    offOnAndStatusbtnSendCode[4 + 5] = [self.statusHex[kMomenyary] integerValue];
+                }
             }
             
             [self writePeripheral:self.mPeripheral characteristic:self.FFFAcharacteristic value:[self convertCode:offOnAndStatusbtnSendCode]];
@@ -619,13 +847,8 @@ typedef enum {
             
             // 改变模式，修改发送的数据
             [self changeStatusWithArrayIndex:0 Num:[self.allLabelStatus[0] integerValue]];
-            
-            // 如果是模式4关闭
-//            if ([self.allLabelStatus[0] integerValue] == kMomenyary + 1) {
-//                self.modelBtn1.selected = NO;
-//            } else {
-//                self.modelBtn1.selected = YES;
-//            }
+            // 修改模式的开关位
+            offOnAndStatusbtnSendCode[3] = 1;
             
             // 改变模式图片
             // 全不高亮
@@ -649,23 +872,23 @@ typedef enum {
             
             // 当开关开着才发送数据
             if (self.onOffBtn1.isSelected) {
-                [self writePeripheral:self.mPeripheral characteristic:self.FFFAcharacteristic value:[self convertCode:offOnAndStatusbtnSendCode]];
+                
+                // 是模式3，立刻关闭灯开关
+                if ([self.allLabelStatus[0] integerValue] == kMomenyary) {
+                    [self onOffBtnTouchDown:self.onOffBtn1];
+                } else {
+                    // 其他模式正常发送数据
+                    [self writePeripheral:self.mPeripheral characteristic:self.FFFAcharacteristic value:[self convertCode:offOnAndStatusbtnSendCode]];
+                }
             }
-            // 当开关开着，并且按钮是模式3，立刻关闭按钮
-            if (self.onOffBtn1.isSelected && [self.allLabelStatus[0] integerValue] == kMomenyary) {
-                [self onOffBtnTouchDown:self.onOffBtn1];
-            }
+            
             break;
         case 2:
             
             [self changeStatusWithArrayIndex:1 Num:[self.allLabelStatus[1] integerValue]];
 
-            // 如果是模式4关闭
-//            if ([self.allLabelStatus[1] integerValue] == kMomenyary + 1) {
-//                self.modelBtn2.selected = NO;
-//            } else {
-//                self.modelBtn2.selected = YES;
-//            }
+            // 修改模式的开关位
+            offOnAndStatusbtnSendCode[3] = 2;
             
             // 改变模式图片
             // 全不高亮
@@ -687,23 +910,26 @@ typedef enum {
                     break;
             }
             
-            if (self.onOffBtn2.selected) {
-                [self writePeripheral:self.mPeripheral characteristic:self.FFFAcharacteristic value:[self convertCode:offOnAndStatusbtnSendCode]];
+            
+            // 当开关开着才发送数据
+            if (self.onOffBtn2.isSelected) {
+                
+                // 是模式3，立刻关闭灯开关
+                if ([self.allLabelStatus[1] integerValue] == kMomenyary) {
+                    [self onOffBtnTouchDown:self.onOffBtn2];
+                } else {
+                    // 其他模式正常发送数据
+                    [self writePeripheral:self.mPeripheral characteristic:self.FFFAcharacteristic value:[self convertCode:offOnAndStatusbtnSendCode]];
+                }
             }
-            if (self.onOffBtn2.selected && [self.allLabelStatus[1] integerValue] == kMomenyary) {
-                [self onOffBtnTouchDown:self.onOffBtn2];
-            }
+            
             break;
         case 3:
             
             [self changeStatusWithArrayIndex:2 Num:[self.allLabelStatus[2] integerValue]];
 
-            // 如果是模式4关闭
-//            if ([self.allLabelStatus[2] integerValue] == kMomenyary + 1) {
-//                self.modelBtn3.selected = NO;
-//            } else {
-//                self.modelBtn3.selected = YES;
-//            }
+            // 修改模式的开关位
+            offOnAndStatusbtnSendCode[3] = 4;
             
             // 改变模式图片
             // 全不高亮
@@ -725,24 +951,26 @@ typedef enum {
                     break;
             }
             
+            // 当开关开着才发送数据
             if (self.onOffBtn3.isSelected) {
-                [self writePeripheral:self.mPeripheral characteristic:self.FFFAcharacteristic value:[self convertCode:offOnAndStatusbtnSendCode]];
+                
+                // 是模式3，立刻关闭灯开关
+                if ([self.allLabelStatus[2] integerValue] == kMomenyary) {
+                    [self onOffBtnTouchDown:self.onOffBtn3];
+                } else {
+                    // 其他模式正常发送数据
+                    [self writePeripheral:self.mPeripheral characteristic:self.FFFAcharacteristic value:[self convertCode:offOnAndStatusbtnSendCode]];
+                }
             }
-            if (self.onOffBtn3.isSelected && [self.allLabelStatus[2] integerValue] == kMomenyary) {
-                [self onOffBtnTouchDown:self.onOffBtn3];
-            }
+            
             break;
         case 4:
             
             
             [self changeStatusWithArrayIndex:3 Num:[self.allLabelStatus[3] integerValue]];
 
-            // 如果是模式4关闭
-//            if ([self.allLabelStatus[3] integerValue] == kMomenyary + 1) {
-//                self.modelBtn4.selected = NO;
-//            } else {
-//                self.modelBtn4.selected = YES;
-//            }
+            // 修改模式的开关位
+            offOnAndStatusbtnSendCode[3] = 8;
             
             // 改变模式图片
             // 全不高亮
@@ -764,22 +992,24 @@ typedef enum {
                     break;
             }
             
+            // 当开关开着才发送数据
             if (self.onOffBtn4.isSelected) {
-                [self writePeripheral:self.mPeripheral characteristic:self.FFFAcharacteristic value:[self convertCode:offOnAndStatusbtnSendCode]];
+                
+                // 是模式3，立刻关闭灯开关
+                if ([self.allLabelStatus[3] integerValue] == kMomenyary) {
+                    [self onOffBtnTouchDown:self.onOffBtn4];
+                } else {
+                    // 其他模式正常发送数据
+                    [self writePeripheral:self.mPeripheral characteristic:self.FFFAcharacteristic value:[self convertCode:offOnAndStatusbtnSendCode]];
+                }
             }
-            if (self.onOffBtn4.isSelected && [self.allLabelStatus[3] integerValue] == kMomenyary) {
-                [self onOffBtnTouchDown:self.onOffBtn4];
-            }
+            
             break;
         case 5:
             [self changeStatusWithArrayIndex:4 Num:[self.allLabelStatus[4] integerValue]];
 
-            // 如果是模式4关闭
-//            if ([self.allLabelStatus[4] integerValue] == kMomenyary + 1) {
-//                self.modelBtn5.selected = NO;
-//            } else {
-//                self.modelBtn5.selected = YES;
-//            }
+            // 修改模式的开关位
+            offOnAndStatusbtnSendCode[3] = 16;
             
             // 改变模式图片
             // 全不高亮
@@ -801,22 +1031,24 @@ typedef enum {
                     break;
             }
             
-            if (self.onOffBtn5.selected) {
-                [self writePeripheral:self.mPeripheral characteristic:self.FFFAcharacteristic value:[self convertCode:offOnAndStatusbtnSendCode]];
+            // 当开关开着才发送数据
+            if (self.onOffBtn5.isSelected) {
+                
+                // 是模式3，立刻关闭灯开关
+                if ([self.allLabelStatus[4] integerValue] == kMomenyary) {
+                    [self onOffBtnTouchDown:self.onOffBtn5];
+                } else {
+                    // 其他模式正常发送数据
+                    [self writePeripheral:self.mPeripheral characteristic:self.FFFAcharacteristic value:[self convertCode:offOnAndStatusbtnSendCode]];
+                }
             }
-            if (self.onOffBtn5.selected && [self.allLabelStatus[4] integerValue] == kMomenyary ) {
-                [self onOffBtnTouchDown:self.onOffBtn5];
-            }
+            
             break;
         case 6:
             [self changeStatusWithArrayIndex:5 Num:[self.allLabelStatus[5] integerValue]];
 
-            // 如果是模式4关闭
-//            if ([self.allLabelStatus[5] integerValue] == kMomenyary + 1) {
-//                self.modelBtn6.selected = NO;
-//            } else {
-//                self.modelBtn6.selected = YES;
-//            }
+            // 修改模式的开关位
+            offOnAndStatusbtnSendCode[3] = 32;
             
             // 改变模式图片
             // 全不高亮
@@ -838,12 +1070,18 @@ typedef enum {
                     break;
             }
             
+            // 当开关开着才发送数据
             if (self.onOffBtn6.isSelected) {
-                [self writePeripheral:self.mPeripheral characteristic:self.FFFAcharacteristic value:[self convertCode:offOnAndStatusbtnSendCode]];
+                
+                // 是模式3，立刻关闭灯开关
+                if ([self.allLabelStatus[5] integerValue] == kMomenyary) {
+                    [self onOffBtnTouchDown:self.onOffBtn6];
+                } else {
+                    // 其他模式正常发送数据
+                    [self writePeripheral:self.mPeripheral characteristic:self.FFFAcharacteristic value:[self convertCode:offOnAndStatusbtnSendCode]];
+                }
             }
-            if (self.onOffBtn6.isSelected && [self.allLabelStatus[5] integerValue] == kMomenyary) {
-                [self onOffBtnTouchDown:self.onOffBtn6];
-            }
+            
             break;
         default:
             break;
@@ -863,10 +1101,11 @@ typedef enum {
 }
 
 #pragma mark - 私有方法
-
 /**
  *  改变模式，修改发送的数据
  *
+ *  @param index 索引
+ *  @param num   修改前的状态
  */
 - (void)changeStatusWithArrayIndex:(NSInteger)index Num:(NSInteger)num {
     
