@@ -1111,7 +1111,7 @@ typedef enum {
     
     num += 1;
     
-    // 大于等于3重置
+    // 大于等于4重置
     if (num >= self.statusHex.count - 1) {
         num = 0;
     }

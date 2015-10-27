@@ -7,9 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		7D0F24DF1BCF3C9D001C9A06 /* MBProgressHUD+MJ.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D0F24DB1BCF3C9D001C9A06 /* MBProgressHUD+MJ.m */; settings = {ASSET_TAGS = (); }; };
-		7D0F24E01BCF3C9D001C9A06 /* MBProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 7D0F24DC1BCF3C9D001C9A06 /* MBProgressHUD.bundle */; settings = {ASSET_TAGS = (); }; };
-		7D0F24E11BCF3C9D001C9A06 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D0F24DE1BCF3C9D001C9A06 /* MBProgressHUD.m */; settings = {ASSET_TAGS = (); }; };
+		7D0F24DF1BCF3C9D001C9A06 /* MBProgressHUD+MJ.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D0F24DB1BCF3C9D001C9A06 /* MBProgressHUD+MJ.m */; };
+		7D0F24E01BCF3C9D001C9A06 /* MBProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 7D0F24DC1BCF3C9D001C9A06 /* MBProgressHUD.bundle */; };
+		7D0F24E11BCF3C9D001C9A06 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D0F24DE1BCF3C9D001C9A06 /* MBProgressHUD.m */; };
 		7D652F4D1BCDE4460019BCA9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D652F4C1BCDE4460019BCA9 /* main.m */; };
 		7D652F501BCDE4460019BCA9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D652F4F1BCDE4460019BCA9 /* AppDelegate.m */; };
 		7D652F561BCDE4460019BCA9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7D652F541BCDE4460019BCA9 /* Main.storyboard */; };
@@ -17,15 +17,15 @@
 		7D652F5B1BCDE4460019BCA9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7D652F591BCDE4460019BCA9 /* LaunchScreen.storyboard */; };
 		7D652F661BCDE4460019BCA9 /* BlueDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D652F651BCDE4460019BCA9 /* BlueDemoTests.m */; };
 		7D652F711BCDE4460019BCA9 /* BlueDemoUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D652F701BCDE4460019BCA9 /* BlueDemoUITests.m */; };
-		7D652F801BCDE4C00019BCA9 /* OperationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D652F7F1BCDE4C00019BCA9 /* OperationViewController.m */; settings = {ASSET_TAGS = (); }; };
-		7D652F921BCDE5880019BCA9 /* FDGapLayoutGuide.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D652F831BCDE5870019BCA9 /* FDGapLayoutGuide.m */; settings = {ASSET_TAGS = (); }; };
-		7D652F931BCDE5880019BCA9 /* FDLayoutSpacer.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D652F851BCDE5870019BCA9 /* FDLayoutSpacer.m */; settings = {ASSET_TAGS = (); }; };
-		7D652F941BCDE5880019BCA9 /* FDStackView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D652F871BCDE5870019BCA9 /* FDStackView.m */; settings = {ASSET_TAGS = (); }; };
-		7D652F951BCDE5880019BCA9 /* FDStackViewAlignmentLayoutArrangement.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D652F891BCDE5870019BCA9 /* FDStackViewAlignmentLayoutArrangement.m */; settings = {ASSET_TAGS = (); }; };
-		7D652F961BCDE5880019BCA9 /* FDStackViewDistributionLayoutArrangement.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D652F8B1BCDE5870019BCA9 /* FDStackViewDistributionLayoutArrangement.m */; settings = {ASSET_TAGS = (); }; };
-		7D652F971BCDE5880019BCA9 /* FDStackViewExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D652F8D1BCDE5870019BCA9 /* FDStackViewExtensions.m */; settings = {ASSET_TAGS = (); }; };
-		7D652F981BCDE5880019BCA9 /* FDStackViewLayoutArrangement.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D652F8F1BCDE5870019BCA9 /* FDStackViewLayoutArrangement.m */; settings = {ASSET_TAGS = (); }; };
-		7D652F991BCDE5880019BCA9 /* FDTransformLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D652F911BCDE5880019BCA9 /* FDTransformLayer.m */; settings = {ASSET_TAGS = (); }; };
+		7D652F801BCDE4C00019BCA9 /* OperationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D652F7F1BCDE4C00019BCA9 /* OperationViewController.m */; };
+		7D652F921BCDE5880019BCA9 /* FDGapLayoutGuide.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D652F831BCDE5870019BCA9 /* FDGapLayoutGuide.m */; };
+		7D652F931BCDE5880019BCA9 /* FDLayoutSpacer.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D652F851BCDE5870019BCA9 /* FDLayoutSpacer.m */; };
+		7D652F941BCDE5880019BCA9 /* FDStackView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D652F871BCDE5870019BCA9 /* FDStackView.m */; };
+		7D652F951BCDE5880019BCA9 /* FDStackViewAlignmentLayoutArrangement.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D652F891BCDE5870019BCA9 /* FDStackViewAlignmentLayoutArrangement.m */; };
+		7D652F961BCDE5880019BCA9 /* FDStackViewDistributionLayoutArrangement.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D652F8B1BCDE5870019BCA9 /* FDStackViewDistributionLayoutArrangement.m */; };
+		7D652F971BCDE5880019BCA9 /* FDStackViewExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D652F8D1BCDE5870019BCA9 /* FDStackViewExtensions.m */; };
+		7D652F981BCDE5880019BCA9 /* FDStackViewLayoutArrangement.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D652F8F1BCDE5870019BCA9 /* FDStackViewLayoutArrangement.m */; };
+		7D652F991BCDE5880019BCA9 /* FDTransformLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D652F911BCDE5880019BCA9 /* FDTransformLayer.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
