@@ -7,11 +7,6 @@
 //
 
 #import "SwitchViewController.h"
-#import "MBProgressHUD+MJ.h"
-#import <CoreBluetooth/CoreBluetooth.h>
-
-// 蓝牙外设名称
-static NSString *const deviceName = @"XIANGXI-CSL-5233";
 
 // 需要MacAddress的长度
 static const NSInteger kMacAddressLength = 6;
@@ -52,19 +47,13 @@ typedef enum {
 // 模式三索引
 //static const NSInteger kMomenyary = 2;
 
-@interface SwitchViewController ()<CBCentralManagerDelegate, CBPeripheralDelegate>
-
-// 系统蓝牙设备管理对象，可以把他理解为主设备，通过他，可以去扫描和链接外设
-@property (nonatomic, strong) CBCentralManager *manager;
-// 蓝牙设备
-@property (nonatomic, strong) CBPeripheral *mPeripheral;
+@interface SwitchViewController ()<CBPeripheralDelegate>
 
 // 特征对象
 @property (nonatomic, strong) CBCharacteristic *FFFAcharacteristic;
 @property (nonatomic, strong) CBCharacteristic *FFFBcharacteristic;
 
-// 保存扫描到的蓝牙设备
-@property (nonatomic, strong) NSMutableArray *mPeripheralList;
+
 
 // 记录哪盏灯亮着（控制的是全部灯 则该字节为 1+2+4+8+16+32；控制第一个灯	则该字节为1）
 @property (nonatomic, assign) NSInteger whickLamp;
@@ -125,12 +114,7 @@ typedef enum {
 
 @implementation SwitchViewController
 
-- (NSMutableArray *)mPeripheralList {
-    if (!_mPeripheralList) {
-        _mPeripheralList = [NSMutableArray array];
-    }
-    return _mPeripheralList;
-}
+
 
 - (NSArray *)statusHex {
     if (!_statusHex) {
@@ -149,15 +133,9 @@ typedef enum {
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    // 1.创建中心设备
-    _manager = [[CBCentralManager alloc] initWithDelegate:self queue:nil];
     
-    [MBProgressHUD showMessage:@"正在扫描设备" toView:self.view];
 }
 
-- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-    [MBProgressHUD hideHUDForView:self.view];
-}
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
@@ -175,21 +153,22 @@ typedef enum {
 }
 
 
+- (void)setMPeripheral:(CBPeripheral *)mPeripheral {
+    _mPeripheral = mPeripheral;
+    // 设置代理
+    _mPeripheral.delegate = self;
+    // 扫描服务
+    [_mPeripheral discoverServices:nil];
+}
+
+
+
 - (void)dealloc {
-    // 停止扫描并断开连接
-    [self disconnectPeripheral:_manager peripheral:_mPeripheral];
-    
-    if (self.mPeripheralList.count > 0) {
-        [self.mPeripheralList removeAllObjects];
-    }
-    
     if (self.mPeripheral) {
         self.mPeripheral = nil;
     }
     
-    if (self.manager) {
-        self.manager = nil;
-    }
+    NSLog(@"SwitchViewController销毁");
 }
 
 #pragma mark 横屏设置
@@ -258,16 +237,10 @@ typedef enum {
     [peripheral setNotifyValue:NO forCharacteristic:characteristic];
 }
 
-// 停止扫描并断开连接
--(void)disconnectPeripheral:(CBCentralManager *)centralManager
-                 peripheral:(CBPeripheral *)peripheral{
-    //停止扫描
-    [centralManager stopScan];
-    //断开连接
-    [centralManager cancelPeripheralConnection:peripheral];
+- (IBAction)backClick:(id)sender {
     
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
-
 
 
 #pragma mark - 按钮点击处理
@@ -1193,109 +1166,7 @@ typedef enum {
 }
 
 
-#pragma mark - CBCentralManagerDelegate
-/*
- 主设备状态改变的委托，在初始化CBCentralManager的适合会打开设备，只有当设备正确打开后才能使用
- */
--(void)centralManagerDidUpdateState:(CBCentralManager *)central{
-    
-    switch (central.state) {
-        case CBCentralManagerStateUnknown:
-            NSLog(@">>>CBCentralManagerStateUnknown");
-            break;
-        case CBCentralManagerStateResetting:
-            NSLog(@">>>CBCentralManagerStateResetting");
-            break;
-        case CBCentralManagerStateUnsupported:
-            NSLog(@">>>CBCentralManagerStateUnsupported");
-            break;
-        case CBCentralManagerStateUnauthorized:
-            NSLog(@">>>CBCentralManagerStateUnauthorized");
-            break;
-        case CBCentralManagerStatePoweredOff:
-            NSLog(@">>>CBCentralManagerStatePoweredOff");
-            break;
-        case CBCentralManagerStatePoweredOn:
-            NSLog(@">>>CBCentralManagerStatePoweredOn");
-            //开始扫描周围的外设
-            /*
-             第一个参数nil就是扫描周围所有的外设，扫描到外设后会进入
-             - (void)centralManager:(CBCentralManager *)central didDiscoverPeripheral:(CBPeripheral *)peripheral advertisementData:(NSDictionary *)advertisementData RSSI:(NSNumber *)RSSI;
-             */
-            [self.manager scanForPeripheralsWithServices:nil options:nil];
-            
-            break;
-        default:
-            break;
-    }
-    
-}
 
-// 扫描到设备会进入方法
--(void)centralManager:(CBCentralManager *)central didDiscoverPeripheral:(CBPeripheral *)peripheral advertisementData:(NSDictionary *)advertisementData RSSI:(NSNumber *)RSSI{
-    
-    NSLog(@"扫描到设备:%@",peripheral);
-    NSLog(@"信号强度:%@",RSSI);
-    
-    // 添加到数组
-    if (![self.mPeripheralList containsObject:peripheral]) {
-        [self.mPeripheralList addObject:peripheral];
-    }
-    
-    // 判断如果名称相同，就连接设备
-    if ([peripheral.name isEqualToString:deviceName]) {
-        [self.manager connectPeripheral:peripheral options:nil];
-    }
-}
-
-
-/*
- 连接到Peripherals失败
- */
--(void)centralManager:(CBCentralManager *)central didFailToConnectPeripheral:(CBPeripheral *)peripheral error:(NSError *)error {
-    NSLog(@">>>连接到名称为（%@）的设备-失败,原因:%@",[peripheral name],[error localizedDescription]);
-}
-
-/*
- Peripherals断开连接
- */
-- (void)centralManager:(CBCentralManager *)central didDisconnectPeripheral:(CBPeripheral *)peripheral error:(NSError *)error{
-    NSLog(@">>>外设连接断开连接 %@: %@\n", [peripheral name], [error localizedDescription]);
-    
-    if (self.mPeripheralList.count > 0) {
-        [self.mPeripheralList removeAllObjects];
-    }
-    
-    if (self.mPeripheral) {
-        self.mPeripheral = nil;
-    }
-    
-    // 重新扫描
-    if (!self.manager.isScanning) {
-        [self.manager scanForPeripheralsWithServices:nil options:nil];
-    }
-    
-    
-}
-/*
- 连接到Peripherals-成功
- */
-- (void)centralManager:(CBCentralManager *)central didConnectPeripheral:(CBPeripheral *)peripheral {
-    NSLog(@">>>连接到名称为（%@）的设备-成功",peripheral.name);
-    
-    [MBProgressHUD hideHUDForView:self.view];
-    [MBProgressHUD showSuccess:[NSString stringWithFormat:@"连接到名称为（%@）的设备-成功",deviceName] toView:self.view];
-    
-    // 停止扫描
-    [self.manager stopScan];
-    
-    // 强引用设备，不让它释放
-    self.mPeripheral = peripheral;
-    // 设置代理
-    self.mPeripheral.delegate = self;
-    // 扫描俯卧
-    [self.mPeripheral discoverServices:nil];
-}
 
 #pragma mark - CBPeripheralDelegate
 /*

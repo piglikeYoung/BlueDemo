@@ -7,8 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import <CoreBluetooth/CoreBluetooth.h>
 
 @interface SwitchViewController : UIViewController
+
+// Switch蓝牙设备
+@property (nonatomic, strong) CBPeripheral *mPeripheral;
 
 @end
