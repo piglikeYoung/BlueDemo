@@ -1,13 +1,14 @@
 //
-//  OperationViewController.m
+//  SwitchViewController.m
 //  BleDemo
 //
 //  Created by piglikeyoung on 15/10/11.
 //  Copyright © 2015年 liuyanwei. All rights reserved.
 //
 
-#import "OperationViewController.h"
+#import "SwitchViewController.h"
 #import "MBProgressHUD+MJ.h"
+#import <CoreBluetooth/CoreBluetooth.h>
 
 // 蓝牙外设名称
 static NSString *const deviceName = @"XIANGXI-CSL-5233";
@@ -51,7 +52,7 @@ typedef enum {
 // 模式三索引
 //static const NSInteger kMomenyary = 2;
 
-@interface OperationViewController ()<CBCentralManagerDelegate, CBPeripheralDelegate>
+@interface SwitchViewController ()<CBCentralManagerDelegate, CBPeripheralDelegate>
 
 // 系统蓝牙设备管理对象，可以把他理解为主设备，通过他，可以去扫描和链接外设
 @property (nonatomic, strong) CBCentralManager *manager;
@@ -122,7 +123,7 @@ typedef enum {
 
 @end
 
-@implementation OperationViewController
+@implementation SwitchViewController
 
 - (NSMutableArray *)mPeripheralList {
     if (!_mPeripheralList) {

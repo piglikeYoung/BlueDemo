@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9059" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9059" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="B9o-3G-jOv">
     <dependencies>
         <deployment version="2304" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
@@ -8,10 +8,137 @@
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
     <scenes>
-        <!--Operation View Controller-->
+        <!--Connection View Controller-->
+        <scene sceneID="mDA-SI-OrD">
+            <objects>
+                <viewController id="B9o-3G-jOv" customClass="ConnectionViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="8QI-hp-sJ7"/>
+                        <viewControllerLayoutGuide type="bottom" id="Cdr-uq-5uT"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="s1T-6F-0f8">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="avT-Lc-tZ5">
+                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <animations/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="100" id="CdU-4t-jno"/>
+                                    <constraint firstAttribute="height" constant="100" id="Ch0-Lt-dAk"/>
+                                </constraints>
+                                <state key="normal" title="圆盘"/>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="CdU-4t-jno"/>
+                                        <exclude reference="Ch0-Lt-dAk"/>
+                                    </mask>
+                                </variation>
+                                <variation key="heightClass=compact-widthClass=compact">
+                                    <mask key="constraints">
+                                        <include reference="CdU-4t-jno"/>
+                                        <include reference="Ch0-Lt-dAk"/>
+                                    </mask>
+                                </variation>
+                                <variation key="heightClass=compact-widthClass=regular">
+                                    <mask key="constraints">
+                                        <include reference="CdU-4t-jno"/>
+                                        <include reference="Ch0-Lt-dAk"/>
+                                    </mask>
+                                </variation>
+                                <connections>
+                                    <segue destination="T6i-m9-jI6" kind="presentation" id="tix-m5-ckc"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CX7-vG-eBI">
+                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <animations/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="100" id="MKA-tf-kk6"/>
+                                    <constraint firstAttribute="width" constant="100" id="sWL-ge-KtN"/>
+                                </constraints>
+                                <state key="normal" title="开关"/>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="MKA-tf-kk6"/>
+                                        <exclude reference="sWL-ge-KtN"/>
+                                    </mask>
+                                </variation>
+                                <variation key="heightClass=compact-widthClass=compact">
+                                    <mask key="constraints">
+                                        <include reference="MKA-tf-kk6"/>
+                                        <include reference="sWL-ge-KtN"/>
+                                    </mask>
+                                </variation>
+                                <variation key="heightClass=compact-widthClass=regular">
+                                    <mask key="constraints">
+                                        <include reference="MKA-tf-kk6"/>
+                                        <include reference="sWL-ge-KtN"/>
+                                    </mask>
+                                </variation>
+                                <connections>
+                                    <segue destination="BYZ-38-t0r" kind="presentation" id="g01-er-JVc"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="CX7-vG-eBI" firstAttribute="centerY" secondItem="s1T-6F-0f8" secondAttribute="centerY" id="9tQ-ar-ABI"/>
+                            <constraint firstItem="CX7-vG-eBI" firstAttribute="centerX" secondItem="s1T-6F-0f8" secondAttribute="centerX" multiplier="1.5" id="S9x-mp-Ww2"/>
+                            <constraint firstItem="avT-Lc-tZ5" firstAttribute="centerY" secondItem="s1T-6F-0f8" secondAttribute="centerY" id="fJm-EL-Uco"/>
+                            <constraint firstItem="avT-Lc-tZ5" firstAttribute="centerX" secondItem="s1T-6F-0f8" secondAttribute="centerX" multiplier="1/2" constant="1" id="zIO-8G-L32"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="subviews">
+                                <exclude reference="avT-Lc-tZ5"/>
+                                <exclude reference="CX7-vG-eBI"/>
+                            </mask>
+                            <mask key="constraints">
+                                <exclude reference="9tQ-ar-ABI"/>
+                                <exclude reference="S9x-mp-Ww2"/>
+                                <exclude reference="fJm-EL-Uco"/>
+                                <exclude reference="zIO-8G-L32"/>
+                            </mask>
+                        </variation>
+                        <variation key="heightClass=compact">
+                            <mask key="subviews">
+                                <include reference="avT-Lc-tZ5"/>
+                                <include reference="CX7-vG-eBI"/>
+                            </mask>
+                        </variation>
+                        <variation key="heightClass=compact-widthClass=compact">
+                            <mask key="constraints">
+                                <include reference="9tQ-ar-ABI"/>
+                                <include reference="S9x-mp-Ww2"/>
+                                <include reference="fJm-EL-Uco"/>
+                                <include reference="zIO-8G-L32"/>
+                            </mask>
+                        </variation>
+                        <variation key="heightClass=compact-widthClass=regular">
+                            <mask key="subviews">
+                                <include reference="avT-Lc-tZ5"/>
+                                <include reference="CX7-vG-eBI"/>
+                            </mask>
+                            <mask key="constraints">
+                                <include reference="9tQ-ar-ABI"/>
+                                <include reference="S9x-mp-Ww2"/>
+                                <include reference="fJm-EL-Uco"/>
+                                <include reference="zIO-8G-L32"/>
+                            </mask>
+                        </variation>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="F4n-MP-wGi" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-486.75" y="307.5"/>
+        </scene>
+        <!--Switch View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="OperationViewController" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="SwitchViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -1255,7 +1382,26 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="174" y="307.5"/>
+            <point key="canvasLocation" x="421.5" y="7.5"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="GMx-9E-giY">
+            <objects>
+                <viewController id="T6i-m9-jI6" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="j6r-GZ-hsP"/>
+                        <viewControllerLayoutGuide type="bottom" id="0SO-M7-oks"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="DAd-MB-Eub">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="qqs-qF-fmw" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="352.5" y="783"/>
         </scene>
     </scenes>
     <resources>

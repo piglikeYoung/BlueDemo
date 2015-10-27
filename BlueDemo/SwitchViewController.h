@@ -1,5 +1,5 @@
 //
-//  OperationViewController.h
+//  SwitchViewController.h
 //  BleDemo
 //
 //  Created by piglikeyoung on 15/10/11.
@@ -7,8 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <CoreBluetooth/CoreBluetooth.h>
 
-@interface OperationViewController : UIViewController
+
+@interface SwitchViewController : UIViewController
 
 @end
