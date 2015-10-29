@@ -133,12 +133,12 @@
                                 <exclude reference="EPM-NO-2jR"/>
                             </mask>
                             <mask key="constraints">
-                                <exclude reference="lyJ-oc-UYE"/>
-                                <exclude reference="fJm-EL-Uco"/>
-                                <exclude reference="zIO-8G-L32"/>
                                 <exclude reference="ArW-jY-pDC"/>
                                 <exclude reference="S9x-mp-Ww2"/>
                                 <exclude reference="v7o-Nz-uDb"/>
+                                <exclude reference="fJm-EL-Uco"/>
+                                <exclude reference="zIO-8G-L32"/>
+                                <exclude reference="lyJ-oc-UYE"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=compact">
@@ -152,12 +152,12 @@
                                 <include reference="EPM-NO-2jR"/>
                             </mask>
                             <mask key="constraints">
-                                <include reference="lyJ-oc-UYE"/>
-                                <include reference="fJm-EL-Uco"/>
-                                <include reference="zIO-8G-L32"/>
                                 <include reference="ArW-jY-pDC"/>
                                 <include reference="S9x-mp-Ww2"/>
                                 <include reference="v7o-Nz-uDb"/>
+                                <include reference="fJm-EL-Uco"/>
+                                <include reference="zIO-8G-L32"/>
+                                <include reference="lyJ-oc-UYE"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=compact-widthClass=regular">
@@ -167,12 +167,12 @@
                                 <include reference="EPM-NO-2jR"/>
                             </mask>
                             <mask key="constraints">
-                                <include reference="lyJ-oc-UYE"/>
-                                <include reference="fJm-EL-Uco"/>
-                                <include reference="zIO-8G-L32"/>
                                 <include reference="ArW-jY-pDC"/>
                                 <include reference="S9x-mp-Ww2"/>
                                 <include reference="v7o-Nz-uDb"/>
+                                <include reference="fJm-EL-Uco"/>
+                                <include reference="zIO-8G-L32"/>
+                                <include reference="lyJ-oc-UYE"/>
                             </mask>
                         </variation>
                     </view>
