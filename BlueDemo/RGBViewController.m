@@ -7,8 +7,15 @@
 //
 
 #import "RGBViewController.h"
+#import "Masonry.h"
+
+static const CGFloat kSliderWidth = 160.f;
 
 @interface RGBViewController ()
+@property (weak, nonatomic) UISlider *leftSlider;
+@property (weak, nonatomic) UISlider *rightSlider;
+@property (weak, nonatomic) IBOutlet UIButton *backBtn;
+@property (weak, nonatomic) IBOutlet UIStackView *modelStackView;
 
 @end
 
@@ -16,7 +23,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    
+    [self setUpSlider];
 }
 
 - (void)dealloc {
@@ -37,6 +45,29 @@
 }
 
 #pragma mark - 私有方法
+- (void)setUpSlider {
+    UISlider *leftSlider = [[UISlider alloc] init];
+    [self.view addSubview:leftSlider];
+    self.leftSlider = leftSlider;
+    leftSlider.transform =  CGAffineTransformMakeRotation( -M_PI * 0.5 );
+    [leftSlider mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.view.mas_left).offset(-kSliderWidth * 0.5  + 25);
+        make.centerY.equalTo(self.view.mas_centerY).offset(-20);
+        make.width.mas_equalTo(kSliderWidth);
+    }];
+    
+    UISlider *rightSlider = [[UISlider alloc] init];
+    [self.view addSubview:rightSlider];
+    self.rightSlider = rightSlider;
+    rightSlider.transform =  CGAffineTransformMakeRotation( -M_PI * 0.5 );
+    [rightSlider mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(self.view.mas_right).offset(kSliderWidth * 0.5  - 25);
+        make.centerY.equalTo(self.view.mas_centerY).offset(-20);
+        make.width.mas_equalTo(kSliderWidth);
+    }];
+}
+
+
 - (IBAction)backClick:(id)sender {
     
     [self dismissViewControllerAnimated:YES completion:nil];
