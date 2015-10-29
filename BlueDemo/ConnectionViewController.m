@@ -13,7 +13,7 @@
 
 // 蓝牙外设名称
 static NSString *const switchDeviceName = @"XIANGXI-CSL-5233";
-static NSString *const rgbDeviceName = @"XIANGXI-CSL-5233";
+static NSString *const rgbDeviceName = @"XIANGXI-CSL-5233-2";
 
 
 @interface ConnectionViewController ()<CBCentralManagerDelegate>
