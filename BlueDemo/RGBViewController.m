@@ -8,6 +8,7 @@
 
 #import "RGBViewController.h"
 #import "Masonry.h"
+#import "UIImage+Extension.h"
 
 static const CGFloat kSliderWidth = 160.f;
 
@@ -48,6 +49,9 @@ static const CGFloat kSliderWidth = 160.f;
 - (void)setUpSlider {
     UISlider *leftSlider = [[UISlider alloc] init];
     [self.view addSubview:leftSlider];
+    [leftSlider setThumbImage:[UIImage imageNamed:@"slider_thumb"] forState:UIControlStateNormal];
+    [leftSlider setMinimumTrackImage:[UIImage resizedImage:@"slider"] forState:UIControlStateNormal];
+    [leftSlider setMaximumTrackImage:[UIImage resizedImage:@"slider"] forState:UIControlStateNormal];
     self.leftSlider = leftSlider;
     leftSlider.transform =  CGAffineTransformMakeRotation( -M_PI * 0.5 );
     [leftSlider mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -58,6 +62,9 @@ static const CGFloat kSliderWidth = 160.f;
     
     UISlider *rightSlider = [[UISlider alloc] init];
     [self.view addSubview:rightSlider];
+    [rightSlider setThumbImage:[UIImage imageNamed:@"slider_thumb"] forState:UIControlStateNormal];
+    [rightSlider setMinimumTrackImage:[UIImage resizedImage:@"slider"] forState:UIControlStateNormal];
+    [rightSlider setMaximumTrackImage:[UIImage resizedImage:@"slider"] forState:UIControlStateNormal];
     self.rightSlider = rightSlider;
     rightSlider.transform =  CGAffineTransformMakeRotation( -M_PI * 0.5 );
     [rightSlider mas_makeConstraints:^(MASConstraintMaker *make) {

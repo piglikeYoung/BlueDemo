@@ -1469,16 +1469,21 @@
                                 <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                 <animations/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="34" id="g4v-ay-4gq"/>
+                                    <constraint firstAttribute="height" constant="11" id="4gx-FY-eaK"/>
+                                    <constraint firstAttribute="width" constant="34" id="g4v-ay-4gq">
+                                        <variation key="heightClass=compact-widthClass=compact" constant="18"/>
+                                    </constraint>
                                 </constraints>
-                                <state key="normal" title="back"/>
+                                <state key="normal" backgroundImage="back"/>
                                 <variation key="default">
                                     <mask key="constraints">
+                                        <exclude reference="4gx-FY-eaK"/>
                                         <exclude reference="g4v-ay-4gq"/>
                                     </mask>
                                 </variation>
                                 <variation key="heightClass=compact-widthClass=compact">
                                     <mask key="constraints">
+                                        <include reference="4gx-FY-eaK"/>
                                         <include reference="g4v-ay-4gq"/>
                                     </mask>
                                 </variation>
@@ -1953,6 +1958,7 @@
         <image name="OffFlag" width="14" height="9"/>
         <image name="OnFlag" width="14" height="9"/>
         <image name="anzoLogo" width="80" height="20"/>
+        <image name="back" width="35" height="22"/>
         <image name="bg" width="1104" height="621"/>
         <image name="btnModel" width="38" height="23"/>
         <image name="btnModel_selected" width="38" height="23"/>

@@ -21,6 +21,7 @@
 		7D3133571BE1F38500B7BB27 /* NSLayoutConstraint+MASDebugAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D3133491BE1F38500B7BB27 /* NSLayoutConstraint+MASDebugAdditions.m */; };
 		7D3133581BE1F38500B7BB27 /* View+MASAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D31334B1BE1F38500B7BB27 /* View+MASAdditions.m */; };
 		7D3133591BE1F38500B7BB27 /* ViewController+MASAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D31334E1BE1F38500B7BB27 /* ViewController+MASAdditions.m */; };
+		7D31335F1BE2110F00B7BB27 /* UIImage+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D31335E1BE2110F00B7BB27 /* UIImage+Extension.m */; };
 		7D38C0DC1BDF5AA00009D6E6 /* RGBViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D38C0DB1BDF5AA00009D6E6 /* RGBViewController.m */; };
 		7D38C0DF1BDF60330009D6E6 /* ConnectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D38C0DE1BDF60330009D6E6 /* ConnectionViewController.m */; };
 		7D652F4D1BCDE4460019BCA9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D652F4C1BCDE4460019BCA9 /* main.m */; };
@@ -90,6 +91,8 @@
 		7D31334C1BE1F38500B7BB27 /* View+MASShorthandAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "View+MASShorthandAdditions.h"; sourceTree = "<group>"; };
 		7D31334D1BE1F38500B7BB27 /* ViewController+MASAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ViewController+MASAdditions.h"; sourceTree = "<group>"; };
 		7D31334E1BE1F38500B7BB27 /* ViewController+MASAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ViewController+MASAdditions.m"; sourceTree = "<group>"; };
+		7D31335D1BE2110F00B7BB27 /* UIImage+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Extension.h"; sourceTree = "<group>"; };
+		7D31335E1BE2110F00B7BB27 /* UIImage+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Extension.m"; sourceTree = "<group>"; };
 		7D38C0DA1BDF5AA00009D6E6 /* RGBViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RGBViewController.h; sourceTree = "<group>"; };
 		7D38C0DB1BDF5AA00009D6E6 /* RGBViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RGBViewController.m; sourceTree = "<group>"; };
 		7D38C0DD1BDF60330009D6E6 /* ConnectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConnectionViewController.h; sourceTree = "<group>"; };
@@ -232,6 +235,8 @@
 				7D652F7F1BCDE4C00019BCA9 /* SwitchViewController.m */,
 				7D38C0DA1BDF5AA00009D6E6 /* RGBViewController.h */,
 				7D38C0DB1BDF5AA00009D6E6 /* RGBViewController.m */,
+				7D31335D1BE2110F00B7BB27 /* UIImage+Extension.h */,
+				7D31335E1BE2110F00B7BB27 /* UIImage+Extension.m */,
 				7D652F541BCDE4460019BCA9 /* Main.storyboard */,
 				7D652F571BCDE4460019BCA9 /* Assets.xcassets */,
 				7D652F591BCDE4460019BCA9 /* LaunchScreen.storyboard */,
@@ -444,6 +449,7 @@
 				7D3133561BE1F38500B7BB27 /* NSArray+MASAdditions.m in Sources */,
 				7D652F951BCDE5880019BCA9 /* FDStackViewAlignmentLayoutArrangement.m in Sources */,
 				7D652F4D1BCDE4460019BCA9 /* main.m in Sources */,
+				7D31335F1BE2110F00B7BB27 /* UIImage+Extension.m in Sources */,
 				7D3133581BE1F38500B7BB27 /* View+MASAdditions.m in Sources */,
 				7D3133551BE1F38500B7BB27 /* MASViewConstraint.m in Sources */,
 				7D3133511BE1F38500B7BB27 /* MASConstraint.m in Sources */,
