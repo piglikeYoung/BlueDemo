@@ -62,9 +62,9 @@ static NSString *const kStartNotifyCharacteristicUUID = @"0xFFFB";
 @property (nonatomic, strong) NSMutableArray *carSelectedBtnArray;
 
 // 亮度的值
-@property (nonatomic, assign) CGFloat brightnessVal;
+@property (nonatomic, assign) NSInteger brightnessVal;
 // 速度的值
-@property (nonatomic, assign) CGFloat speedVal;
+@property (nonatomic, assign) NSInteger speedVal;
 
 @end
 
