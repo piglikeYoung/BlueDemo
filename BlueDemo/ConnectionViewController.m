@@ -77,7 +77,8 @@ static NSString *const rgbDeviceName = @"XIANGXI-CSL-5233-2";
         SwitchViewController *destVc = segue.destinationViewController;
         destVc.mPeripheral = self.switchPeripheral;
     } else if([segue.identifier isEqualToString:@"toRGBVc"]) {
-        
+        RGBViewController *destVc = segue.destinationViewController;
+        destVc.mPeripheral = self.rgbPeripheral;
     }
 }
 

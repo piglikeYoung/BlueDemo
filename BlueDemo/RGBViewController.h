@@ -7,7 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <CoreBluetooth/CoreBluetooth.h>
 
 @interface RGBViewController : UIViewController
+
+// 主界面蓝牙设备
+@property (nonatomic, strong) CBPeripheral *mPeripheral;
 
 @end

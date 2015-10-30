@@ -133,7 +133,6 @@ typedef enum {
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    
 }
 
 
@@ -235,6 +234,96 @@ typedef enum {
                    characteristic:(CBCharacteristic *)characteristic{
     
     [peripheral setNotifyValue:NO forCharacteristic:characteristic];
+}
+
+/**
+ *  改变模式，修改发送的数据
+ *
+ *  @param index 索引
+ *  @param num   修改前的状态
+ */
+- (void)changeStatusWithArrayIndex:(NSInteger)index Num:(NSInteger)num {
+    
+    num += 1;
+    
+    // 大于等于4重置
+    if (num >= self.statusHex.count - 1) {
+        num = 0;
+    }
+    
+    // 保存当前状态
+    self.allLabelStatus[index] = @(num);
+    // 修改发送数据的值
+    offOnAndStatusbtnSendCode[4 + index] = [self.statusHex[num] integerValue];
+}
+
+/**
+ *  检测设备是否锁定
+ *
+ */
+- (BOOL) checkLock:(char*)codes {
+    char lockFlag[] = {0x00};
+    lockFlag[0] = codes[2];
+    NSString *lock = [[NSString alloc] initWithData:[NSData dataWithBytes:lockFlag length:1]  encoding:NSUTF8StringEncoding];
+    if ([lock isEqualToString: @"\x01"]) {
+        return YES;
+    }
+    
+    return NO;
+}
+
+
+/**
+ *  CRC校验
+ *
+ */
+- (BOOL) checkCRC:(char*)codes {
+    // 计算CRC
+    char ch[] = {0x00};
+    for (int i = 0; i < 10; i++) {
+        ch[0] += codes[i];
+    }
+    
+    // 返回的CRC
+    char backch[] = {0x00};
+    backch[0] = codes[10];
+    
+    NSString *calCRC = [[NSString alloc] initWithData:[NSData dataWithBytes:ch length:1]  encoding:NSUTF8StringEncoding];
+    NSString *backCRC = [[NSString alloc] initWithData:[NSData dataWithBytes:backch length:1]  encoding:NSUTF8StringEncoding];
+    
+    // 比较CRC
+    return [calCRC isEqualToString:backCRC];
+}
+
+
+/**
+ *  开始马上发送的Code
+ *
+ */
+- (NSData *) startCode {
+    NSString *identifierForVendor = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
+    NSString *subid = [identifierForVendor substringWithRange: NSMakeRange(0, kMacAddressLength)];
+    for (int i = 0; i < kMacAddressLength; i++) {
+        startCode[i + 1] = [subid characterAtIndex:i];
+    }
+    return [self convertCode:startCode];
+}
+
+
+/**
+ *  发送码值计算
+ *
+ */
+- (NSData *) convertCode:(char*)codes {
+    char ch = 0;
+    for (int i = 0; i < 10; i++) {
+        ch += codes[i];
+    }
+    
+    codes[10] = ch;
+    NSLog(@"%zd", [NSData dataWithBytes:codes length:kDataLength].length);
+    NSLog(@"%@", [[NSString alloc] initWithData:[NSData dataWithBytes:codes length:kDataLength]  encoding:NSUTF8StringEncoding]);
+    return [NSData dataWithBytes:codes length:kDataLength];
 }
 
 - (IBAction)backClick:(id)sender {
@@ -1069,103 +1158,6 @@ typedef enum {
         [self writePeripheral:self.mPeripheral characteristic:self.FFFAcharacteristic value:[self convertCode:unlockSendCode]];
     }
 }
-
-- (IBAction)closeVc:(id)sender {
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
-
-#pragma mark - 私有方法
-/**
- *  改变模式，修改发送的数据
- *
- *  @param index 索引
- *  @param num   修改前的状态
- */
-- (void)changeStatusWithArrayIndex:(NSInteger)index Num:(NSInteger)num {
-    
-    num += 1;
-    
-    // 大于等于4重置
-    if (num >= self.statusHex.count - 1) {
-        num = 0;
-    }
-    
-    // 保存当前状态
-    self.allLabelStatus[index] = @(num);
-    // 修改发送数据的值
-    offOnAndStatusbtnSendCode[4 + index] = [self.statusHex[num] integerValue];
-}
-
-/**
- *  检测设备是否锁定
- *
- */
-- (BOOL) checkLock:(char*)codes {
-    char lockFlag[] = {0x00};
-    lockFlag[0] = codes[2];
-    NSString *lock = [[NSString alloc] initWithData:[NSData dataWithBytes:lockFlag length:1]  encoding:NSUTF8StringEncoding];
-    if ([lock isEqualToString: @"\x01"]) {
-        return YES;
-    }
-    
-    return NO;
-}
-
-
-/**
- *  CRC校验
- *
- */
-- (BOOL) checkCRC:(char*)codes {
-    // 计算CRC
-    char ch[] = {0x00};
-    for (int i = 0; i < 10; i++) {
-        ch[0] += codes[i];
-    }
-    
-    // 返回的CRC
-    char backch[] = {0x00};
-    backch[0] = codes[10];
-    
-    NSString *calCRC = [[NSString alloc] initWithData:[NSData dataWithBytes:ch length:1]  encoding:NSUTF8StringEncoding];
-    NSString *backCRC = [[NSString alloc] initWithData:[NSData dataWithBytes:backch length:1]  encoding:NSUTF8StringEncoding];
-    
-    // 比较CRC
-    return [calCRC isEqualToString:backCRC];
-}
-
-
-/**
- *  开始马上发送的Code
- *
- */
-- (NSData *) startCode {
-    NSString *identifierForVendor = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
-    NSString *subid = [identifierForVendor substringWithRange: NSMakeRange(0, kMacAddressLength)];
-    for (int i = 0; i < kMacAddressLength; i++) {
-        startCode[i + 1] = [subid characterAtIndex:i];
-    }
-    return [self convertCode:startCode];
-}
-
-
-/**
- *  发送码值计算
- *
- */
-- (NSData *) convertCode:(char*)codes {
-    char ch = 0;
-    for (int i = 0; i < 10; i++) {
-        ch += codes[i];
-    }
-    
-    codes[10] = ch;
-    NSLog(@"%zd", [NSData dataWithBytes:codes length:kDataLength].length);
-    NSLog(@"%@", [[NSString alloc] initWithData:[NSData dataWithBytes:codes length:kDataLength]  encoding:NSUTF8StringEncoding]);
-    return [NSData dataWithBytes:codes length:kDataLength];
-}
-
-
 
 
 #pragma mark - CBPeripheralDelegate
