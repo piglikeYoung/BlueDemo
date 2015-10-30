@@ -15,4 +15,6 @@
  */
 + (UIImage *)resizedImage:(NSString *)name;
 
+
+
 @end
