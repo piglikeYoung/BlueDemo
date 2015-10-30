@@ -15,6 +15,9 @@ static const CGFloat kSliderWidth = 160.f;
 // 蓝牙传输数据的长度
 static const NSInteger kDataLength = 20;
 
+// 总开关对应value
+static const NSInteger masterSwitchVal = 128;
+
 // 接收Notify返回的code
 static char backCode[] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 , 0x00, 0x00, 0x00 , 0x00 , 0x00 , 0x00 , 0x00 , 0x00 , 0x00 , 0x00 , 0x00 , 0x00};
 
@@ -32,6 +35,15 @@ static NSString *const kStartNotifyCharacteristicUUID = @"0xFFFB";
 @property (weak, nonatomic) IBOutlet UIButton *backBtn;
 @property (weak, nonatomic) IBOutlet UIStackView *modelStackView;
 
+@property (weak, nonatomic) IBOutlet UIButton *carBtn1;
+@property (weak, nonatomic) IBOutlet UIButton *carBtn2;
+@property (weak, nonatomic) IBOutlet UIButton *carBtn3;
+@property (weak, nonatomic) IBOutlet UIButton *carBtn4;
+@property (weak, nonatomic) IBOutlet UIButton *carBtn5;
+@property (weak, nonatomic) IBOutlet UIButton *carBtn6;
+
+@property (weak, nonatomic) IBOutlet UISwitch *masterSwitch;
+
 @property (weak, nonatomic) UISlider *leftSlider;
 @property (weak, nonatomic) UISlider *rightSlider;
 
@@ -42,13 +54,35 @@ static NSString *const kStartNotifyCharacteristicUUID = @"0xFFFB";
 // 蓝牙传输数据
 @property (nonatomic, strong) NSMutableArray *transferCode;
 
+// 6个车按钮对应的value
+@property (nonatomic, strong) NSArray *carBtnValueArray;
+
+// 保存选中的按钮数组
+@property (nonatomic, strong) NSMutableArray *carSelectedBtnArray;
+
 @end
 
 @implementation RGBViewController
 
+- (NSMutableArray *)carSelectedBtnArray {
+    if (!_carSelectedBtnArray) {
+        _carSelectedBtnArray = [NSMutableArray array];
+    }
+    
+    return _carSelectedBtnArray;
+}
+
+- (NSArray *)carBtnValueArray {
+    if (!_carBtnValueArray) {
+        _carBtnValueArray = @[@1, @2, @4, @8, @16, @32];
+    }
+    
+    return _carBtnValueArray;
+}
+
 - (NSMutableArray *)transferCode {
     if (!_transferCode) {
-        _transferCode = [NSMutableArray arrayWithObjects:@76, @0, @0, @0, @0, @0, @0, @0, @0, @0, @0, @0, @0, @0, @0, @0, @0, @0, @0, @0, nil];
+        _transferCode = [NSMutableArray arrayWithObjects:@76, @0, @(masterSwitchVal), @0, @0, @0, @0, @0, @0, @0, @0, @0, @0, @0, @0, @0, @0, @0, @0, @0, nil];
     }
     
     return _transferCode;
@@ -58,8 +92,6 @@ static NSString *const kStartNotifyCharacteristicUUID = @"0xFFFB";
     [super viewDidLoad];
     
     [self setUpSlider];
-    
-    [self converToCharArrayWithIntegerArray:self.transferCode];
 }
 
 - (void)setMPeripheral:(CBPeripheral *)mPeripheral {
@@ -128,11 +160,6 @@ static NSString *const kStartNotifyCharacteristicUUID = @"0xFFFB";
 }
 
 
-- (void) brightnessOrSpeedSlider:(UISlider *)slider {
-    NSLog(@"%f", slider.value);
-}
-
-#pragma mark - 私有方法
 // 写数据
 -(void)writePeripheral:(CBPeripheral *)peripheral
         characteristic:(CBCharacteristic *)characteristic
@@ -225,6 +252,141 @@ static NSString *const kStartNotifyCharacteristicUUID = @"0xFFFB";
     return [calCRC isEqualToString:backCRC];
 }
 
+
+/**
+ *  车图片上的6个按钮点击总处理
+ *
+ *  @param btn 按钮
+ *  @param obj 按钮对应的数组value
+ */
+- (void) carBtnClickWithBtn:(UIButton *)btn andObject:(id) obj {
+    
+    // 1.判断是否选中按钮数组里面的按钮
+    __block BOOL found = NO;
+    
+    [self.carSelectedBtnArray enumerateObjectsUsingBlock:^(UIButton *selectedBtn, NSUInteger idx, BOOL * _Nonnull stop) {
+        // 按钮在选中按钮数组里，标记并退出遍历
+        if (selectedBtn.tag == btn.tag) {
+            found = YES;
+            *stop = YES;
+        }
+    }];
+    
+    
+    if (found) {
+        // 2.如果是，将按钮关闭
+        btn.selected = !btn.selected;
+    } else {
+        // 3.如果不是，打开按钮，设置选中边框
+        btn.selected = YES;
+        [btn.layer setBorderWidth:5.0]; //边框宽度
+        [btn.layer setBorderColor:[UIColor whiteColor].CGColor];//边框颜色
+//        [btn.layer setCornerRadius:5.0];
+        // 因为不在选中按钮数组里，要把之前的组里的按钮边框去掉
+        [self.carSelectedBtnArray enumerateObjectsUsingBlock:^(UIButton *selectedBtn, NSUInteger idx, BOOL * _Nonnull stop) {
+            [selectedBtn.layer setBorderWidth:0.0]; //边框宽度
+            [selectedBtn.layer setBorderColor:[UIColor clearColor].CGColor];//边框颜色
+        }];
+        // 移除所有按钮
+        [self.carSelectedBtnArray removeAllObjects];
+        
+        // 把现在的按钮添加到选中数组里
+        [self.carSelectedBtnArray addObject:btn];
+    }
+    
+    
+    if (btn.isSelected) {
+        
+        // 第2个字节(数组的第三位)，每选中一个按钮在原来的基础加上对应的value
+        self.transferCode[2] = @([self.transferCode[2] integerValue] + [obj integerValue]);
+        
+    } else {
+
+        // 第2个字节(数据的第三位)，每选中一个按钮在原来的基础减去对应的value
+        self.transferCode[2] = @([self.transferCode[2] integerValue] - [obj integerValue]);
+    }
+    
+    // 第3个字节(数组的第四位)，赋值操作的按钮对应的value
+    self.transferCode[3] = obj;
+    
+    
+    
+    if (self.masterSwitch.isOn) {
+        [self writePeripheral:_mPeripheral characteristic:_FFFAcharacteristic value:[self converToCharArrayWithIntegerArray:self.transferCode]];
+    }
+    
+}
+
+#pragma mark - 按钮点击处理
+/**
+ *  总开关，开或关
+ *
+ */
+- (IBAction)masterSwitchClick:(UISwitch *)sender {
+    // 第2个字节(数组的第三位)，决定开或关
+    if (sender.isOn) {
+        self.transferCode[2] = @(masterSwitchVal);
+    } else {
+        self.transferCode[2] = @0;
+    }
+}
+
+
+/**
+ *  车图片上的6个按钮点击事件
+ *
+ */
+- (IBAction)carBtnTouchUpInside:(UIButton *)sender {
+    switch (sender.tag - 30000) {
+        case 1:
+            
+//            sender.selected = !sender.selected;
+//            
+//            if (sender.isSelected) {
+//                // 第2个字节(数组的第三位)，每选中一个按钮在原来的基础加上对应的value
+//                self.transferCode[2] = @([self.transferCode[2] integerValue] + [self.carBtnValueArray[0] integerValue]);
+//                
+//                
+//            } else {
+//                // 第2个字节(数据的第三位)，每选中一个按钮在原来的基础减去对应的value
+//                self.transferCode[2] = @([self.transferCode[2] integerValue] - [self.carBtnValueArray[0] integerValue]);
+//            }
+//            
+//            // 第3个字节(数组的第四位)，赋值操作的按钮对应的value
+//            self.transferCode[3] = self.carBtnValueArray[0];
+//            
+//            
+//            
+//            if (self.masterSwitch.isOn) {
+//                [self writePeripheral:_mPeripheral characteristic:_FFFAcharacteristic value:[self converToCharArrayWithIntegerArray:self.transferCode]];
+//            }
+            
+            [self carBtnClickWithBtn:sender andObject:self.carBtnValueArray[0]];
+            
+            break;
+        case 2:
+            [self carBtnClickWithBtn:sender andObject:self.carBtnValueArray[1]];
+            break;
+        case 3:
+            [self carBtnClickWithBtn:sender andObject:self.carBtnValueArray[2]];
+            break;
+        case 4:
+            [self carBtnClickWithBtn:sender andObject:self.carBtnValueArray[3]];
+            break;
+        case 5:
+            [self carBtnClickWithBtn:sender andObject:self.carBtnValueArray[4]];
+            break;
+        case 6:
+            [self carBtnClickWithBtn:sender andObject:self.carBtnValueArray[5]];
+            break;
+        default:
+            break;
+    }
+}
+
+- (void) brightnessOrSpeedSlider:(UISlider *)slider {
+    NSLog(@"%f", slider.value);
+}
 
 - (IBAction)backClick:(id)sender {
     

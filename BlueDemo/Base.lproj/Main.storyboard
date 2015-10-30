@@ -1533,6 +1533,9 @@
                                         <include reference="DAL-5a-vR8"/>
                                     </mask>
                                 </variation>
+                                <connections>
+                                    <action selector="masterSwitchClick:" destination="T6i-m9-jI6" eventType="valueChanged" id="IBs-IX-tV8"/>
+                                </connections>
                             </switch>
                             <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="cau-eV-upS">
                                 <rect key="frame" x="-12" y="330" width="382" height="30"/>
@@ -1618,7 +1621,7 @@
                                             </mask>
                                         </variation>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ETW-WA-d7o" userLabel="CarBtn1">
+                                    <button opaque="NO" tag="30001" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ETW-WA-d7o" userLabel="CarBtn1">
                                         <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                         <animations/>
                                         <constraints>
@@ -1627,8 +1630,8 @@
                                                 <variation key="heightClass=compact-widthClass=compact" constant="30"/>
                                             </constraint>
                                         </constraints>
-                                        <state key="normal" backgroundImage="carBtn_1"/>
-                                        <state key="selected" backgroundImage="carBtn_selected_1"/>
+                                        <state key="normal" image="carBtn_1"/>
+                                        <state key="selected" image="carBtn_on_1"/>
                                         <variation key="default">
                                             <mask key="constraints">
                                                 <exclude reference="BBb-Cy-fKq"/>
@@ -1641,36 +1644,54 @@
                                                 <include reference="eBw-Uc-qfH"/>
                                             </mask>
                                         </variation>
+                                        <connections>
+                                            <action selector="carBtnTouchUpInside:" destination="T6i-m9-jI6" eventType="touchUpInside" id="Q07-q9-cvp"/>
+                                        </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fdu-s6-sOj" userLabel="CarBtn2">
+                                    <button opaque="NO" tag="30002" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fdu-s6-sOj" userLabel="CarBtn2">
                                         <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                         <animations/>
-                                        <state key="normal" backgroundImage="carBtn_2"/>
-                                        <state key="selected" backgroundImage="carBtn_selected_2"/>
+                                        <state key="normal" image="carBtn_2"/>
+                                        <state key="selected" image="carBtn_on_2"/>
+                                        <connections>
+                                            <action selector="carBtnTouchUpInside:" destination="T6i-m9-jI6" eventType="touchUpInside" id="kaU-L6-Xt7"/>
+                                        </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tcg-ns-5JI" userLabel="CarBtn3">
+                                    <button opaque="NO" tag="30003" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tcg-ns-5JI" userLabel="CarBtn3">
                                         <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                         <animations/>
-                                        <state key="normal" backgroundImage="carBtn_3"/>
-                                        <state key="selected" backgroundImage="carBtn_selected_3"/>
+                                        <state key="normal" image="carBtn_3"/>
+                                        <state key="selected" image="carBtn_on_3"/>
+                                        <connections>
+                                            <action selector="carBtnTouchUpInside:" destination="T6i-m9-jI6" eventType="touchUpInside" id="L9N-ny-3tn"/>
+                                        </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KhB-Ta-DlU" userLabel="CarBtn4">
+                                    <button opaque="NO" tag="30004" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KhB-Ta-DlU" userLabel="CarBtn4">
                                         <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                         <animations/>
-                                        <state key="normal" backgroundImage="carBtn_4"/>
-                                        <state key="selected" backgroundImage="carBtn_selected_4"/>
+                                        <state key="normal" image="carBtn_4"/>
+                                        <state key="selected" image="carBtn_on_4"/>
+                                        <connections>
+                                            <action selector="carBtnTouchUpInside:" destination="T6i-m9-jI6" eventType="touchUpInside" id="Zsv-SE-ym5"/>
+                                        </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vaJ-1c-MHK" userLabel="CarBtn5">
+                                    <button opaque="NO" tag="30005" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vaJ-1c-MHK" userLabel="CarBtn5">
                                         <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                         <animations/>
-                                        <state key="normal" backgroundImage="carBtn_5"/>
-                                        <state key="selected" backgroundImage="carBtn_selected_5"/>
+                                        <state key="normal" image="carBtn_5"/>
+                                        <state key="selected" image="carBtn_on_5"/>
+                                        <connections>
+                                            <action selector="carBtnTouchUpInside:" destination="T6i-m9-jI6" eventType="touchUpInside" id="bi5-by-0d1"/>
+                                        </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="trH-d2-yJC" userLabel="CarBtn6">
+                                    <button opaque="NO" tag="30006" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="trH-d2-yJC" userLabel="CarBtn6">
                                         <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                         <animations/>
-                                        <state key="normal" backgroundImage="carBtn_6"/>
-                                        <state key="selected" backgroundImage="carBtn_selected_6"/>
+                                        <state key="normal" image="carBtn_6"/>
+                                        <state key="selected" image="carBtn_on_6"/>
+                                        <connections>
+                                            <action selector="carBtnTouchUpInside:" destination="T6i-m9-jI6" eventType="touchUpInside" id="GlU-iT-32l"/>
+                                        </connections>
                                     </button>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="car1" translatesAutoresizingMaskIntoConstraints="NO" id="VVG-hZ-AoZ">
                                         <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
@@ -1956,6 +1977,13 @@
                     </view>
                     <connections>
                         <outlet property="backBtn" destination="dpb-fV-UYV" id="Ezy-XM-vR3"/>
+                        <outlet property="carBtn1" destination="ETW-WA-d7o" id="HRv-AC-XOI"/>
+                        <outlet property="carBtn2" destination="Fdu-s6-sOj" id="Y47-3a-MOC"/>
+                        <outlet property="carBtn3" destination="Tcg-ns-5JI" id="uKa-hF-zfF"/>
+                        <outlet property="carBtn4" destination="KhB-Ta-DlU" id="NOe-Oq-uo9"/>
+                        <outlet property="carBtn5" destination="vaJ-1c-MHK" id="SXI-xS-KQv"/>
+                        <outlet property="carBtn6" destination="trH-d2-yJC" id="luj-ab-jan"/>
+                        <outlet property="masterSwitch" destination="g5y-Vh-0jl" id="vFG-qN-ZOs"/>
                         <outlet property="modelStackView" destination="cau-eV-upS" id="bcs-y1-DCZ"/>
                     </connections>
                 </viewController>
@@ -2212,12 +2240,12 @@
         <image name="carBtn_4" width="40" height="40"/>
         <image name="carBtn_5" width="40" height="41"/>
         <image name="carBtn_6" width="40" height="41"/>
-        <image name="carBtn_selected_1" width="40" height="41"/>
-        <image name="carBtn_selected_2" width="40" height="41"/>
-        <image name="carBtn_selected_3" width="41" height="41"/>
-        <image name="carBtn_selected_4" width="40" height="40"/>
-        <image name="carBtn_selected_5" width="40" height="40"/>
-        <image name="carBtn_selected_6" width="41" height="40"/>
+        <image name="carBtn_on_1" width="40" height="41"/>
+        <image name="carBtn_on_2" width="40" height="41"/>
+        <image name="carBtn_on_3" width="41" height="41"/>
+        <image name="carBtn_on_4" width="40" height="40"/>
+        <image name="carBtn_on_5" width="40" height="40"/>
+        <image name="carBtn_on_6" width="41" height="40"/>
         <image name="confirm_highlinght" width="101" height="27"/>
         <image name="conn_logo" width="235" height="61"/>
         <image name="conn_rgbBtn_normal" width="87" height="87"/>
