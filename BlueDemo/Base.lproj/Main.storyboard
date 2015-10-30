@@ -1628,6 +1628,7 @@
                                             </constraint>
                                         </constraints>
                                         <state key="normal" backgroundImage="carBtn_1"/>
+                                        <state key="selected" backgroundImage="carBtn_selected_1"/>
                                         <variation key="default">
                                             <mask key="constraints">
                                                 <exclude reference="BBb-Cy-fKq"/>
@@ -1645,26 +1646,31 @@
                                         <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                         <animations/>
                                         <state key="normal" backgroundImage="carBtn_2"/>
+                                        <state key="selected" backgroundImage="carBtn_selected_2"/>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tcg-ns-5JI" userLabel="CarBtn3">
                                         <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                         <animations/>
                                         <state key="normal" backgroundImage="carBtn_3"/>
+                                        <state key="selected" backgroundImage="carBtn_selected_3"/>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KhB-Ta-DlU" userLabel="CarBtn4">
                                         <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                         <animations/>
                                         <state key="normal" backgroundImage="carBtn_4"/>
+                                        <state key="selected" backgroundImage="carBtn_selected_4"/>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vaJ-1c-MHK" userLabel="CarBtn5">
                                         <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                         <animations/>
-                                        <state key="normal" backgroundImage="carBtn_1"/>
+                                        <state key="normal" backgroundImage="carBtn_5"/>
+                                        <state key="selected" backgroundImage="carBtn_selected_5"/>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="trH-d2-yJC" userLabel="CarBtn6">
                                         <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                         <animations/>
-                                        <state key="normal" backgroundImage="carBtn_2"/>
+                                        <state key="normal" backgroundImage="carBtn_6"/>
+                                        <state key="selected" backgroundImage="carBtn_selected_6"/>
                                     </button>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="car1" translatesAutoresizingMaskIntoConstraints="NO" id="VVG-hZ-AoZ">
                                         <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
@@ -2204,6 +2210,14 @@
         <image name="carBtn_2" width="40" height="40"/>
         <image name="carBtn_3" width="40" height="40"/>
         <image name="carBtn_4" width="40" height="40"/>
+        <image name="carBtn_5" width="40" height="41"/>
+        <image name="carBtn_6" width="40" height="41"/>
+        <image name="carBtn_selected_1" width="40" height="41"/>
+        <image name="carBtn_selected_2" width="40" height="41"/>
+        <image name="carBtn_selected_3" width="41" height="41"/>
+        <image name="carBtn_selected_4" width="40" height="40"/>
+        <image name="carBtn_selected_5" width="40" height="40"/>
+        <image name="carBtn_selected_6" width="41" height="40"/>
         <image name="confirm_highlinght" width="101" height="27"/>
         <image name="conn_logo" width="235" height="61"/>
         <image name="conn_rgbBtn_normal" width="87" height="87"/>
