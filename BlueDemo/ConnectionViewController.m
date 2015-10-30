@@ -171,6 +171,14 @@ static NSString *const rgbDeviceName = @"XIANGXI-CSL-5233-2";
  */
 -(void)centralManager:(CBCentralManager *)central didFailToConnectPeripheral:(CBPeripheral *)peripheral error:(NSError *)error {
     NSLog(@">>>连接到名称为（%@）的设备-失败,原因:%@",[peripheral name],[error localizedDescription]);
+    
+    if ([peripheral.name isEqualToString:switchDeviceName]) {
+        [self.switchBtn setImage:[UIImage imageNamed:@"conn_switchBtn_notConnected"] forState:UIControlStateSelected];
+        self.switchBtn.selected = YES;
+    } else if ([peripheral.name isEqualToString:rgbDeviceName]) {
+        [self.rgbBtn setImage:[UIImage imageNamed:@"conn_rgbBtn_notConnected"] forState:UIControlStateSelected];
+        self.rgbBtn.selected = YES;
+    }
 }
 
 /*
@@ -211,9 +219,11 @@ static NSString *const rgbDeviceName = @"XIANGXI-CSL-5233-2";
     // 强引用设备，不让它释放
     if ([peripheral.name isEqualToString:switchDeviceName]) {
         self.switchPeripheral = peripheral;
+        [self.switchBtn setImage:[UIImage imageNamed:@"conn_switchBtn_connected"] forState:UIControlStateSelected];
         self.switchBtn.selected = YES;
     } else if ([peripheral.name isEqualToString:rgbDeviceName]) {
         self.rgbPeripheral = peripheral;
+        [self.rgbBtn setImage:[UIImage imageNamed:@"conn_rgbBtn_connected"] forState:UIControlStateSelected];
         self.rgbBtn.selected = YES;
     }
 

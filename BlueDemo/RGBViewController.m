@@ -60,6 +60,11 @@ static NSString *const kStartNotifyCharacteristicUUID = @"0xFFFB";
 // 保存选中的按钮数组
 @property (nonatomic, strong) NSMutableArray *carSelectedBtnArray;
 
+// 亮度的值
+@property (nonatomic, assign) CGFloat brightnessVal;
+// 速度的值
+@property (nonatomic, assign) CGFloat speedVal;
+
 @end
 
 @implementation RGBViewController
@@ -388,8 +393,29 @@ static NSString *const kStartNotifyCharacteristicUUID = @"0xFFFB";
     }
 }
 
+/**
+ *  Slider值改变响应
+ *
+ */
 - (void) brightnessOrSpeedSlider:(UISlider *)slider {
-    NSLog(@"%f", slider.value);
+    // 亮度
+    if (slider == self.leftSlider) {
+        _brightnessVal = slider.value;
+    }
+    // 速度
+    else if(slider == self.rightSlider) {
+        _speedVal = slider.value;
+    }
+    
+    // 遍历选中按钮数据，给每个选中按钮对应位赋值
+    [self.carSelectedBtnArray enumerateObjectsUsingBlock:^(UIButton *selectedBtn, NSUInteger idx, BOOL * _Nonnull stop) {
+        NSInteger allVal = _brightnessVal * 16 + _speedVal;
+        self.transferCode[selectedBtn.tag - 30000 + 3] = @(allVal);
+    }];
+    
+    if (self.masterSwitch.isOn) {
+        [self writePeripheral:_mPeripheral characteristic:_FFFAcharacteristic value:[self converToCharArrayWithIntegerArray:self.transferCode]];
+    }
 }
 
 - (IBAction)backClick:(id)sender {

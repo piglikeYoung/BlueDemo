@@ -21,7 +21,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="avT-Lc-tZ5">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="avT-Lc-tZ5">
                                 <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                 <animations/>
                                 <constraints>
@@ -30,7 +30,7 @@
                                     <constraint firstAttribute="width" secondItem="avT-Lc-tZ5" secondAttribute="height" multiplier="1:1" id="QRN-mE-f7b"/>
                                     <constraint firstAttribute="width" constant="87" id="kOK-ec-POZ"/>
                                 </constraints>
-                                <state key="normal" backgroundImage="conn_rgbBtn_normal"/>
+                                <state key="normal" image="conn_rgbBtn_normal"/>
                                 <state key="selected">
                                     <color key="titleColor" red="1" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
@@ -60,7 +60,7 @@
                                     <segue destination="T6i-m9-jI6" kind="presentation" identifier="toRGBVc" id="tix-m5-ckc"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CX7-vG-eBI">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CX7-vG-eBI">
                                 <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                 <animations/>
                                 <constraints>
@@ -69,7 +69,7 @@
                                     <constraint firstAttribute="height" constant="100" id="MKA-tf-kk6"/>
                                     <constraint firstAttribute="width" constant="100" id="sWL-ge-KtN"/>
                                 </constraints>
-                                <state key="normal" backgroundImage="conn_switchBtn_normal"/>
+                                <state key="normal" image="conn_switchBtn_normal"/>
                                 <variation key="default">
                                     <mask key="constraints">
                                         <exclude reference="6BP-C6-sxD"/>

@@ -46,7 +46,7 @@
     
     for (NSInteger i = 0; i < 3; i++) {
         // 获取色块图片的名称
-        NSString *imageName = [NSString stringWithFormat:@"circle%ld",i+1];
+        NSString *imageName = [NSString stringWithFormat:@"circle%zd",i+1];
         
         // 添加色块
         YJHColorPickerHSWheel *iv = [[YJHColorPickerHSWheel alloc] initWithImage:[UIImage imageNamed:imageName]];
