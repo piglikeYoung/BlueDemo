@@ -21,6 +21,9 @@
 // 选中色块的tag
 @property (nonatomic, assign) NSInteger currentColorTag;
 
+// 是否第一次发送数据
+@property (nonatomic, assign, getter=isFirstSend) BOOL firstSend;
+
 @end
 
 @implementation ColorBoardViewController
@@ -34,6 +37,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.firstSend = YES;
     
     [self p_SetUpWheel];
 }
@@ -106,10 +111,22 @@
         CGPoint tapPoint = [sender locationOfTouch:0 inView:self.circleImageView];
         for (YJHColorPickerHSWheel *colorIv in self.colorList) {
             if ([colorIv pointInside:tapPoint withEvent:nil]) {
-                _currentColorTag = colorIv.tag;
-                __weak typeof(self) weakSelf = self;
-                // 回调block
-                self.confirmBlock(weakSelf.currentColorTag);
+                // 第一次发送数据不用判断值是否相同
+                if (self.isFirstSend) {
+                    _currentColorTag = colorIv.tag;
+                    __weak typeof(self) weakSelf = self;
+                    // 回调block
+                    self.confirmBlock(weakSelf.currentColorTag);
+                    self.firstSend = NO;
+                } else {
+                    // 防止传输速度过快，当值不同的时候才回调
+                    if (_currentColorTag != colorIv.tag) {
+                        _currentColorTag = colorIv.tag;
+                        __weak typeof(self) weakSelf = self;
+                        // 回调block
+                        self.confirmBlock(weakSelf.currentColorTag);
+                    }
+                }
             }
             
         }
@@ -124,10 +141,24 @@
         CGPoint tapPoint = [sender locationOfTouch:0 inView:self.circleImageView];
         for (YJHColorPickerHSWheel *colorIv in self.colorList) {
             if ([colorIv pointInside:tapPoint withEvent:nil]) {
-                _currentColorTag = colorIv.tag;
-                __weak typeof(self) weakSelf = self;
-                // 回调block
-                self.confirmBlock(weakSelf.currentColorTag);
+                
+                // 第一次发送数据不用判断值是否相同
+                if (self.isFirstSend) {
+                    _currentColorTag = colorIv.tag;
+                    __weak typeof(self) weakSelf = self;
+                    // 回调block
+                    self.confirmBlock(weakSelf.currentColorTag);
+                    self.firstSend = NO;
+                } else {
+                    // 防止传输速度过快，当值不同的时候才回调
+                    if (_currentColorTag != colorIv.tag) {
+                        _currentColorTag = colorIv.tag;
+                        __weak typeof(self) weakSelf = self;
+                        // 回调block
+                        self.confirmBlock(weakSelf.currentColorTag);
+                    }
+                }
+                
             }
         }
     }

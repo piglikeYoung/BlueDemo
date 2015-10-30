@@ -65,6 +65,11 @@ static NSString *const kStartNotifyCharacteristicUUID = @"0xFFFB";
 @property (nonatomic, assign) NSInteger brightnessVal;
 // 速度的值
 @property (nonatomic, assign) NSInteger speedVal;
+// 亮度的临时值
+@property (nonatomic, assign) NSInteger brightnessTmpVal;
+// 速度的临时值
+@property (nonatomic, assign) NSInteger speedTmpVal;
+
 
 @end
 
@@ -405,13 +410,14 @@ static NSString *const kStartNotifyCharacteristicUUID = @"0xFFFB";
  *
  */
 - (void) brightnessOrSpeedSlider:(UISlider *)slider {
+
     // 亮度
     if (slider == self.leftSlider) {
-        _brightnessVal = slider.value;
+        _brightnessTmpVal = slider.value;
     }
     // 速度
     else if(slider == self.rightSlider) {
-        _speedVal = slider.value;
+        _speedTmpVal = slider.value;
     }
     
     // 遍历选中按钮数据，给每个选中按钮对应位赋值
@@ -420,9 +426,14 @@ static NSString *const kStartNotifyCharacteristicUUID = @"0xFFFB";
         self.transferCode[selectedBtn.tag - 30000 + 3] = @(allVal);
     }];
     
-    if (self.masterSwitch.isOn) {
+    // 防止发送数据速度太快，当值不一样时才发送
+    if (self.masterSwitch.isOn && (_brightnessVal != _brightnessTmpVal || _speedVal != _speedTmpVal)) {
+        _brightnessVal = _brightnessTmpVal;
+        _speedVal = _speedTmpVal;
+//        NSLog(@"%zd----%zd------%zd", _brightnessVal, _speedVal, _brightnessVal * 16 + _speedVal);
         [self writePeripheral:_mPeripheral characteristic:_FFFAcharacteristic value:[self converToCharArrayWithIntegerArray:self.transferCode]];
     }
+    
 }
 
 - (IBAction)backClick:(id)sender {
