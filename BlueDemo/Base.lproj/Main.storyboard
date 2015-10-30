@@ -703,10 +703,26 @@
                                     </mask>
                                 </variation>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nnk-Hw-Ps5" userLabel="backBtn">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nnk-Hw-Ps5" userLabel="backBtn">
                                 <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                 <animations/>
-                                <state key="normal" title="back"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="18" id="H3e-sL-MhE"/>
+                                    <constraint firstAttribute="width" constant="18" id="KXF-QS-WgB"/>
+                                </constraints>
+                                <state key="normal" image="back"/>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="H3e-sL-MhE"/>
+                                        <exclude reference="KXF-QS-WgB"/>
+                                    </mask>
+                                </variation>
+                                <variation key="heightClass=compact-widthClass=compact">
+                                    <mask key="constraints">
+                                        <include reference="H3e-sL-MhE"/>
+                                        <include reference="KXF-QS-WgB"/>
+                                    </mask>
+                                </variation>
                                 <connections>
                                     <action selector="backClick:" destination="BYZ-38-t0r" eventType="touchUpInside" id="yom-er-XzH"/>
                                 </connections>

@@ -69,6 +69,9 @@ static NSString *const kStartNotifyCharacteristicUUID = @"0xFFFB";
 @property (nonatomic, assign) NSInteger brightnessTmpVal;
 // 速度的临时值
 @property (nonatomic, assign) NSInteger speedTmpVal;
+// slider是否第一次发送数据
+@property (nonatomic, assign, getter=isSliderFirstSend) BOOL sliderFirstSend;
+
 
 
 @end
@@ -101,6 +104,8 @@ static NSString *const kStartNotifyCharacteristicUUID = @"0xFFFB";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.sliderFirstSend = YES;
     
     [self setUpSlider];
 }
@@ -268,7 +273,7 @@ static NSString *const kStartNotifyCharacteristicUUID = @"0xFFFB";
             charArray[i] = [integerArray[i] charValue];
         }
     }
-    
+//    NSLog(@"%zd", [self.transferCode[4] integerValue]);
     return [NSData dataWithBytes:charArray length:integerArray.count];
 }
 
@@ -413,26 +418,50 @@ static NSString *const kStartNotifyCharacteristicUUID = @"0xFFFB";
 
     // 亮度
     if (slider == self.leftSlider) {
-        _brightnessTmpVal = slider.value;
+        _brightnessTmpVal = [[NSNumber numberWithFloat:slider.value] integerValue];
     }
     // 速度
     else if(slider == self.rightSlider) {
-        _speedTmpVal = slider.value;
+        _speedTmpVal = [[NSNumber numberWithFloat:slider.value] integerValue];
     }
     
-    // 遍历选中按钮数据，给每个选中按钮对应位赋值
-    [self.carSelectedBtnArray enumerateObjectsUsingBlock:^(UIButton *selectedBtn, NSUInteger idx, BOOL * _Nonnull stop) {
-        NSInteger allVal = _brightnessVal * 16 + _speedVal;
-        self.transferCode[selectedBtn.tag - 30000 + 3] = @(allVal);
-    }];
     
-    // 防止发送数据速度太快，当值不一样时才发送
-    if (self.masterSwitch.isOn && (_brightnessVal != _brightnessTmpVal || _speedVal != _speedTmpVal)) {
-        _brightnessVal = _brightnessTmpVal;
-        _speedVal = _speedTmpVal;
-//        NSLog(@"%zd----%zd------%zd", _brightnessVal, _speedVal, _brightnessVal * 16 + _speedVal);
-        [self writePeripheral:_mPeripheral characteristic:_FFFAcharacteristic value:[self converToCharArrayWithIntegerArray:self.transferCode]];
+    // 第一次发送数据
+    if (self.isSliderFirstSend) {
+        if (self.masterSwitch.isOn) {
+            _brightnessVal = _brightnessTmpVal;
+            _speedVal = _speedTmpVal;
+            
+            // 遍历选中按钮数据，给每个选中按钮对应位赋值
+            [self.carSelectedBtnArray enumerateObjectsUsingBlock:^(UIButton *selectedBtn, NSUInteger idx, BOOL * _Nonnull stop) {
+                NSInteger allVal = _brightnessVal * 16 + _speedVal;
+                self.transferCode[selectedBtn.tag - 30000 + 3] = @(allVal);
+            }];
+            
+            //        NSLog(@"%zd----%zd------%zd", _brightnessVal, _speedVal, _brightnessVal * 16 + _speedVal);
+            [self writePeripheral:_mPeripheral characteristic:_FFFAcharacteristic value:[self converToCharArrayWithIntegerArray:self.transferCode]];
+            
+            self.sliderFirstSend = NO;
+        }
+        
+    } else {
+        // 防止发送数据速度太快，当值不一样时才发送
+        if (self.masterSwitch.isOn && (_brightnessVal != _brightnessTmpVal || _speedVal != _speedTmpVal)) {
+            
+            _brightnessVal = _brightnessTmpVal;
+            _speedVal = _speedTmpVal;
+            
+            // 遍历选中按钮数据，给每个选中按钮对应位赋值
+            [self.carSelectedBtnArray enumerateObjectsUsingBlock:^(UIButton *selectedBtn, NSUInteger idx, BOOL * _Nonnull stop) {
+                NSInteger allVal = _brightnessVal * 16 + _speedVal;
+                self.transferCode[selectedBtn.tag - 30000 + 3] = @(allVal);
+            }];
+            
+            //        NSLog(@"%zd----%zd------%zd", _brightnessVal, _speedVal, _brightnessVal * 16 + _speedVal);
+            [self writePeripheral:_mPeripheral characteristic:_FFFAcharacteristic value:[self converToCharArrayWithIntegerArray:self.transferCode]];
+        }
     }
+    
     
 }
 
