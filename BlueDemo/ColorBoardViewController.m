@@ -62,9 +62,18 @@
  *  添加色块到View上
  */
 - (void) p_SetUpWheel{
+    
+    // 拖拽手势
     UIPanGestureRecognizer *panGestureRecognizer;
     panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
     [self.circleImageView addGestureRecognizer:panGestureRecognizer];
+    
+    // 敲击手势
+    UITapGestureRecognizer *tapGestureRecognizer;
+    tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
+    [self.circleImageView addGestureRecognizer:tapGestureRecognizer];
+    
+    
     self.circleImageView.userInteractionEnabled = YES;
     
     for (NSInteger i = 0; i < 3; i++) {
@@ -98,13 +107,35 @@
         for (YJHColorPickerHSWheel *colorIv in self.colorList) {
             if ([colorIv pointInside:tapPoint withEvent:nil]) {
                 _currentColorTag = colorIv.tag;
+                __weak typeof(self) weakSelf = self;
+                // 回调block
+                self.confirmBlock(weakSelf.currentColorTag);
             }
             
         }
     }
 }
 
+- (void)handleTap:(UITapGestureRecognizer *)sender {
+    if (sender.state == UIGestureRecognizerStateEnded) {
+        if (sender.numberOfTouches <= 0) {
+            return;
+        }
+        CGPoint tapPoint = [sender locationOfTouch:0 inView:self.circleImageView];
+        for (YJHColorPickerHSWheel *colorIv in self.colorList) {
+            if ([colorIv pointInside:tapPoint withEvent:nil]) {
+                _currentColorTag = colorIv.tag;
+                __weak typeof(self) weakSelf = self;
+                // 回调block
+                self.confirmBlock(weakSelf.currentColorTag);
+            }
+        }
+    }
+}
+
 - (IBAction)confirmClick:(UIButton *)sender {
+    
+    // 把选中的色块赋值给confirmTag
     __weak typeof(self) weakSelf = self;
     // 回调block
     self.confirmBlock(weakSelf.currentColorTag);
@@ -113,6 +144,9 @@
 
 - (IBAction)backClick:(id)sender {
     
+    __weak typeof(self) weakSelf = self;
+    // 回调block
+    self.confirmBlock(weakSelf.oldColorTag);
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 

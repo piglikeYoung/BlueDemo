@@ -15,4 +15,7 @@ typedef void (^ColorBoardConfirmBlock)(NSInteger colorBoardTag);
 
 @property (nonatomic, copy) ColorBoardConfirmBlock confirmBlock;
 
+// 旧的选中色块的tag
+@property (nonatomic, assign) NSInteger oldColorTag;
+
 @end

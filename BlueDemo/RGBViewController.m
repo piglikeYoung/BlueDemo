@@ -122,6 +122,13 @@ static NSString *const kStartNotifyCharacteristicUUID = @"0xFFFB";
     
     // 跳转到色盘界面
     ColorBoardViewController *destVc = segue.destinationViewController;
+    [self.carSelectedBtnArray enumerateObjectsUsingBlock:^(UIButton *selectedBtn, NSUInteger idx, BOOL * _Nonnull stop) {
+        // 把旧的colorTag传给destVc
+        destVc.oldColorTag = [self.transferCode[selectedBtn.tag - 30000 + 12] integerValue];
+        *stop = YES;
+    }];
+    
+    
     destVc.confirmBlock = ^(NSInteger tag) {
         NSLog(@"tag=%zd", tag);
         
