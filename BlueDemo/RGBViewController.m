@@ -9,6 +9,7 @@
 #import "RGBViewController.h"
 #import "Masonry.h"
 #import "UIImage+Extension.h"
+#import "ColorBoardViewController.h"
 
 // Slider的宽度
 static const CGFloat kSliderWidth = 160.f;
@@ -115,6 +116,26 @@ static NSString *const kStartNotifyCharacteristicUUID = @"0xFFFB";
     
     NSLog(@"RGBViewController销毁");
 }
+
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    
+    // 跳转到色盘界面
+    ColorBoardViewController *destVc = segue.destinationViewController;
+    destVc.confirmBlock = ^(NSInteger tag) {
+        NSLog(@"tag=%zd", tag);
+        
+        // 遍历选中按钮数据，给每个选中按钮对应位赋值
+        [self.carSelectedBtnArray enumerateObjectsUsingBlock:^(UIButton *selectedBtn, NSUInteger idx, BOOL * _Nonnull stop) {
+            self.transferCode[selectedBtn.tag - 30000 + 12] = @(tag);
+        }];
+        
+        if (self.masterSwitch.isOn) {
+            [self writePeripheral:_mPeripheral characteristic:_FFFAcharacteristic value:[self converToCharArrayWithIntegerArray:self.transferCode]];
+        }
+    };
+}
+
 
 #pragma mark 横屏设置
 - (BOOL) shouldAutorotate{
@@ -348,27 +369,6 @@ static NSString *const kStartNotifyCharacteristicUUID = @"0xFFFB";
 - (IBAction)carBtnTouchUpInside:(UIButton *)sender {
     switch (sender.tag - 30000) {
         case 1:
-            
-//            sender.selected = !sender.selected;
-//            
-//            if (sender.isSelected) {
-//                // 第2个字节(数组的第三位)，每选中一个按钮在原来的基础加上对应的value
-//                self.transferCode[2] = @([self.transferCode[2] integerValue] + [self.carBtnValueArray[0] integerValue]);
-//                
-//                
-//            } else {
-//                // 第2个字节(数据的第三位)，每选中一个按钮在原来的基础减去对应的value
-//                self.transferCode[2] = @([self.transferCode[2] integerValue] - [self.carBtnValueArray[0] integerValue]);
-//            }
-//            
-//            // 第3个字节(数组的第四位)，赋值操作的按钮对应的value
-//            self.transferCode[3] = self.carBtnValueArray[0];
-//            
-//            
-//            
-//            if (self.masterSwitch.isOn) {
-//                [self writePeripheral:_mPeripheral characteristic:_FFFAcharacteristic value:[self converToCharArrayWithIntegerArray:self.transferCode]];
-//            }
             
             [self carBtnClickWithBtn:sender andObject:self.carBtnValueArray[0]];
             

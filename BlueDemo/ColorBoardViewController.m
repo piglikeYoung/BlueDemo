@@ -12,11 +12,14 @@
 
 @interface ColorBoardViewController ()
 @property (weak, nonatomic) IBOutlet UIImageView *circleImageView;
+@property (weak, nonatomic) IBOutlet UIButton *cancelBtn;
+@property (weak, nonatomic) IBOutlet UIButton *confirmBtn;
 
+// 色块图片数组
 @property (nonatomic, strong) NSMutableArray *colorList;
 
-@property (nonatomic, assign) CGPoint previousTouchPoint;
-@property (nonatomic, assign) BOOL previousTouchHitTestResponse;
+// 选中色块的tag
+@property (nonatomic, assign) NSInteger currentColorTag;
 
 @end
 
@@ -35,6 +38,26 @@
     [self p_SetUpWheel];
 }
 
+- (void)dealloc {
+    NSLog(@"ColorBoardViewController销毁");
+}
+
+
+#pragma mark - 横屏设置
+- (BOOL) shouldAutorotate{
+    return YES;
+    
+}
+- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
+    return UIInterfaceOrientationMaskLandscapeRight;
+}
+
+- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {
+    return UIInterfaceOrientationLandscapeRight;
+}
+
+
+#pragma mark - 私有方法
 /**
  *  添加色块到View上
  */
@@ -74,17 +97,18 @@
         CGPoint tapPoint = [sender locationOfTouch:0 inView:self.circleImageView];
         for (YJHColorPickerHSWheel *colorIv in self.colorList) {
             if ([colorIv pointInside:tapPoint withEvent:nil]) {
-                NSLog(@"%zd", colorIv.tag);
+                _currentColorTag = colorIv.tag;
             }
             
         }
     }
 }
 
-
-
-- (void)dealloc {
-    NSLog(@"ColorBoardViewController销毁");
+- (IBAction)confirmClick:(UIButton *)sender {
+    __weak typeof(self) weakSelf = self;
+    // 回调block
+    self.confirmBlock(weakSelf.currentColorTag);
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (IBAction)backClick:(id)sender {
@@ -92,18 +116,7 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-#pragma mark 横屏设置
-- (BOOL) shouldAutorotate{
-    return YES;
-    
-}
-- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
-    return UIInterfaceOrientationMaskLandscapeRight;
-}
 
-- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {
-    return UIInterfaceOrientationLandscapeRight;
-}
 
 
 

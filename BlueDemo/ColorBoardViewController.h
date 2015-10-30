@@ -8,6 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
+// 选好色块的回调block
+typedef void (^ColorBoardConfirmBlock)(NSInteger colorBoardTag);
+
 @interface ColorBoardViewController : UIViewController
+
+@property (nonatomic, copy) ColorBoardConfirmBlock confirmBlock;
 
 @end

@@ -1876,7 +1876,7 @@
                                         <animations/>
                                         <state key="normal" title="selectedColor"/>
                                         <connections>
-                                            <segue destination="CqS-Xx-x0g" kind="presentation" id="wgY-64-1Ta"/>
+                                            <segue destination="CqS-Xx-x0g" kind="presentation" id="ekJ-wz-PSc"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -2028,7 +2028,7 @@
                                             </mask>
                                         </variation>
                                     </imageView>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aFu-NM-Z1R">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aFu-NM-Z1R">
                                         <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                         <animations/>
                                         <constraints>
@@ -2037,8 +2037,8 @@
                                             </constraint>
                                             <constraint firstAttribute="width" secondItem="aFu-NM-Z1R" secondAttribute="height" multiplier="2:1" id="aVq-lW-wXZ"/>
                                         </constraints>
-                                        <state key="normal" backgroundImage="cancel_normal"/>
-                                        <state key="highlighted" backgroundImage="cancel_highlinght"/>
+                                        <state key="normal" image="cancel_normal"/>
+                                        <state key="highlighted" image="cancel_highlinght"/>
                                         <variation key="default">
                                             <mask key="constraints">
                                                 <exclude reference="1bL-if-JJy"/>
@@ -2051,12 +2051,18 @@
                                                 <include reference="aVq-lW-wXZ"/>
                                             </mask>
                                         </variation>
+                                        <connections>
+                                            <action selector="backClick:" destination="CqS-Xx-x0g" eventType="touchUpInside" id="uf8-TN-Ni1"/>
+                                        </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qfk-sY-2of">
+                                    <button opaque="NO" contentMode="scaleToFill" highlighted="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qfk-sY-2of">
                                         <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                         <animations/>
-                                        <state key="normal" backgroundImage="cancel_normal"/>
-                                        <state key="highlighted" backgroundImage="confirm_highlinght"/>
+                                        <state key="normal" image="cancel_normal"/>
+                                        <state key="highlighted" image="confirm_highlinght"/>
+                                        <connections>
+                                            <action selector="confirmClick:" destination="CqS-Xx-x0g" eventType="touchUpInside" id="e8s-gD-Z91"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <animations/>
@@ -2213,7 +2219,9 @@
                         </variation>
                     </view>
                     <connections>
+                        <outlet property="cancelBtn" destination="aFu-NM-Z1R" id="6b3-LN-gjk"/>
                         <outlet property="circleImageView" destination="IUi-Jl-KKT" id="qWe-IP-Vd5"/>
+                        <outlet property="confirmBtn" destination="Qfk-sY-2of" id="Up5-Z7-OMZ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fiX-Dc-fbO" userLabel="First Responder" sceneMemberID="firstResponder"/>
