@@ -43,6 +43,8 @@
 		7D652F991BCDE5880019BCA9 /* FDTransformLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D652F911BCDE5880019BCA9 /* FDTransformLayer.m */; };
 		7DE500001BE2F9E300282CAF /* YJHColorPickerHSWheel.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DE5FFFF1BE2F9E300282CAF /* YJHColorPickerHSWheel.m */; };
 		7DE5FFFD1BE2F87700282CAF /* UIImage+ColorAtPixel.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DE5FFFC1BE2F87700282CAF /* UIImage+ColorAtPixel.m */; };
+		7DF038F11BE3DB60007D49FF /* HSV.c in Sources */ = {isa = PBXBuildFile; fileRef = 7DF038EF1BE3DB60007D49FF /* HSV.c */; };
+		7DF038F41BE3DBB7007D49FF /* UIColor+Convert.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DF038F31BE3DBB7007D49FF /* UIColor+Convert.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -138,6 +140,10 @@
 		7DE5FFFC1BE2F87700282CAF /* UIImage+ColorAtPixel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ColorAtPixel.m"; sourceTree = "<group>"; };
 		7DE5FFFE1BE2F9E300282CAF /* YJHColorPickerHSWheel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YJHColorPickerHSWheel.h; sourceTree = "<group>"; };
 		7DE5FFFF1BE2F9E300282CAF /* YJHColorPickerHSWheel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YJHColorPickerHSWheel.m; sourceTree = "<group>"; };
+		7DF038EF1BE3DB60007D49FF /* HSV.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = HSV.c; sourceTree = "<group>"; };
+		7DF038F01BE3DB60007D49FF /* HSV.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HSV.h; sourceTree = "<group>"; };
+		7DF038F21BE3DBB7007D49FF /* UIColor+Convert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+Convert.h"; sourceTree = "<group>"; };
+		7DF038F31BE3DBB7007D49FF /* UIColor+Convert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Convert.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -213,8 +219,12 @@
 		7D3133631BE21B0D00B7BB27 /* ColorBoard */ = {
 			isa = PBXGroup;
 			children = (
+				7DF038EF1BE3DB60007D49FF /* HSV.c */,
+				7DF038F01BE3DB60007D49FF /* HSV.h */,
 				7DE5FFFB1BE2F87700282CAF /* UIImage+ColorAtPixel.h */,
 				7DE5FFFC1BE2F87700282CAF /* UIImage+ColorAtPixel.m */,
+				7DF038F21BE3DBB7007D49FF /* UIColor+Convert.h */,
+				7DF038F31BE3DBB7007D49FF /* UIColor+Convert.m */,
 				7D31336E1BE21B5B00B7BB27 /* UIImage+Extension.h */,
 				7D31336F1BE21B5B00B7BB27 /* UIImage+Extension.m */,
 			);
@@ -454,12 +464,14 @@
 				7D0F24DF1BCF3C9D001C9A06 /* MBProgressHUD+MJ.m in Sources */,
 				7D652F801BCDE4C00019BCA9 /* SwitchViewController.m in Sources */,
 				7D38C0DF1BDF60330009D6E6 /* ConnectionViewController.m in Sources */,
+				7DF038F11BE3DB60007D49FF /* HSV.c in Sources */,
 				7D652F941BCDE5880019BCA9 /* FDStackView.m in Sources */,
 				7D652F971BCDE5880019BCA9 /* FDStackViewExtensions.m in Sources */,
 				7D3133541BE1F38500B7BB27 /* MASViewAttribute.m in Sources */,
 				7D3133531BE1F38500B7BB27 /* MASLayoutConstraint.m in Sources */,
 				7D3133571BE1F38500B7BB27 /* NSLayoutConstraint+MASDebugAdditions.m in Sources */,
 				7D3133521BE1F38500B7BB27 /* MASConstraintMaker.m in Sources */,
+				7DF038F41BE3DBB7007D49FF /* UIColor+Convert.m in Sources */,
 				7D652F961BCDE5880019BCA9 /* FDStackViewDistributionLayoutArrangement.m in Sources */,
 				7D652F981BCDE5880019BCA9 /* FDStackViewLayoutArrangement.m in Sources */,
 				7D3133591BE1F38500B7BB27 /* ViewController+MASAdditions.m in Sources */,

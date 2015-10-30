@@ -2060,7 +2060,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="viewBg" translatesAutoresizingMaskIntoConstraints="NO" id="6uW-hO-FFd">
+                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="viewBg" translatesAutoresizingMaskIntoConstraints="NO" id="6uW-hO-FFd">
                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                 <animations/>
                             </imageView>
@@ -2215,7 +2215,7 @@
                                     <action selector="backClick:" destination="T6i-m9-jI6" eventType="touchUpInside" id="vQX-cI-huA"/>
                                 </connections>
                             </button>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="home_yuanpan_bg" translatesAutoresizingMaskIntoConstraints="NO" id="IUi-Jl-KKT">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="color" translatesAutoresizingMaskIntoConstraints="NO" id="IUi-Jl-KKT">
                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                 <animations/>
                                 <constraints>
@@ -2331,6 +2331,7 @@
         <image name="carBtn_on_4" width="40" height="40"/>
         <image name="carBtn_on_5" width="40" height="40"/>
         <image name="carBtn_on_6" width="41" height="40"/>
+        <image name="color" width="250" height="250"/>
         <image name="confirm_highlinght" width="101" height="27"/>
         <image name="confirm_normal" width="104" height="31"/>
         <image name="conn_logo" width="235" height="61"/>
@@ -2340,7 +2341,6 @@
         <image name="flash" width="23" height="10"/>
         <image name="flash_hightlighted" width="23" height="10"/>
         <image name="four" width="16" height="8"/>
-        <image name="home_yuanpan_bg" width="306" height="306"/>
         <image name="momentary" width="43" height="10"/>
         <image name="momentary_highlighted" width="43" height="10"/>
         <image name="one" width="13" height="8"/>
