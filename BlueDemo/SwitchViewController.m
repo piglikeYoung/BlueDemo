@@ -142,11 +142,11 @@ typedef enum {
     CGFloat screenHeight = [[UIScreen mainScreen] bounds].size.height;
     // 针对不同手机，修改顶部距离
     if (screenHeight == 375) {
-        self.stackViewTopCons.constant = 58;
+        self.stackViewTopCons.constant = 84;
     } else if (screenHeight == 414){
-        self.stackViewTopCons.constant = 64;
+        self.stackViewTopCons.constant = 100;
     } else {
-        self.stackViewTopCons.constant = 44;
+        self.stackViewTopCons.constant = 76;
     }
 
 }
