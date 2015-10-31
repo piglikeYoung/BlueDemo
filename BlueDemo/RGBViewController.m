@@ -34,7 +34,6 @@ static NSString *const kStartNotifyCharacteristicUUID = @"0xFFFB";
 @interface RGBViewController () <CBPeripheralDelegate>
 
 @property (weak, nonatomic) IBOutlet UIButton *backBtn;
-@property (weak, nonatomic) IBOutlet UIStackView *modelStackView;
 
 @property (weak, nonatomic) IBOutlet UIButton *carBtn1;
 @property (weak, nonatomic) IBOutlet UIButton *carBtn2;
@@ -44,7 +43,8 @@ static NSString *const kStartNotifyCharacteristicUUID = @"0xFFFB";
 @property (weak, nonatomic) IBOutlet UIButton *carBtn6;
 
 @property (weak, nonatomic) IBOutlet UISwitch *masterSwitch;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *selectCarViewCons;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *selectCarViewBottomCons;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *threeBtnViewBottomCons;
 
 @property (weak, nonatomic) UISlider *leftSlider;
 @property (weak, nonatomic) UISlider *rightSlider;
@@ -106,8 +106,16 @@ static NSString *const kStartNotifyCharacteristicUUID = @"0xFFFB";
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.sliderFirstSend = YES;
+    UIImageView *backgroundIv = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"viewBg"]];
+    [self.view addSubview:backgroundIv];
+    [backgroundIv mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.width.equalTo(self.view.mas_width);
+        make.height.equalTo(self.view.mas_height);
+        make.left.equalTo(self.view.mas_left);
+        make.top.equalTo(self.view.mas_top);
+    }];
     
+    self.sliderFirstSend = YES;
     [self setUpSlider];
 }
 
@@ -117,11 +125,14 @@ static NSString *const kStartNotifyCharacteristicUUID = @"0xFFFB";
     CGFloat screenHeight = [[UIScreen mainScreen] bounds].size.height;
     // 针对不同手机，修改顶部距离
     if (screenHeight == 375) {
-        self.selectCarViewCons.constant = 52;
+        self.selectCarViewBottomCons.constant = 52;
+        self.threeBtnViewBottomCons.constant = 28;
     } else if (screenHeight == 414){
-        self.selectCarViewCons.constant = 68;
+        self.selectCarViewBottomCons.constant = 62;
+        self.threeBtnViewBottomCons.constant = 38;
     } else {
-        self.selectCarViewCons.constant = 20;
+        self.selectCarViewBottomCons.constant = 20;
+        self.threeBtnViewBottomCons.constant = 8;
     }
     
 }
