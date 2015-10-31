@@ -11,6 +11,13 @@
 
 @interface UIImage (ColorAtPixel)
 
+/**
+ *  获取当前点的颜色，直接返回颜色
+ *
+ *  @param point 当前点
+ *
+ *  @return 颜色
+ */
 - (UIColor *)colorAtPixel:(CGPoint)point;
 
 /**

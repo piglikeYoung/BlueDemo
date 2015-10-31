@@ -41,7 +41,6 @@
 		7D652F971BCDE5880019BCA9 /* FDStackViewExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D652F8D1BCDE5870019BCA9 /* FDStackViewExtensions.m */; };
 		7D652F981BCDE5880019BCA9 /* FDStackViewLayoutArrangement.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D652F8F1BCDE5870019BCA9 /* FDStackViewLayoutArrangement.m */; };
 		7D652F991BCDE5880019BCA9 /* FDTransformLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D652F911BCDE5880019BCA9 /* FDTransformLayer.m */; };
-		7DE500001BE2F9E300282CAF /* YJHColorPickerHSWheel.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DE5FFFF1BE2F9E300282CAF /* YJHColorPickerHSWheel.m */; };
 		7DE5FFFD1BE2F87700282CAF /* UIImage+ColorAtPixel.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DE5FFFC1BE2F87700282CAF /* UIImage+ColorAtPixel.m */; };
 		7DF038F11BE3DB60007D49FF /* HSV.c in Sources */ = {isa = PBXBuildFile; fileRef = 7DF038EF1BE3DB60007D49FF /* HSV.c */; };
 		7DF038F41BE3DBB7007D49FF /* UIColor+Convert.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DF038F31BE3DBB7007D49FF /* UIColor+Convert.m */; };
@@ -138,8 +137,6 @@
 		7D652F911BCDE5880019BCA9 /* FDTransformLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FDTransformLayer.m; sourceTree = "<group>"; };
 		7DE5FFFB1BE2F87700282CAF /* UIImage+ColorAtPixel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ColorAtPixel.h"; sourceTree = "<group>"; };
 		7DE5FFFC1BE2F87700282CAF /* UIImage+ColorAtPixel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ColorAtPixel.m"; sourceTree = "<group>"; };
-		7DE5FFFE1BE2F9E300282CAF /* YJHColorPickerHSWheel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YJHColorPickerHSWheel.h; sourceTree = "<group>"; };
-		7DE5FFFF1BE2F9E300282CAF /* YJHColorPickerHSWheel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YJHColorPickerHSWheel.m; sourceTree = "<group>"; };
 		7DF038EF1BE3DB60007D49FF /* HSV.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = HSV.c; sourceTree = "<group>"; };
 		7DF038F01BE3DB60007D49FF /* HSV.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HSV.h; sourceTree = "<group>"; };
 		7DF038F21BE3DBB7007D49FF /* UIColor+Convert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+Convert.h"; sourceTree = "<group>"; };
@@ -268,8 +265,6 @@
 				7D38C0DB1BDF5AA00009D6E6 /* RGBViewController.m */,
 				7D3133601BE2182100B7BB27 /* ColorBoardViewController.h */,
 				7D3133611BE2182100B7BB27 /* ColorBoardViewController.m */,
-				7DE5FFFE1BE2F9E300282CAF /* YJHColorPickerHSWheel.h */,
-				7DE5FFFF1BE2F9E300282CAF /* YJHColorPickerHSWheel.m */,
 				7D652F541BCDE4460019BCA9 /* Main.storyboard */,
 				7D652F571BCDE4460019BCA9 /* Assets.xcassets */,
 				7D652F591BCDE4460019BCA9 /* LaunchScreen.storyboard */,
@@ -491,7 +486,6 @@
 				7D3133551BE1F38500B7BB27 /* MASViewConstraint.m in Sources */,
 				7D3133511BE1F38500B7BB27 /* MASConstraint.m in Sources */,
 				7D652F921BCDE5880019BCA9 /* FDGapLayoutGuide.m in Sources */,
-				7DE500001BE2F9E300282CAF /* YJHColorPickerHSWheel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

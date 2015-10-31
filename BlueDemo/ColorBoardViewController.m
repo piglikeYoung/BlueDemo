@@ -7,7 +7,6 @@
 //
 
 #import "ColorBoardViewController.h"
-#import "YJHColorPickerHSWheel.h"
 #import "Masonry.h"
 #import "UIImage+ColorAtPixel.h"
 
@@ -16,7 +15,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *cancelBtn;
 @property (weak, nonatomic) IBOutlet UIButton *confirmBtn;
 
-// 色块图片数组
+// 色块十六进制数组
 @property (nonatomic, strong) NSArray *colorList;
 
 // 选中色块的tag
@@ -81,7 +80,7 @@
                        @"0xf05e90",
                        @"0xf388a7",
                        @"0xf7aec0",
-                       @"0xffffff"];
+                       @"0xfeffff"];
     }
     return _colorList;
 }
@@ -89,6 +88,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    // 设置第一次发送数据
     self.firstSend = YES;
     
     [self p_SetUpWheel];
@@ -126,36 +126,10 @@
     [self.circleImageView addGestureRecognizer:panGestureRecognizer];
     
     // 敲击手势
-    UIImageView *wheelKnob = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"colorPickerKnob.png"]];
-    [self.circleImageView addSubview:wheelKnob];
-    wheelKnob.hidden = YES;
-    self.wheelKnobView = wheelKnob;
-    
     UITapGestureRecognizer *tapGestureRecognizer;
     tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
     [self.circleImageView addGestureRecognizer:tapGestureRecognizer];
-    
     self.circleImageView.userInteractionEnabled = YES;
-    
-//    for (NSInteger i = 0; i < 3; i++) {
-//        // 获取色块图片的名称
-//        NSString *imageName = [NSString stringWithFormat:@"circle%zd",i+1];
-//        
-//        // 添加色块
-//        YJHColorPickerHSWheel *iv = [[YJHColorPickerHSWheel alloc] initWithImage:[UIImage imageNamed:imageName]];
-//        iv.tag = i;
-//        iv.userInteractionEnabled = YES;
-//        // 添加到View
-//        [self.circleImageView addSubview:iv];
-//        [self.colorList addObject:iv];
-//        
-//        [iv mas_makeConstraints:^(MASConstraintMaker *make) {
-//            make.width.equalTo(self.circleImageView.mas_width);
-//            make.height.equalTo(self.circleImageView.mas_height);
-//            make.top.equalTo(self.circleImageView.mas_top);
-//            make.left.equalTo(self.circleImageView.mas_left);
-//        }];
-//    }
     
 }
 
@@ -165,32 +139,11 @@
             return;
         }
         CGPoint tapPoint = [sender locationOfTouch:0 inView:self.circleImageView];
-//        CGPoint tapPoint = [sender locationInView:self.circleImageView];
-//        for (YJHColorPickerHSWheel *colorIv in self.colorList) {
-//            if ([colorIv pointInside:tapPoint withEvent:nil]) {
-//                // 第一次发送数据不用判断值是否相同
-//                if (self.isFirstSend) {
-//                    _currentColorTag = colorIv.tag;
-//                    __weak typeof(self) weakSelf = self;
-//                    // 回调block
-//                    self.confirmBlock(weakSelf.currentColorTag);
-//                    self.firstSend = NO;
-//                } else {
-//                    // 防止传输速度过快，当值不同的时候才回调
-//                    if (_currentColorTag != colorIv.tag) {
-//                        _currentColorTag = colorIv.tag;
-//                        __weak typeof(self) weakSelf = self;
-//                        // 回调block
-//                        self.confirmBlock(weakSelf.currentColorTag);
-//                    }
-//                }
-//            }
-//            
-//        }
         
         RGBType rgba = [self.circleImageView.image colorAtPixel2:tapPoint];
         NSInteger hex = RGB_to_HEX(rgba.r, rgba.g, rgba.b);
         NSString *hexString = [NSString stringWithFormat:@"0x%06lx", (long)hex];
+//        NSLog(@"%@", hexString);
         [self.colorList enumerateObjectsUsingBlock:^(NSString *obj, NSUInteger idx, BOOL * _Nonnull stop) {
             if ([obj isEqualToString:hexString]) {
 //                NSLog(@"%zd",idx);
@@ -222,36 +175,14 @@
             return;
         }
         CGPoint tapPoint = [sender locationOfTouch:0 inView:self.circleImageView];
-//        for (YJHColorPickerHSWheel *colorIv in self.colorList) {
-//            if ([colorIv pointInside:tapPoint withEvent:nil]) {
-//                
-//                // 第一次发送数据不用判断值是否相同
-//                if (self.isFirstSend) {
-//                    _currentColorTag = colorIv.tag;
-//                    __weak typeof(self) weakSelf = self;
-//                    // 回调block
-//                    self.confirmBlock(weakSelf.currentColorTag);
-//                    self.firstSend = NO;
-//                } else {
-//                    // 防止传输速度过快，当值不同的时候才回调
-//                    if (_currentColorTag != colorIv.tag) {
-//                        _currentColorTag = colorIv.tag;
-//                        __weak typeof(self) weakSelf = self;
-//                        // 回调block
-//                        self.confirmBlock(weakSelf.currentColorTag);
-//                    }
-//                }
-//                
-//            }
-//        }
-
         
         RGBType rgba = [self.circleImageView.image colorAtPixel2:tapPoint];
         NSInteger hex = RGB_to_HEX(rgba.r, rgba.g, rgba.b);
         NSString *hexString = [NSString stringWithFormat:@"0x%06lx", (long)hex];
+//        NSLog(@"%@", hexString);
         [self.colorList enumerateObjectsUsingBlock:^(NSString *obj, NSUInteger idx, BOOL * _Nonnull stop) {
             if ([obj isEqualToString:hexString]) {
-                NSLog(@"%zd",idx);
+//                NSLog(@"%zd",idx);
                 // 第一次发送数据不用判断值是否相同
                 if (self.isFirstSend) {
                     _currentColorTag = idx;
