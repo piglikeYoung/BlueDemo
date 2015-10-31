@@ -1723,7 +1723,9 @@
                                     <constraint firstAttribute="bottom" secondItem="VVG-hZ-AoZ" secondAttribute="bottom" id="2xI-aQ-p6b"/>
                                     <constraint firstAttribute="width" secondItem="f3A-fI-24f" secondAttribute="height" multiplier="418:180" id="4Au-2i-qZ6"/>
                                     <constraint firstItem="Fdu-s6-sOj" firstAttribute="width" secondItem="ETW-WA-d7o" secondAttribute="width" id="4Pq-ot-OXg"/>
-                                    <constraint firstItem="66w-gE-JN3" firstAttribute="leading" secondItem="VVG-hZ-AoZ" secondAttribute="trailing" id="4eX-Ry-fmG"/>
+                                    <constraint firstItem="66w-gE-JN3" firstAttribute="leading" secondItem="VVG-hZ-AoZ" secondAttribute="trailing" id="4eX-Ry-fmG">
+                                        <variation key="heightClass=compact-widthClass=compact" constant="20"/>
+                                    </constraint>
                                     <constraint firstItem="KhB-Ta-DlU" firstAttribute="leading" secondItem="ETW-WA-d7o" secondAttribute="leading" id="7X7-d2-6LL"/>
                                     <constraint firstAttribute="height" constant="90" id="8xW-UQ-Atp"/>
                                     <constraint firstItem="KhB-Ta-DlU" firstAttribute="width" secondItem="ETW-WA-d7o" secondAttribute="width" id="9MD-Yl-KDU"/>
@@ -1734,7 +1736,9 @@
                                     <constraint firstItem="VVG-hZ-AoZ" firstAttribute="top" secondItem="f3A-fI-24f" secondAttribute="top" id="IA6-YN-OgS"/>
                                     <constraint firstAttribute="bottom" secondItem="66w-gE-JN3" secondAttribute="bottom" id="Ldb-LI-DKk"/>
                                     <constraint firstAttribute="bottom" secondItem="BKJ-6x-64U" secondAttribute="bottom" id="LzQ-cu-0BQ"/>
-                                    <constraint firstItem="ETW-WA-d7o" firstAttribute="leading" secondItem="BKJ-6x-64U" secondAttribute="trailing" constant="8" id="R9k-Bf-TOw"/>
+                                    <constraint firstItem="ETW-WA-d7o" firstAttribute="leading" secondItem="BKJ-6x-64U" secondAttribute="trailing" constant="8" id="R9k-Bf-TOw">
+                                        <variation key="heightClass=compact-widthClass=compact" constant="30"/>
+                                    </constraint>
                                     <constraint firstItem="Fdu-s6-sOj" firstAttribute="centerX" secondItem="f3A-fI-24f" secondAttribute="centerX" id="SLt-2C-Ci4"/>
                                     <constraint firstItem="Tcg-ns-5JI" firstAttribute="top" secondItem="ETW-WA-d7o" secondAttribute="top" id="UaR-gE-KYU"/>
                                     <constraint firstItem="vaJ-1c-MHK" firstAttribute="height" secondItem="ETW-WA-d7o" secondAttribute="height" id="VD3-1X-OZl"/>
@@ -1750,8 +1754,12 @@
                                     </constraint>
                                     <constraint firstItem="trH-d2-yJC" firstAttribute="height" secondItem="ETW-WA-d7o" secondAttribute="height" id="iiq-GL-bx4"/>
                                     <constraint firstItem="trH-d2-yJC" firstAttribute="width" secondItem="ETW-WA-d7o" secondAttribute="width" id="kGL-Jj-UMX"/>
-                                    <constraint firstItem="66w-gE-JN3" firstAttribute="leading" secondItem="Tcg-ns-5JI" secondAttribute="trailing" constant="8" id="mbc-BQ-DvV"/>
-                                    <constraint firstItem="VVG-hZ-AoZ" firstAttribute="leading" secondItem="BKJ-6x-64U" secondAttribute="trailing" id="mo2-dO-YmH"/>
+                                    <constraint firstItem="66w-gE-JN3" firstAttribute="leading" secondItem="Tcg-ns-5JI" secondAttribute="trailing" constant="8" id="mbc-BQ-DvV">
+                                        <variation key="heightClass=compact-widthClass=compact" constant="30"/>
+                                    </constraint>
+                                    <constraint firstItem="VVG-hZ-AoZ" firstAttribute="leading" secondItem="BKJ-6x-64U" secondAttribute="trailing" id="mo2-dO-YmH">
+                                        <variation key="heightClass=compact-widthClass=compact" constant="20"/>
+                                    </constraint>
                                     <constraint firstItem="Tcg-ns-5JI" firstAttribute="trailing" secondItem="trH-d2-yJC" secondAttribute="trailing" id="rJQ-Za-vT4"/>
                                     <constraint firstItem="Tcg-ns-5JI" firstAttribute="height" secondItem="ETW-WA-d7o" secondAttribute="height" id="s8Q-1G-a31"/>
                                     <constraint firstItem="ETW-WA-d7o" firstAttribute="centerY" secondItem="f3A-fI-24f" secondAttribute="centerY" id="wOv-4j-OlB">
@@ -2223,7 +2231,9 @@
                             <constraint firstItem="g5y-Vh-0jl" firstAttribute="leading" secondItem="f3A-fI-24f" secondAttribute="trailing" id="64B-Cj-XFj">
                                 <variation key="heightClass=compact-widthClass=compact" constant="10"/>
                             </constraint>
-                            <constraint firstItem="CEN-Ry-QZh" firstAttribute="trailing" secondItem="f3A-fI-24f" secondAttribute="trailing" id="7O0-19-PUu"/>
+                            <constraint firstItem="CEN-Ry-QZh" firstAttribute="trailing" secondItem="f3A-fI-24f" secondAttribute="trailing" id="7O0-19-PUu">
+                                <variation key="heightClass=compact-widthClass=compact" constant="-12"/>
+                            </constraint>
                             <constraint firstItem="D8E-eV-xxU" firstAttribute="leading" secondItem="DAd-MB-Eub" secondAttribute="leading" id="80T-td-hXX"/>
                             <constraint firstItem="dpb-fV-UYV" firstAttribute="top" secondItem="DAd-MB-Eub" secondAttribute="top" constant="12" id="Eub-fQ-ghU">
                                 <variation key="heightClass=compact-widthClass=compact" constant="20"/>
@@ -2242,13 +2252,18 @@
                             <constraint firstItem="c8d-Ch-CPC" firstAttribute="centerX" secondItem="DAd-MB-Eub" secondAttribute="centerX" id="ZqT-vb-dmv"/>
                             <constraint firstItem="0SO-M7-oks" firstAttribute="top" secondItem="D8E-eV-xxU" secondAttribute="bottom" id="oLP-xv-MZv"/>
                             <constraint firstItem="DwF-X0-Svs" firstAttribute="top" secondItem="CEN-Ry-QZh" secondAttribute="bottom" constant="8" id="pM1-WB-uhu"/>
+                            <constraint firstItem="CEN-Ry-QZh" firstAttribute="top" secondItem="f3A-fI-24f" secondAttribute="bottom" constant="20" id="q75-NV-Gi6"/>
                             <constraint firstItem="D8E-eV-xxU" firstAttribute="top" secondItem="DAd-MB-Eub" secondAttribute="top" id="reL-Tp-2ed"/>
-                            <constraint firstItem="0SO-M7-oks" firstAttribute="top" secondItem="DwF-X0-Svs" secondAttribute="bottom" id="s6T-ia-XbM"/>
+                            <constraint firstItem="0SO-M7-oks" firstAttribute="top" secondItem="DwF-X0-Svs" secondAttribute="bottom" id="s6T-ia-XbM">
+                                <variation key="heightClass=compact-widthClass=compact" constant="4"/>
+                            </constraint>
                             <constraint firstAttribute="trailing" secondItem="g5y-Vh-0jl" secondAttribute="trailing" constant="12" id="sC4-Lz-OWu">
                                 <variation key="heightClass=compact-widthClass=compact" constant="8"/>
                             </constraint>
                             <constraint firstAttribute="trailing" secondItem="DwF-X0-Svs" secondAttribute="trailing" id="scu-nc-klr"/>
-                            <constraint firstItem="CEN-Ry-QZh" firstAttribute="leading" secondItem="f3A-fI-24f" secondAttribute="leading" id="xI2-29-ZOz"/>
+                            <constraint firstItem="CEN-Ry-QZh" firstAttribute="leading" secondItem="f3A-fI-24f" secondAttribute="leading" id="xI2-29-ZOz">
+                                <variation key="heightClass=compact-widthClass=compact" constant="12"/>
+                            </constraint>
                         </constraints>
                         <variation key="default">
                             <mask key="subviews">
@@ -2272,6 +2287,7 @@
                                 <exclude reference="V5s-eg-aYu"/>
                                 <exclude reference="ZqT-vb-dmv"/>
                                 <exclude reference="7O0-19-PUu"/>
+                                <exclude reference="q75-NV-Gi6"/>
                                 <exclude reference="xI2-29-ZOz"/>
                                 <exclude reference="4vY-m4-nO9"/>
                                 <exclude reference="64B-Cj-XFj"/>
@@ -2300,11 +2316,12 @@
                                 <include reference="Eub-fQ-ghU"/>
                                 <include reference="IfV-H4-AXO"/>
                                 <include reference="IfO-6a-MKI"/>
-                                <include reference="QiK-Yf-agK"/>
+                                <exclude reference="QiK-Yf-agK"/>
                                 <exclude reference="ROu-gO-XEb"/>
                                 <include reference="V5s-eg-aYu"/>
                                 <include reference="ZqT-vb-dmv"/>
                                 <include reference="7O0-19-PUu"/>
+                                <include reference="q75-NV-Gi6"/>
                                 <include reference="xI2-29-ZOz"/>
                                 <include reference="4vY-m4-nO9"/>
                                 <include reference="64B-Cj-XFj"/>
@@ -2335,6 +2352,7 @@
                         <outlet property="carBtn5" destination="vaJ-1c-MHK" id="SXI-xS-KQv"/>
                         <outlet property="carBtn6" destination="trH-d2-yJC" id="luj-ab-jan"/>
                         <outlet property="masterSwitch" destination="g5y-Vh-0jl" id="vFG-qN-ZOs"/>
+                        <outlet property="selectCarViewCons" destination="q75-NV-Gi6" id="nnO-yb-lbz"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qqs-qF-fmw" userLabel="First Responder" sceneMemberID="firstResponder"/>

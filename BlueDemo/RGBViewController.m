@@ -44,6 +44,7 @@ static NSString *const kStartNotifyCharacteristicUUID = @"0xFFFB";
 @property (weak, nonatomic) IBOutlet UIButton *carBtn6;
 
 @property (weak, nonatomic) IBOutlet UISwitch *masterSwitch;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *selectCarViewCons;
 
 @property (weak, nonatomic) UISlider *leftSlider;
 @property (weak, nonatomic) UISlider *rightSlider;
@@ -108,6 +109,21 @@ static NSString *const kStartNotifyCharacteristicUUID = @"0xFFFB";
     self.sliderFirstSend = YES;
     
     [self setUpSlider];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    CGFloat screenHeight = [[UIScreen mainScreen] bounds].size.height;
+    // 针对不同手机，修改顶部距离
+    if (screenHeight == 375) {
+        self.selectCarViewCons.constant = 52;
+    } else if (screenHeight == 414){
+        self.selectCarViewCons.constant = 68;
+    } else {
+        self.selectCarViewCons.constant = 20;
+    }
+    
 }
 
 - (void)setMPeripheral:(CBPeripheral *)mPeripheral {
