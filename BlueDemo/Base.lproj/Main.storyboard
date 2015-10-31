@@ -120,10 +120,38 @@
                                     </mask>
                                 </variation>
                             </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="rgbControl" translatesAutoresizingMaskIntoConstraints="NO" id="WPy-Lg-MNb">
+                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                <animations/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="switchControl" translatesAutoresizingMaskIntoConstraints="NO" id="3ST-p5-PhI">
+                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="3ST-p5-PhI" secondAttribute="height" multiplier="13:1" id="BaY-z6-2Pq"/>
+                                    <constraint firstAttribute="width" constant="60" id="jmv-N6-mL0">
+                                        <variation key="heightClass=compact-widthClass=compact" constant="112"/>
+                                    </constraint>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="BaY-z6-2Pq"/>
+                                        <exclude reference="jmv-N6-mL0"/>
+                                    </mask>
+                                </variation>
+                                <variation key="heightClass=compact-widthClass=compact">
+                                    <mask key="constraints">
+                                        <include reference="BaY-z6-2Pq"/>
+                                        <include reference="jmv-N6-mL0"/>
+                                    </mask>
+                                </variation>
+                            </imageView>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="3ST-p5-PhI" firstAttribute="centerX" secondItem="CX7-vG-eBI" secondAttribute="centerX" id="3Qi-hw-X1y"/>
+                            <constraint firstItem="WPy-Lg-MNb" firstAttribute="centerX" secondItem="avT-Lc-tZ5" secondAttribute="centerX" id="7Rg-0w-ojE"/>
                             <constraint firstItem="CX7-vG-eBI" firstAttribute="centerY" secondItem="avT-Lc-tZ5" secondAttribute="centerY" id="ArW-jY-pDC"/>
                             <constraint firstAttribute="trailing" secondItem="0zM-6g-7QH" secondAttribute="trailing" id="GaM-0h-HJN"/>
                             <constraint firstItem="0zM-6g-7QH" firstAttribute="leading" secondItem="s1T-6F-0f8" secondAttribute="leading" id="OLa-v8-jkh"/>
@@ -132,8 +160,13 @@
                             <constraint firstItem="0zM-6g-7QH" firstAttribute="top" secondItem="s1T-6F-0f8" secondAttribute="top" id="cFZ-ex-bLu"/>
                             <constraint firstAttribute="bottomMargin" secondItem="0zM-6g-7QH" secondAttribute="bottom" id="eMw-cw-FMe"/>
                             <constraint firstItem="avT-Lc-tZ5" firstAttribute="centerY" secondItem="s1T-6F-0f8" secondAttribute="centerY" constant="30" id="fJm-EL-Uco"/>
+                            <constraint firstItem="3ST-p5-PhI" firstAttribute="top" secondItem="WPy-Lg-MNb" secondAttribute="bottom" constant="6" id="fVd-qN-eIw"/>
                             <constraint firstItem="EPM-NO-2jR" firstAttribute="centerX" secondItem="s1T-6F-0f8" secondAttribute="centerX" id="lyJ-oc-UYE"/>
                             <constraint firstItem="CX7-vG-eBI" firstAttribute="top" secondItem="EPM-NO-2jR" secondAttribute="bottom" constant="20" id="v7o-Nz-uDb"/>
+                            <constraint firstItem="WPy-Lg-MNb" firstAttribute="top" secondItem="CX7-vG-eBI" secondAttribute="bottom" constant="4" id="wHw-V4-226">
+                                <variation key="heightClass=compact-widthClass=compact" constant="6"/>
+                            </constraint>
+                            <constraint firstItem="3ST-p5-PhI" firstAttribute="top" secondItem="CX7-vG-eBI" secondAttribute="bottom" constant="6" id="y6O-DF-D9u"/>
                             <constraint firstItem="avT-Lc-tZ5" firstAttribute="centerX" secondItem="s1T-6F-0f8" secondAttribute="centerX" constant="-80" id="zIO-8G-L32"/>
                         </constraints>
                         <variation key="default">
@@ -142,19 +175,26 @@
                                 <exclude reference="avT-Lc-tZ5"/>
                                 <exclude reference="CX7-vG-eBI"/>
                                 <exclude reference="EPM-NO-2jR"/>
+                                <exclude reference="WPy-Lg-MNb"/>
+                                <exclude reference="3ST-p5-PhI"/>
                             </mask>
                             <mask key="constraints">
-                                <exclude reference="ArW-jY-pDC"/>
-                                <exclude reference="S9x-mp-Ww2"/>
-                                <exclude reference="aIU-bv-azt"/>
-                                <exclude reference="v7o-Nz-uDb"/>
-                                <exclude reference="fJm-EL-Uco"/>
-                                <exclude reference="zIO-8G-L32"/>
                                 <exclude reference="GaM-0h-HJN"/>
                                 <exclude reference="OLa-v8-jkh"/>
                                 <exclude reference="cFZ-ex-bLu"/>
                                 <exclude reference="eMw-cw-FMe"/>
                                 <exclude reference="lyJ-oc-UYE"/>
+                                <exclude reference="fJm-EL-Uco"/>
+                                <exclude reference="zIO-8G-L32"/>
+                                <exclude reference="7Rg-0w-ojE"/>
+                                <exclude reference="wHw-V4-226"/>
+                                <exclude reference="ArW-jY-pDC"/>
+                                <exclude reference="S9x-mp-Ww2"/>
+                                <exclude reference="aIU-bv-azt"/>
+                                <exclude reference="v7o-Nz-uDb"/>
+                                <exclude reference="3Qi-hw-X1y"/>
+                                <exclude reference="fVd-qN-eIw"/>
+                                <exclude reference="y6O-DF-D9u"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=compact">
@@ -167,19 +207,26 @@
                             <mask key="subviews">
                                 <include reference="0zM-6g-7QH"/>
                                 <include reference="EPM-NO-2jR"/>
+                                <include reference="WPy-Lg-MNb"/>
+                                <include reference="3ST-p5-PhI"/>
                             </mask>
                             <mask key="constraints">
-                                <include reference="ArW-jY-pDC"/>
-                                <include reference="S9x-mp-Ww2"/>
-                                <exclude reference="aIU-bv-azt"/>
-                                <include reference="v7o-Nz-uDb"/>
-                                <include reference="fJm-EL-Uco"/>
-                                <include reference="zIO-8G-L32"/>
                                 <include reference="GaM-0h-HJN"/>
                                 <include reference="OLa-v8-jkh"/>
                                 <include reference="cFZ-ex-bLu"/>
                                 <include reference="eMw-cw-FMe"/>
                                 <include reference="lyJ-oc-UYE"/>
+                                <include reference="fJm-EL-Uco"/>
+                                <include reference="zIO-8G-L32"/>
+                                <include reference="7Rg-0w-ojE"/>
+                                <include reference="wHw-V4-226"/>
+                                <include reference="ArW-jY-pDC"/>
+                                <include reference="S9x-mp-Ww2"/>
+                                <exclude reference="aIU-bv-azt"/>
+                                <include reference="v7o-Nz-uDb"/>
+                                <include reference="3Qi-hw-X1y"/>
+                                <exclude reference="fVd-qN-eIw"/>
+                                <include reference="y6O-DF-D9u"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=compact-widthClass=regular">
@@ -189,12 +236,12 @@
                                 <include reference="EPM-NO-2jR"/>
                             </mask>
                             <mask key="constraints">
+                                <include reference="lyJ-oc-UYE"/>
+                                <include reference="fJm-EL-Uco"/>
+                                <include reference="zIO-8G-L32"/>
                                 <include reference="ArW-jY-pDC"/>
                                 <include reference="S9x-mp-Ww2"/>
                                 <include reference="v7o-Nz-uDb"/>
-                                <include reference="fJm-EL-Uco"/>
-                                <include reference="zIO-8G-L32"/>
-                                <include reference="lyJ-oc-UYE"/>
                             </mask>
                         </variation>
                     </view>
@@ -2679,9 +2726,11 @@
         <image name="momentary" width="43" height="10"/>
         <image name="momentary_highlighted" width="43" height="10"/>
         <image name="one" width="13" height="8"/>
+        <image name="rgbControl" width="89" height="8"/>
         <image name="six" width="13" height="8"/>
         <image name="strobe" width="26" height="10"/>
         <image name="strobe_highlighted" width="26" height="10"/>
+        <image name="switchControl" width="129" height="10"/>
         <image name="three" width="20" height="8"/>
         <image name="two" width="13" height="8"/>
         <image name="viewBg" width="667" height="375"/>
