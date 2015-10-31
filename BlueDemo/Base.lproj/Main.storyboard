@@ -155,11 +155,9 @@
                             <constraint firstAttribute="trailing" secondItem="0zM-6g-7QH" secondAttribute="trailing" id="GaM-0h-HJN"/>
                             <constraint firstItem="0zM-6g-7QH" firstAttribute="leading" secondItem="s1T-6F-0f8" secondAttribute="leading" id="OLa-v8-jkh"/>
                             <constraint firstItem="CX7-vG-eBI" firstAttribute="centerX" secondItem="s1T-6F-0f8" secondAttribute="centerX" constant="80" id="S9x-mp-Ww2"/>
-                            <constraint firstItem="CX7-vG-eBI" firstAttribute="top" secondItem="0zM-6g-7QH" secondAttribute="bottom" id="aIU-bv-azt"/>
                             <constraint firstItem="0zM-6g-7QH" firstAttribute="top" secondItem="s1T-6F-0f8" secondAttribute="top" id="cFZ-ex-bLu"/>
                             <constraint firstAttribute="bottomMargin" secondItem="0zM-6g-7QH" secondAttribute="bottom" id="eMw-cw-FMe"/>
                             <constraint firstItem="avT-Lc-tZ5" firstAttribute="centerY" secondItem="s1T-6F-0f8" secondAttribute="centerY" constant="30" id="fJm-EL-Uco"/>
-                            <constraint firstItem="3ST-p5-PhI" firstAttribute="top" secondItem="WPy-Lg-MNb" secondAttribute="bottom" constant="6" id="fVd-qN-eIw"/>
                             <constraint firstItem="EPM-NO-2jR" firstAttribute="centerX" secondItem="s1T-6F-0f8" secondAttribute="centerX" id="lyJ-oc-UYE"/>
                             <constraint firstItem="CX7-vG-eBI" firstAttribute="top" secondItem="EPM-NO-2jR" secondAttribute="bottom" constant="20" id="v7o-Nz-uDb"/>
                             <constraint firstItem="WPy-Lg-MNb" firstAttribute="top" secondItem="CX7-vG-eBI" secondAttribute="bottom" constant="4" id="wHw-V4-226">
@@ -189,10 +187,8 @@
                                 <exclude reference="wHw-V4-226"/>
                                 <exclude reference="ArW-jY-pDC"/>
                                 <exclude reference="S9x-mp-Ww2"/>
-                                <exclude reference="aIU-bv-azt"/>
                                 <exclude reference="v7o-Nz-uDb"/>
                                 <exclude reference="3Qi-hw-X1y"/>
-                                <exclude reference="fVd-qN-eIw"/>
                                 <exclude reference="y6O-DF-D9u"/>
                             </mask>
                         </variation>
@@ -221,26 +217,35 @@
                                 <include reference="wHw-V4-226"/>
                                 <include reference="ArW-jY-pDC"/>
                                 <include reference="S9x-mp-Ww2"/>
-                                <exclude reference="aIU-bv-azt"/>
                                 <include reference="v7o-Nz-uDb"/>
                                 <include reference="3Qi-hw-X1y"/>
-                                <exclude reference="fVd-qN-eIw"/>
                                 <include reference="y6O-DF-D9u"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=compact-widthClass=regular">
                             <mask key="subviews">
+                                <include reference="0zM-6g-7QH"/>
                                 <include reference="avT-Lc-tZ5"/>
                                 <include reference="CX7-vG-eBI"/>
                                 <include reference="EPM-NO-2jR"/>
+                                <include reference="WPy-Lg-MNb"/>
+                                <include reference="3ST-p5-PhI"/>
                             </mask>
                             <mask key="constraints">
+                                <include reference="GaM-0h-HJN"/>
+                                <include reference="OLa-v8-jkh"/>
+                                <include reference="cFZ-ex-bLu"/>
+                                <include reference="eMw-cw-FMe"/>
                                 <include reference="lyJ-oc-UYE"/>
                                 <include reference="fJm-EL-Uco"/>
                                 <include reference="zIO-8G-L32"/>
+                                <include reference="7Rg-0w-ojE"/>
+                                <include reference="wHw-V4-226"/>
                                 <include reference="ArW-jY-pDC"/>
                                 <include reference="S9x-mp-Ww2"/>
                                 <include reference="v7o-Nz-uDb"/>
+                                <include reference="3Qi-hw-X1y"/>
+                                <include reference="y6O-DF-D9u"/>
                             </mask>
                         </variation>
                     </view>
@@ -1611,6 +1616,7 @@
                                     </constraint>
                                     <constraint firstAttribute="width" constant="49" id="DAL-5a-vR8"/>
                                 </constraints>
+                                <color key="onTintColor" red="0.79607843137254897" green="0.0" blue="0.082352941176470587" alpha="1" colorSpace="calibratedRGB"/>
                                 <variation key="default">
                                     <mask key="constraints">
                                         <exclude reference="50T-gZ-dxK"/>
@@ -1633,13 +1639,15 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BKJ-6x-64U">
                                         <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                         <animations/>
-                                        <color key="backgroundColor" red="1" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="12" id="xxV-s2-aad">
                                                 <variation key="heightClass=compact-widthClass=compact" constant="20"/>
                                             </constraint>
                                         </constraints>
-                                        <state key="normal" title="&lt;"/>
+                                        <state key="normal" title="&lt;">
+                                            <color key="titleColor" red="0.96078431372549022" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
                                         <variation key="default">
                                             <mask key="constraints">
                                                 <exclude reference="xxV-s2-aad"/>
@@ -1654,11 +1662,13 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="66w-gE-JN3">
                                         <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                         <animations/>
-                                        <color key="backgroundColor" red="1" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="20" id="HRV-Mp-M6A"/>
                                         </constraints>
-                                        <state key="normal" title="&gt;"/>
+                                        <state key="normal" title="&gt;">
+                                            <color key="titleColor" red="0.96078431372549022" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
                                         <variation key="default">
                                             <mask key="constraints">
                                                 <exclude reference="HRV-Mp-M6A"/>
