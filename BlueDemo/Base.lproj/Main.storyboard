@@ -1582,47 +1582,6 @@
                                     <action selector="masterSwitchClick:" destination="T6i-m9-jI6" eventType="valueChanged" id="IBs-IX-tV8"/>
                                 </connections>
                             </switch>
-                            <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="cau-eV-upS">
-                                <rect key="frame" x="-12" y="330" width="382" height="30"/>
-                                <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZgU-Xm-57k">
-                                        <rect key="frame" x="0.0" y="0.0" width="52" height="30"/>
-                                        <animations/>
-                                        <state key="normal" title="Button1"/>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Cx5-qx-BFc">
-                                        <rect key="frame" x="52" y="0.0" width="55" height="30"/>
-                                        <animations/>
-                                        <state key="normal" title="Button2"/>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yYu-SR-Xbx">
-                                        <rect key="frame" x="107" y="0.0" width="55" height="30"/>
-                                        <animations/>
-                                        <state key="normal" title="Button3"/>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ISc-ZA-OS6">
-                                        <rect key="frame" x="162" y="0.0" width="56" height="30"/>
-                                        <animations/>
-                                        <state key="normal" title="Button4"/>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ikq-Ds-KRz">
-                                        <rect key="frame" x="218" y="0.0" width="55" height="30"/>
-                                        <animations/>
-                                        <state key="normal" title="Button5"/>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jJb-3b-Sd6">
-                                        <rect key="frame" x="273" y="0.0" width="55" height="30"/>
-                                        <animations/>
-                                        <state key="normal" title="Button6"/>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HcQ-kN-QJK">
-                                        <rect key="frame" x="328" y="0.0" width="54" height="30"/>
-                                        <animations/>
-                                        <state key="normal" title="Button7"/>
-                                    </button>
-                                </subviews>
-                                <animations/>
-                            </stackView>
                             <view contentMode="scaleAspectFill" translatesAutoresizingMaskIntoConstraints="NO" id="f3A-fI-24f" userLabel="selectCarView">
                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                 <subviews>
@@ -1903,26 +1862,149 @@
                                     </mask>
                                 </variation>
                             </view>
-                            <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="7mp-tz-IN5">
-                                <rect key="frame" x="33" y="292" width="188" height="30"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CEN-Ry-QZh">
+                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WDb-nf-VDB">
-                                        <rect key="frame" x="0.0" y="0.0" width="46" height="30"/>
+                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WDb-nf-VDB" userLabel="savePreset">
+                                        <rect key="frame" x="20" y="20" width="176" height="42"/>
                                         <animations/>
-                                        <state key="normal" title="Button"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="36" id="lwc-GR-TcS"/>
+                                            <constraint firstAttribute="width" secondItem="WDb-nf-VDB" secondAttribute="height" multiplier="41:9" id="vtZ-zX-gT8"/>
+                                        </constraints>
+                                        <state key="normal" image="btn_savePreset"/>
+                                        <state key="highlighted" image="btn_savePreset_highlight"/>
+                                        <variation key="default">
+                                            <mask key="constraints">
+                                                <exclude reference="lwc-GR-TcS"/>
+                                                <exclude reference="vtZ-zX-gT8"/>
+                                            </mask>
+                                        </variation>
+                                        <variation key="heightClass=compact-widthClass=compact">
+                                            <mask key="constraints">
+                                                <exclude reference="lwc-GR-TcS"/>
+                                                <include reference="vtZ-zX-gT8"/>
+                                            </mask>
+                                        </variation>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="B08-Kq-O9A">
-                                        <rect key="frame" x="46" y="0.0" width="46" height="30"/>
+                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="B08-Kq-O9A" userLabel="selectPreset">
+                                        <rect key="frame" x="54" y="20" width="107" height="42"/>
                                         <animations/>
-                                        <state key="normal" title="Button"/>
+                                        <state key="normal" image="btn_selectPreset"/>
+                                        <state key="highlighted" image="btn_selectPreset_highlight"/>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="d3g-uP-lPI">
-                                        <rect key="frame" x="92" y="0.0" width="96" height="30"/>
+                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="d3g-uP-lPI" userLabel="selectColor">
+                                        <rect key="frame" x="108" y="20" width="0.0" height="42"/>
                                         <animations/>
-                                        <state key="normal" title="selectedColor"/>
+                                        <state key="normal" image="btn_selectColor"/>
+                                        <state key="highlighted" image="btn_selectColor_highlight"/>
                                         <connections>
                                             <segue destination="CqS-Xx-x0g" kind="presentation" id="ekJ-wz-PSc"/>
                                         </connections>
+                                    </button>
+                                </subviews>
+                                <animations/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="B08-Kq-O9A" firstAttribute="centerY" secondItem="WDb-nf-VDB" secondAttribute="centerY" id="3Zw-C9-RjR"/>
+                                    <constraint firstItem="WDb-nf-VDB" firstAttribute="centerY" secondItem="CEN-Ry-QZh" secondAttribute="centerY" id="Dyk-rd-8SP"/>
+                                    <constraint firstAttribute="trailing" secondItem="d3g-uP-lPI" secondAttribute="trailing" id="Fy6-Fz-UMu"/>
+                                    <constraint firstItem="d3g-uP-lPI" firstAttribute="height" secondItem="WDb-nf-VDB" secondAttribute="height" id="Oun-G5-ZgA"/>
+                                    <constraint firstItem="d3g-uP-lPI" firstAttribute="width" secondItem="WDb-nf-VDB" secondAttribute="width" id="RUU-0Z-UlT"/>
+                                    <constraint firstItem="B08-Kq-O9A" firstAttribute="leading" secondItem="WDb-nf-VDB" secondAttribute="trailing" constant="29" id="Vin-eQ-1Xj">
+                                        <variation key="heightClass=compact-widthClass=compact" constant="0.0"/>
+                                    </constraint>
+                                    <constraint firstItem="B08-Kq-O9A" firstAttribute="height" secondItem="WDb-nf-VDB" secondAttribute="height" id="ZEI-Bm-aOM"/>
+                                    <constraint firstItem="B08-Kq-O9A" firstAttribute="width" secondItem="WDb-nf-VDB" secondAttribute="width" id="k37-q0-oxW"/>
+                                    <constraint firstItem="d3g-uP-lPI" firstAttribute="leading" secondItem="B08-Kq-O9A" secondAttribute="trailing" constant="-24" id="l0o-z4-hZa">
+                                        <variation key="heightClass=compact-widthClass=compact" constant="0.0"/>
+                                    </constraint>
+                                    <constraint firstItem="d3g-uP-lPI" firstAttribute="centerY" secondItem="WDb-nf-VDB" secondAttribute="centerY" id="lhR-cm-agY"/>
+                                    <constraint firstAttribute="height" constant="36" id="nMg-QY-2TD">
+                                        <variation key="heightClass=compact-widthClass=compact" constant="36"/>
+                                    </constraint>
+                                    <constraint firstItem="WDb-nf-VDB" firstAttribute="leading" secondItem="CEN-Ry-QZh" secondAttribute="leading" id="zgY-Dj-qCT"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="subviews">
+                                        <exclude reference="WDb-nf-VDB"/>
+                                        <exclude reference="B08-Kq-O9A"/>
+                                        <exclude reference="d3g-uP-lPI"/>
+                                    </mask>
+                                    <mask key="constraints">
+                                        <exclude reference="nMg-QY-2TD"/>
+                                        <exclude reference="Dyk-rd-8SP"/>
+                                        <exclude reference="zgY-Dj-qCT"/>
+                                        <exclude reference="3Zw-C9-RjR"/>
+                                        <exclude reference="Vin-eQ-1Xj"/>
+                                        <exclude reference="ZEI-Bm-aOM"/>
+                                        <exclude reference="k37-q0-oxW"/>
+                                        <exclude reference="Fy6-Fz-UMu"/>
+                                        <exclude reference="Oun-G5-ZgA"/>
+                                        <exclude reference="RUU-0Z-UlT"/>
+                                        <exclude reference="l0o-z4-hZa"/>
+                                        <exclude reference="lhR-cm-agY"/>
+                                    </mask>
+                                </variation>
+                                <variation key="heightClass=compact-widthClass=compact">
+                                    <mask key="subviews">
+                                        <include reference="WDb-nf-VDB"/>
+                                        <include reference="B08-Kq-O9A"/>
+                                        <include reference="d3g-uP-lPI"/>
+                                    </mask>
+                                    <mask key="constraints">
+                                        <include reference="nMg-QY-2TD"/>
+                                        <include reference="Dyk-rd-8SP"/>
+                                        <include reference="zgY-Dj-qCT"/>
+                                        <include reference="3Zw-C9-RjR"/>
+                                        <include reference="Vin-eQ-1Xj"/>
+                                        <include reference="ZEI-Bm-aOM"/>
+                                        <include reference="k37-q0-oxW"/>
+                                        <include reference="Fy6-Fz-UMu"/>
+                                        <include reference="Oun-G5-ZgA"/>
+                                        <include reference="RUU-0Z-UlT"/>
+                                        <include reference="l0o-z4-hZa"/>
+                                        <include reference="lhR-cm-agY"/>
+                                    </mask>
+                                </variation>
+                            </view>
+                            <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="cau-eV-upS">
+                                <rect key="frame" x="-12" y="330" width="382" height="30"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZgU-Xm-57k">
+                                        <rect key="frame" x="0.0" y="0.0" width="52" height="30"/>
+                                        <animations/>
+                                        <state key="normal" title="Button1"/>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Cx5-qx-BFc">
+                                        <rect key="frame" x="52" y="0.0" width="55" height="30"/>
+                                        <animations/>
+                                        <state key="normal" title="Button2"/>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yYu-SR-Xbx">
+                                        <rect key="frame" x="107" y="0.0" width="55" height="30"/>
+                                        <animations/>
+                                        <state key="normal" title="Button3"/>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ISc-ZA-OS6">
+                                        <rect key="frame" x="162" y="0.0" width="56" height="30"/>
+                                        <animations/>
+                                        <state key="normal" title="Button4"/>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ikq-Ds-KRz">
+                                        <rect key="frame" x="218" y="0.0" width="55" height="30"/>
+                                        <animations/>
+                                        <state key="normal" title="Button5"/>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jJb-3b-Sd6">
+                                        <rect key="frame" x="273" y="0.0" width="55" height="30"/>
+                                        <animations/>
+                                        <state key="normal" title="Button6"/>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HcQ-kN-QJK">
+                                        <rect key="frame" x="328" y="0.0" width="54" height="30"/>
+                                        <animations/>
+                                        <state key="normal" title="Button7"/>
                                     </button>
                                 </subviews>
                                 <animations/>
@@ -1931,13 +2013,12 @@
                         <animations/>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="7mp-tz-IN5" firstAttribute="leading" secondItem="f3A-fI-24f" secondAttribute="leading" id="3We-AB-Y7h"/>
                             <constraint firstItem="g5y-Vh-0jl" firstAttribute="top" secondItem="dpb-fV-UYV" secondAttribute="top" id="4vY-m4-nO9"/>
                             <constraint firstItem="g5y-Vh-0jl" firstAttribute="leading" secondItem="f3A-fI-24f" secondAttribute="trailing" id="64B-Cj-XFj">
                                 <variation key="heightClass=compact-widthClass=compact" constant="10"/>
                             </constraint>
+                            <constraint firstItem="CEN-Ry-QZh" firstAttribute="trailing" secondItem="f3A-fI-24f" secondAttribute="trailing" id="7O0-19-PUu"/>
                             <constraint firstItem="D8E-eV-xxU" firstAttribute="leading" secondItem="DAd-MB-Eub" secondAttribute="leading" id="80T-td-hXX"/>
-                            <constraint firstItem="7mp-tz-IN5" firstAttribute="trailing" secondItem="f3A-fI-24f" secondAttribute="trailing" id="9HC-oY-L7u"/>
                             <constraint firstItem="dpb-fV-UYV" firstAttribute="top" secondItem="DAd-MB-Eub" secondAttribute="top" constant="12" id="Eub-fQ-ghU">
                                 <variation key="heightClass=compact-widthClass=compact" constant="20"/>
                             </constraint>
@@ -1952,8 +2033,8 @@
                             <constraint firstItem="0SO-M7-oks" firstAttribute="top" secondItem="cau-eV-upS" secondAttribute="bottom" constant="20" id="QN4-Tn-XHf"/>
                             <constraint firstItem="f3A-fI-24f" firstAttribute="top" secondItem="c8d-Ch-CPC" secondAttribute="bottom" constant="10" id="QiK-Yf-agK"/>
                             <constraint firstItem="c8d-Ch-CPC" firstAttribute="top" secondItem="DAd-MB-Eub" secondAttribute="topMargin" constant="12" id="ROu-gO-XEb"/>
-                            <constraint firstItem="cau-eV-upS" firstAttribute="top" secondItem="7mp-tz-IN5" secondAttribute="bottom" constant="8" id="SS1-0P-uxS"/>
                             <constraint firstItem="c8d-Ch-CPC" firstAttribute="top" secondItem="dpb-fV-UYV" secondAttribute="top" id="V5s-eg-aYu"/>
+                            <constraint firstItem="cau-eV-upS" firstAttribute="top" secondItem="CEN-Ry-QZh" secondAttribute="bottom" constant="8" id="Xxn-FK-OOM"/>
                             <constraint firstItem="c8d-Ch-CPC" firstAttribute="centerX" secondItem="DAd-MB-Eub" secondAttribute="centerX" id="ZqT-vb-dmv"/>
                             <constraint firstItem="0SO-M7-oks" firstAttribute="top" secondItem="D8E-eV-xxU" secondAttribute="bottom" id="oLP-xv-MZv"/>
                             <constraint firstAttribute="trailing" secondItem="cau-eV-upS" secondAttribute="trailing" constant="8" id="oTv-9L-Mcl"/>
@@ -1961,6 +2042,7 @@
                             <constraint firstAttribute="trailing" secondItem="g5y-Vh-0jl" secondAttribute="trailing" constant="12" id="sC4-Lz-OWu">
                                 <variation key="heightClass=compact-widthClass=compact" constant="8"/>
                             </constraint>
+                            <constraint firstItem="CEN-Ry-QZh" firstAttribute="leading" secondItem="f3A-fI-24f" secondAttribute="leading" id="xI2-29-ZOz"/>
                         </constraints>
                         <variation key="default">
                             <mask key="subviews">
@@ -1969,25 +2051,26 @@
                                 <exclude reference="c8d-Ch-CPC"/>
                                 <exclude reference="g5y-Vh-0jl"/>
                                 <exclude reference="f3A-fI-24f"/>
+                                <exclude reference="CEN-Ry-QZh"/>
                             </mask>
                             <mask key="constraints">
-                                <exclude reference="Eub-fQ-ghU"/>
-                                <exclude reference="IfV-H4-AXO"/>
-                                <exclude reference="4vY-m4-nO9"/>
-                                <exclude reference="64B-Cj-XFj"/>
-                                <exclude reference="sC4-Lz-OWu"/>
                                 <exclude reference="80T-td-hXX"/>
                                 <exclude reference="Q2p-xy-OKQ"/>
                                 <exclude reference="reL-Tp-2ed"/>
+                                <exclude reference="Eub-fQ-ghU"/>
+                                <exclude reference="IfV-H4-AXO"/>
+                                <exclude reference="IfO-6a-MKI"/>
+                                <exclude reference="QiK-Yf-agK"/>
                                 <exclude reference="ROu-gO-XEb"/>
                                 <exclude reference="V5s-eg-aYu"/>
                                 <exclude reference="ZqT-vb-dmv"/>
-                                <exclude reference="IfO-6a-MKI"/>
-                                <exclude reference="QiK-Yf-agK"/>
-                                <exclude reference="3We-AB-Y7h"/>
-                                <exclude reference="9HC-oY-L7u"/>
+                                <exclude reference="7O0-19-PUu"/>
+                                <exclude reference="xI2-29-ZOz"/>
+                                <exclude reference="4vY-m4-nO9"/>
+                                <exclude reference="64B-Cj-XFj"/>
+                                <exclude reference="sC4-Lz-OWu"/>
                                 <exclude reference="Lvv-Q1-CZg"/>
-                                <exclude reference="SS1-0P-uxS"/>
+                                <exclude reference="Xxn-FK-OOM"/>
                                 <exclude reference="oTv-9L-Mcl"/>
                                 <exclude reference="QN4-Tn-XHf"/>
                                 <exclude reference="oLP-xv-MZv"/>
@@ -2000,25 +2083,26 @@
                                 <include reference="c8d-Ch-CPC"/>
                                 <include reference="g5y-Vh-0jl"/>
                                 <include reference="f3A-fI-24f"/>
+                                <include reference="CEN-Ry-QZh"/>
                             </mask>
                             <mask key="constraints">
-                                <include reference="Eub-fQ-ghU"/>
-                                <include reference="IfV-H4-AXO"/>
-                                <include reference="4vY-m4-nO9"/>
-                                <include reference="64B-Cj-XFj"/>
-                                <include reference="sC4-Lz-OWu"/>
                                 <include reference="80T-td-hXX"/>
                                 <include reference="Q2p-xy-OKQ"/>
                                 <include reference="reL-Tp-2ed"/>
+                                <include reference="Eub-fQ-ghU"/>
+                                <include reference="IfV-H4-AXO"/>
+                                <include reference="IfO-6a-MKI"/>
+                                <include reference="QiK-Yf-agK"/>
                                 <exclude reference="ROu-gO-XEb"/>
                                 <include reference="V5s-eg-aYu"/>
                                 <include reference="ZqT-vb-dmv"/>
-                                <include reference="IfO-6a-MKI"/>
-                                <include reference="QiK-Yf-agK"/>
-                                <include reference="3We-AB-Y7h"/>
-                                <include reference="9HC-oY-L7u"/>
+                                <include reference="7O0-19-PUu"/>
+                                <include reference="xI2-29-ZOz"/>
+                                <include reference="4vY-m4-nO9"/>
+                                <include reference="64B-Cj-XFj"/>
+                                <include reference="sC4-Lz-OWu"/>
                                 <include reference="Lvv-Q1-CZg"/>
-                                <include reference="SS1-0P-uxS"/>
+                                <include reference="Xxn-FK-OOM"/>
                                 <include reference="oTv-9L-Mcl"/>
                                 <include reference="QN4-Tn-XHf"/>
                                 <include reference="oLP-xv-MZv"/>
@@ -2320,6 +2404,12 @@
         <image name="btnModel_selected" width="38" height="23"/>
         <image name="btnOff" width="60" height="60"/>
         <image name="btnOn" width="60" height="60"/>
+        <image name="btn_savePreset" width="176" height="42"/>
+        <image name="btn_savePreset_highlight" width="164" height="35"/>
+        <image name="btn_selectColor" width="176" height="42"/>
+        <image name="btn_selectColor_highlight" width="164" height="35"/>
+        <image name="btn_selectPreset" width="176" height="42"/>
+        <image name="btn_selectPreset_highlight" width="164" height="35"/>
         <image name="cancel_highlinght" width="89" height="30"/>
         <image name="cancel_normal" width="100" height="27"/>
         <image name="car1" width="418" height="180"/>
