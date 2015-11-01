@@ -41,6 +41,7 @@
 		7D652F971BCDE5880019BCA9 /* FDStackViewExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D652F8D1BCDE5870019BCA9 /* FDStackViewExtensions.m */; };
 		7D652F981BCDE5880019BCA9 /* FDStackViewLayoutArrangement.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D652F8F1BCDE5870019BCA9 /* FDStackViewLayoutArrangement.m */; };
 		7D652F991BCDE5880019BCA9 /* FDTransformLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D652F911BCDE5880019BCA9 /* FDTransformLayer.m */; };
+		7D8484701BE5EEBE00C34D89 /* OBShapedButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D84846F1BE5EEBE00C34D89 /* OBShapedButton.m */; };
 		7DE5FFFD1BE2F87700282CAF /* UIImage+ColorAtPixel.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DE5FFFC1BE2F87700282CAF /* UIImage+ColorAtPixel.m */; };
 		7DF038F11BE3DB60007D49FF /* HSV.c in Sources */ = {isa = PBXBuildFile; fileRef = 7DF038EF1BE3DB60007D49FF /* HSV.c */; };
 		7DF038F41BE3DBB7007D49FF /* UIColor+Convert.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DF038F31BE3DBB7007D49FF /* UIColor+Convert.m */; };
@@ -135,6 +136,8 @@
 		7D652F8F1BCDE5870019BCA9 /* FDStackViewLayoutArrangement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FDStackViewLayoutArrangement.m; sourceTree = "<group>"; };
 		7D652F901BCDE5870019BCA9 /* FDTransformLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FDTransformLayer.h; sourceTree = "<group>"; };
 		7D652F911BCDE5880019BCA9 /* FDTransformLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FDTransformLayer.m; sourceTree = "<group>"; };
+		7D84846E1BE5EEBE00C34D89 /* OBShapedButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OBShapedButton.h; sourceTree = "<group>"; };
+		7D84846F1BE5EEBE00C34D89 /* OBShapedButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OBShapedButton.m; sourceTree = "<group>"; };
 		7DE5FFFB1BE2F87700282CAF /* UIImage+ColorAtPixel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ColorAtPixel.h"; sourceTree = "<group>"; };
 		7DE5FFFC1BE2F87700282CAF /* UIImage+ColorAtPixel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ColorAtPixel.m"; sourceTree = "<group>"; };
 		7DF038EF1BE3DB60007D49FF /* HSV.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = HSV.c; sourceTree = "<group>"; };
@@ -251,6 +254,7 @@
 		7D652F4A1BCDE4460019BCA9 /* BlueDemo */ = {
 			isa = PBXGroup;
 			children = (
+				7D84846D1BE5EEBE00C34D89 /* shapedButton */,
 				7D3133631BE21B0D00B7BB27 /* ColorBoard */,
 				7D3133341BE1F38500B7BB27 /* Masonry */,
 				7D0F24D91BCF3C9D001C9A06 /* MBProgressHUD */,
@@ -321,6 +325,15 @@
 				7D652F911BCDE5880019BCA9 /* FDTransformLayer.m */,
 			);
 			path = FDStackView;
+			sourceTree = "<group>";
+		};
+		7D84846D1BE5EEBE00C34D89 /* shapedButton */ = {
+			isa = PBXGroup;
+			children = (
+				7D84846E1BE5EEBE00C34D89 /* OBShapedButton.h */,
+				7D84846F1BE5EEBE00C34D89 /* OBShapedButton.m */,
+			);
+			path = shapedButton;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -457,6 +470,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7D0F24DF1BCF3C9D001C9A06 /* MBProgressHUD+MJ.m in Sources */,
+				7D8484701BE5EEBE00C34D89 /* OBShapedButton.m in Sources */,
 				7D652F801BCDE4C00019BCA9 /* SwitchViewController.m in Sources */,
 				7D38C0DF1BDF60330009D6E6 /* ConnectionViewController.m in Sources */,
 				7DF038F11BE3DB60007D49FF /* HSV.c in Sources */,

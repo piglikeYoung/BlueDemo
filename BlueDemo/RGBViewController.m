@@ -10,6 +10,7 @@
 #import "Masonry.h"
 #import "UIImage+Extension.h"
 #import "ColorBoardViewController.h"
+#import "OBShapedButton.h"
 
 // Slider的宽度
 static const CGFloat kSliderWidth = 160.f;
@@ -41,6 +42,7 @@ static NSString *const kStartNotifyCharacteristicUUID = @"0xFFFB";
 @property (weak, nonatomic) IBOutlet UIButton *carBtn4;
 @property (weak, nonatomic) IBOutlet UIButton *carBtn5;
 @property (weak, nonatomic) IBOutlet UIButton *carBtn6;
+@property (weak, nonatomic) IBOutlet UIView *eightBtnView;
 
 @property (weak, nonatomic) IBOutlet UISwitch *masterSwitch;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *selectCarViewBottomCons;
@@ -59,8 +61,22 @@ static NSString *const kStartNotifyCharacteristicUUID = @"0xFFFB";
 // 6个车按钮对应的value
 @property (nonatomic, strong) NSArray *carBtnValueArray;
 
+// 6个车按钮对应的model临时value
+@property (nonatomic, assign) NSInteger firstTmp;
+@property (nonatomic, assign) NSInteger secondTmp;
+@property (nonatomic, assign) NSInteger thirdTmp;
+@property (nonatomic, assign) NSInteger fourthTmp;
+@property (nonatomic, assign) NSInteger fifthTmp;
+@property (nonatomic, assign) NSInteger sixthTmp;
+
+// 8个ModelBtn
+@property (nonatomic, strong) NSMutableArray *eightModelBtnArray;
+
 // 保存选中的按钮数组
 @property (nonatomic, strong) NSMutableArray *carSelectedBtnArray;
+
+// 存储carBtn选中按钮的model值，key是carBtn的tag，value是modelBtn的tag
+@property (nonatomic, strong) NSMutableDictionary *carSelectedModelDic;
 
 // 亮度的值
 @property (nonatomic, assign) NSInteger brightnessVal;
@@ -78,6 +94,21 @@ static NSString *const kStartNotifyCharacteristicUUID = @"0xFFFB";
 @end
 
 @implementation RGBViewController
+
+- (NSMutableArray *)eightModelBtnArray {
+    if (!_eightModelBtnArray) {
+        _eightModelBtnArray = [NSMutableArray arrayWithCapacity:8];
+    }
+    
+    return _eightModelBtnArray;
+}
+
+- (NSMutableDictionary *)carSelectedModelDic {
+    if (!_carSelectedModelDic) {
+        _carSelectedModelDic = [NSMutableDictionary dictionary];
+    }
+    return _carSelectedModelDic;
+}
 
 - (NSMutableArray *)carSelectedBtnArray {
     if (!_carSelectedBtnArray) {
@@ -106,17 +137,12 @@ static NSString *const kStartNotifyCharacteristicUUID = @"0xFFFB";
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    UIImageView *backgroundIv = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"viewBg"]];
-    [self.view addSubview:backgroundIv];
-    [backgroundIv mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.width.equalTo(self.view.mas_width);
-        make.height.equalTo(self.view.mas_height);
-        make.left.equalTo(self.view.mas_left);
-        make.top.equalTo(self.view.mas_top);
-    }];
+    [self setUpBackgroundIv];
     
     self.sliderFirstSend = YES;
     [self setUpSlider];
+    
+    [self setUpEightModelBtn];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -197,6 +223,20 @@ static NSString *const kStartNotifyCharacteristicUUID = @"0xFFFB";
 #pragma mark - 私有方法
 
 /**
+ *  设置背景图片
+ */
+- (void) setUpBackgroundIv{
+    UIImageView *backgroundIv = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"viewBg"]];
+    [self.view addSubview:backgroundIv];
+    [backgroundIv mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.width.equalTo(self.view.mas_width);
+        make.height.equalTo(self.view.mas_height);
+        make.left.equalTo(self.view.mas_left);
+        make.top.equalTo(self.view.mas_top);
+    }];
+}
+
+/**
  *  设置左右Slider控件
  */
 - (void)setUpSlider {
@@ -231,6 +271,34 @@ static NSString *const kStartNotifyCharacteristicUUID = @"0xFFFB";
         make.centerY.equalTo(self.view.mas_centerY).offset(-20);
         make.width.mas_equalTo(kSliderWidth);
     }];
+}
+
+/**
+ *  设置8个模态按钮
+ */
+- (void) setUpEightModelBtn {
+    for (NSInteger i = 0; i < 8; i++) {
+        //获取按钮图片的名称
+        NSString *imageName = [NSString stringWithFormat:@"modelBtn%zd",i+1];
+        NSString *selectedImageName = [NSString stringWithFormat:@"modelBtn%zd_selected", i+1];
+        
+        UIButton *btn = [OBShapedButton buttonWithType:UIButtonTypeCustom];
+        [btn setBackgroundImage:[UIImage imageNamed:imageName] forState:UIControlStateNormal];
+        [btn setBackgroundImage:[UIImage imageNamed:selectedImageName] forState:UIControlStateSelected];
+        btn.tag = i + 40001;
+        [btn addTarget:self action:@selector(modelBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+        
+        //往图片添加按钮
+        [self.eightBtnView addSubview:btn];
+        [self.eightModelBtnArray addObject:btn];
+        
+        [btn mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.height.equalTo(self.eightBtnView.mas_height);
+            make.width.equalTo(self.eightBtnView.mas_width);
+            make.left.equalTo(self.eightBtnView.mas_left);
+            make.top.equalTo(self.eightBtnView.mas_top);
+        }];
+    }
 }
 
 
@@ -383,11 +451,130 @@ static NSString *const kStartNotifyCharacteristicUUID = @"0xFFFB";
     // 第3个字节(数组的第四位)，赋值操作的按钮对应的value
     self.transferCode[3] = obj;
     
-    
+    // 当每次点击carBtn时，重新对model按钮赋值
+    // 1.把所有的model按钮取消选中
+    // 2.把当前carBtn对应的model选中
     
     if (self.masterSwitch.isOn) {
         [self writePeripheral:_mPeripheral characteristic:_FFFAcharacteristic value:[self converToCharArrayWithIntegerArray:self.transferCode]];
     }
+    
+}
+
+/**
+ *  8个model按钮点击方法总处理
+ *
+ *  @param btn 按钮
+ */
+- (void) modelBtnClickWithBtn:(UIButton *)modelBtn{
+
+    
+    if (self.carSelectedBtnArray.count > 0) {
+        // 1.反选按钮
+        modelBtn.selected = !modelBtn.selected;
+    }
+    
+    
+    // 2.遍历选中按钮数组里面的按钮，计算选中按钮对应位的值
+    for (UIButton *selectedBtn in self.carSelectedBtnArray) {
+        
+        // 3.之前选中的model反选
+//        for (NSNumber *carSelectBtnTag in [self.carSelectedModelDic allKeys]) {
+//            // 当carBtn一样时才反选
+//            if (selectedBtn.tag == [carSelectBtnTag integerValue]) {
+//                [self.carSelectedModelDic objectForKey:carSelectBtnTag];
+//                UIButton *oldBtn = [self.view viewWithTag:[[self.carSelectedModelDic objectForKey:carSelectBtnTag] integerValue]];
+//                oldBtn.selected = !oldBtn.selected;
+//            }
+//        }
+        // 3.全部model取消选中
+        [self.eightModelBtnArray makeObjectsPerformSelector:@selector(setSelected:) withObject:NO];
+        
+        // 4.存储选中carBtn的model，key是carBtn的tag，value是modelBtn的tag
+        [self.carSelectedModelDic setObject:@(modelBtn.tag) forKey:@(selectedBtn.tag)];
+        
+        // 5.给选中的carBtn对应的model选中
+        for (NSNumber *modelBtnTag in [self.carSelectedModelDic allValues]) {
+            UIButton *modelBtn = [self.view viewWithTag:[modelBtnTag integerValue]];
+            modelBtn.selected = !modelBtn.selected;
+        }
+        
+        // 计算公式：X * 16 + Y (X是第一个按钮的状态，Y是第二个按钮的状态)，以此类推
+        // 判断是否是第几个carBtn
+        switch (selectedBtn.tag - 30000) {
+            case 1:
+                // 如果模型按钮选中，赋值对应的modelVal
+                if (modelBtn.isSelected) {
+                    _firstTmp = (modelBtn.tag - 40000) * 16;
+                }
+                // 未选中，赋为0
+                else {
+                    _firstTmp = 0 * 16;
+                }
+                break;
+            case 2:
+                // 如果模型按钮选中，赋值对应的modelVal
+                if (modelBtn.isSelected) {
+                    _secondTmp = (modelBtn.tag - 40000);
+                }
+                // 未选中，赋为0
+                else {
+                    _secondTmp = 0;
+                }
+                break;
+            case 3:
+                // 如果模型按钮选中，赋值对应的modelVal
+                if (modelBtn.isSelected) {
+                    _thirdTmp = (modelBtn.tag - 40000) * 16;
+                }
+                // 未选中，赋为0
+                else {
+                    _thirdTmp = 0 * 16;
+                }
+                break;
+            case 4:
+                // 如果模型按钮选中，赋值对应的modelVal
+                if (modelBtn.isSelected) {
+                    _fourthTmp = (modelBtn.tag - 40000);
+                }
+                // 未选中，赋为0
+                else {
+                    _fourthTmp = 0;
+                }
+                break;
+            case 5:
+                // 如果模型按钮选中，赋值对应的modelVal
+                if (modelBtn.isSelected) {
+                    _fifthTmp = (modelBtn.tag - 40000) * 16;
+                }
+                // 未选中，赋为0
+                else {
+                    _fifthTmp = 0 * 16;
+                }
+                break;
+            case 6:
+                // 如果模型按钮选中，赋值对应的modelVal
+                if (modelBtn.isSelected) {
+                    _sixthTmp = (modelBtn.tag - 40000);
+                }
+                // 未选中，赋为0
+                else {
+                    _sixthTmp = 0;
+                }
+                break;
+            default:
+                break;
+        }
+        
+        // 写数据
+        self.transferCode[10] = @(_firstTmp + _secondTmp);
+        self.transferCode[11] = @(_thirdTmp + _fourthTmp);
+        self.transferCode[12] = @(_fifthTmp + _sixthTmp);
+        if (self.masterSwitch.isOn) {
+            [self writePeripheral:_mPeripheral characteristic:_FFFAcharacteristic value:[self converToCharArrayWithIntegerArray:self.transferCode]];
+        }
+    }
+    
     
 }
 
@@ -488,8 +675,43 @@ static NSString *const kStartNotifyCharacteristicUUID = @"0xFFFB";
             [self writePeripheral:_mPeripheral characteristic:_FFFAcharacteristic value:[self converToCharArrayWithIntegerArray:self.transferCode]];
         }
     }
+}
+
+/**
+ *  8个model按钮的点击
+ *
+ */
+-(void)modelBtnClick:(UIButton *)btn{
+//    switch (btn.tag - 40000) {
+//        case 1:
+//            [self modelBtnClickWithBtn:btn];
+//            break;
+//        case 2:
+//            [self modelBtnClickWithBtn:btn];
+//            break;
+//        case 3:
+//            [self modelBtnClickWithBtn:btn];
+//            break;
+//        case 4:
+//            [self modelBtnClickWithBtn:btn];
+//            break;
+//        case 5:
+//            [self modelBtnClickWithBtn:btn];
+//            break;
+//        case 6:
+//            [self modelBtnClickWithBtn:btn];
+//            break;
+//        case 7:
+//            [self modelBtnClickWithBtn:btn];
+//            break;
+//        case 8:
+//            [self modelBtnClickWithBtn:btn];
+//            break;
+//        default:
+//            break;
+//    }
     
-    
+    [self modelBtnClickWithBtn:btn];
 }
 
 - (IBAction)backClick:(id)sender {
