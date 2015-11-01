@@ -453,7 +453,17 @@ static NSString *const kStartNotifyCharacteristicUUID = @"0xFFFB";
     
     // 当每次点击carBtn时，重新对model按钮赋值
     // 1.把所有的model按钮取消选中
+    [self.eightModelBtnArray makeObjectsPerformSelector:@selector(setSelected:) withObject:NO];
     // 2.把当前carBtn对应的model选中
+    for (NSNumber *carSelectBtnTag in [self.carSelectedModelDic allKeys]) {
+        // 当carBtn一样时才反选
+        if (btn.tag == [carSelectBtnTag integerValue]) {
+            [self.carSelectedModelDic objectForKey:carSelectBtnTag];
+            UIButton *modelBtn = [self.view viewWithTag:[[self.carSelectedModelDic objectForKey:carSelectBtnTag] integerValue]];
+            modelBtn.selected = !modelBtn.selected;
+        }
+    }
+    
     
     if (self.masterSwitch.isOn) {
         [self writePeripheral:_mPeripheral characteristic:_FFFAcharacteristic value:[self converToCharArrayWithIntegerArray:self.transferCode]];
@@ -494,9 +504,13 @@ static NSString *const kStartNotifyCharacteristicUUID = @"0xFFFB";
         [self.carSelectedModelDic setObject:@(modelBtn.tag) forKey:@(selectedBtn.tag)];
         
         // 5.给选中的carBtn对应的model选中
-        for (NSNumber *modelBtnTag in [self.carSelectedModelDic allValues]) {
-            UIButton *modelBtn = [self.view viewWithTag:[modelBtnTag integerValue]];
-            modelBtn.selected = !modelBtn.selected;
+        for (NSNumber *carSelectBtnTag in [self.carSelectedModelDic allKeys]) {
+            // 当carBtn一样时才反选
+            if (selectedBtn.tag == [carSelectBtnTag integerValue]) {
+                [self.carSelectedModelDic objectForKey:carSelectBtnTag];
+                UIButton *oldBtn = [self.view viewWithTag:[[self.carSelectedModelDic objectForKey:carSelectBtnTag] integerValue]];
+                oldBtn.selected = !oldBtn.selected;
+            }
         }
         
         // 计算公式：X * 16 + Y (X是第一个按钮的状态，Y是第二个按钮的状态)，以此类推
