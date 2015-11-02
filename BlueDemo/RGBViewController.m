@@ -417,13 +417,32 @@ static NSString *const kStartNotifyCharacteristicUUID = @"0xFFFB";
     
     if (found) {
         // 2.如果是，将按钮关闭
+        // 判断是否选中，选中才在原来的基础减去对应的value
+        if (btn.isSelected) {
+            
+            // 第2个字节(数据的第三位)，每选中一个按钮在原来的基础减去对应的value
+            self.transferCode[2] = @([self.transferCode[2] integerValue] - [obj integerValue]);
+        }
+        // 未选中在原来的基础加上对应的value
+        else {
+            // 第2个字节(数组的第三位)，每选中一个按钮在原来的基础加上对应的value
+            self.transferCode[2] = @([self.transferCode[2] integerValue] + [obj integerValue]);
+        }
         btn.selected = !btn.selected;
+        
     } else {
-        // 3.如果不是，打开按钮，设置选中边框
-        btn.selected = YES;
+        // 3.如果不是
+        // 先判断按钮是否已经选中，未选中才在原来的基础加上对应的value
+        if (!btn.isSelected) {
+            btn.selected = !btn.selected;
+            
+            // 第2个字节(数组的第三位)，每选中一个按钮在原来的基础加上对应的value
+            self.transferCode[2] = @([self.transferCode[2] integerValue] + [obj integerValue]);
+        }
+        
         [btn.layer setBorderWidth:5.0]; //边框宽度
         [btn.layer setBorderColor:[UIColor whiteColor].CGColor];//边框颜色
-//        [btn.layer setCornerRadius:5.0];
+        //        [btn.layer setCornerRadius:5.0];
         // 因为不在选中按钮数组里，要把之前的组里的按钮边框去掉
         [self.carSelectedBtnArray enumerateObjectsUsingBlock:^(UIButton *selectedBtn, NSUInteger idx, BOOL * _Nonnull stop) {
             [selectedBtn.layer setBorderWidth:0.0]; //边框宽度
@@ -434,18 +453,6 @@ static NSString *const kStartNotifyCharacteristicUUID = @"0xFFFB";
         
         // 把现在的按钮添加到选中数组里
         [self.carSelectedBtnArray addObject:btn];
-    }
-    
-    
-    if (btn.isSelected) {
-        
-        // 第2个字节(数组的第三位)，每选中一个按钮在原来的基础加上对应的value
-        self.transferCode[2] = @([self.transferCode[2] integerValue] + [obj integerValue]);
-        
-    } else {
-
-        // 第2个字节(数据的第三位)，每选中一个按钮在原来的基础减去对应的value
-        self.transferCode[2] = @([self.transferCode[2] integerValue] - [obj integerValue]);
     }
     
     // 第3个字节(数组的第四位)，赋值操作的按钮对应的value
