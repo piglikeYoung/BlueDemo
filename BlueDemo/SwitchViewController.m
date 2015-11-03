@@ -27,9 +27,6 @@ static char startCode[] = {0x4e, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 , 0x00
 // 接收Notify返回的code
 static char backCode[] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 , 0x00, 0x00, 0x00};
 
-// 开关和模式按钮发送的数据
-static char offOnAndStatusbtnSendCode[] = {0x4c, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 , 0x00, 0x00, 0x00};
-
 // 锁定设备数据
 static char lockSendCode[] = {0x4d, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00 , 0x00, 0x00, 0x00};
 // 解锁设备数据
@@ -110,15 +107,39 @@ typedef enum {
 
 //@property (weak, nonatomic) IBOutlet UISwitch *lockSwichBtn;
 
+// 开关和模式按钮发送的数据
+@property (nonatomic, strong) NSMutableArray *offOnAndStatusbtnSendCode;
+
 @end
 
 @implementation SwitchViewController
 
+- (NSMutableArray *)offOnAndStatusbtnSendCode {
+    if (!_offOnAndStatusbtnSendCode) {
+        _offOnAndStatusbtnSendCode = [NSMutableArray arrayWithObjects:@76, @0, @0, @0, @0, @0, @0, @0 , @0, @0, @0, nil];
+    }
+    
+    return _offOnAndStatusbtnSendCode;
+}
+
+
+/**
+ *  连接蓝牙马上发送的数据，把手机的uuid发过去
+ *
+ */
+- (NSData *) startCode {
+    NSString *identifierForVendor = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
+    NSString *subid = [identifierForVendor substringWithRange: NSMakeRange(0, kMacAddressLength)];
+    for (int i = 0; i < kMacAddressLength; i++) {
+        startCode[i + 1] = [subid characterAtIndex:i];
+    }
+    return [self convertCode:startCode];
+}
 
 
 - (NSArray *)statusHex {
     if (!_statusHex) {
-        _statusHex = @[@0x00, @0x01, @0x02, @0x03, @0x04];
+        _statusHex = @[@0, @1, @2, @3, @4];
     }
     return _statusHex;
 }
@@ -132,6 +153,19 @@ typedef enum {
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+ 
+    // 恢复存储数据
+    NSArray *recoveryCode = [self recoveryBlueDeviceStatus];
+    
+    if (recoveryCode.count > 0) {
+        self.offOnAndStatusbtnSendCode = [recoveryCode mutableCopy];
+        // 恢复开关按钮对应位
+        _whickLamp = [self.offOnAndStatusbtnSendCode[3] integerValue];
+        // 恢复开关按钮状态
+        [self recoveryOnOffBtnValueWithIntegerArray:recoveryCode];
+        // 恢复模式按钮状态
+        [self recoveryModelBtnValueWithIntegerArray:recoveryCode];
+    }
     
 }
 
@@ -149,6 +183,21 @@ typedef enum {
         self.stackViewTopCons.constant = 76;
     }
 
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    
+    // 由于跳到模式三的时候，offOnAndStatusbtnSendCode[3] 会变成模式四，这样回显状态会不准确
+    // 所以offOnAndStatusbtnSendCode的model按钮位置替换为allLabelStatus的值
+    for (int i = 0; i < 6; i++) {
+        self.offOnAndStatusbtnSendCode[i + 4] = self.allLabelStatus[i];
+    }
+    
+    // 界面消失之前把发送的数组第四个字节，数组第三位改为亮了几个灯的值
+    self.offOnAndStatusbtnSendCode[3] = @(_whickLamp);
+    [self saveBlueDeviceStatusWithCode:self.offOnAndStatusbtnSendCode];
+    
+    [super viewWillDisappear:animated];
 }
 
 
@@ -214,6 +263,7 @@ typedef enum {
          最好一个type参数可以为CBCharacteristicWriteWithResponse或type:CBCharacteristicWriteWithResponse,区别是是否会有反馈
          */
         [peripheral writeValue:value forCharacteristic:characteristic type:CBCharacteristicWriteWithResponse];
+        
     }else{
         NSLog(@"该字段不可写！");
     }
@@ -254,7 +304,7 @@ typedef enum {
     // 保存当前状态
     self.allLabelStatus[index] = @(num);
     // 修改发送数据的值
-    offOnAndStatusbtnSendCode[4 + index] = [self.statusHex[num] integerValue];
+    self.offOnAndStatusbtnSendCode[4 + index] = self.statusHex[num];
 }
 
 /**
@@ -296,18 +346,7 @@ typedef enum {
 }
 
 
-/**
- *  开始马上发送的Code
- *
- */
-- (NSData *) startCode {
-    NSString *identifierForVendor = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
-    NSString *subid = [identifierForVendor substringWithRange: NSMakeRange(0, kMacAddressLength)];
-    for (int i = 0; i < kMacAddressLength; i++) {
-        startCode[i + 1] = [subid characterAtIndex:i];
-    }
-    return [self convertCode:startCode];
-}
+
 
 
 /**
@@ -325,6 +364,209 @@ typedef enum {
     NSLog(@"%@", [[NSString alloc] initWithData:[NSData dataWithBytes:codes length:kDataLength]  encoding:NSUTF8StringEncoding]);
     return [NSData dataWithBytes:codes length:kDataLength];
 }
+
+/**
+ *  把发送的给蓝牙设备的数据从integer数组转为char数据，并把char数据转为NSData
+ *
+ */
+- (NSData *) converToCharArrayWithIntegerArray:(NSMutableArray *) integerArray {
+    
+    char charArray[] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 , 0x00, 0x00, 0x00};
+    
+    char crcVal = 0;
+    
+    for (int i = 0; i < integerArray.count; i++) {
+        
+        crcVal += [integerArray[i] charValue];
+        // 最后一位是把前面19位加起来的CRC位
+        if (i == integerArray.count - 1) {
+            charArray[i] = crcVal;
+        } else {
+            charArray[i] = [integerArray[i] charValue];
+        }
+    }
+    
+    // 保存发送数值到偏好设置
+    [self saveBlueDeviceStatusWithCode:integerArray];
+    
+    return [NSData dataWithBytes:charArray length:integerArray.count];
+}
+
+
+/**
+ *  保存蓝牙设备的状态，即每个按钮按下的状态
+ *
+ *  @param integerArray 按钮保存的状态，即发送给设备的数组
+ */
+- (void) saveBlueDeviceStatusWithCode:(NSMutableArray *)integerArray {
+
+    // 1.获取NSUserDefaults对象
+    NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
+    // 2.保存数据
+    [defaults setObject:integerArray forKey:@"offOnAndStatusbtnSendCode"];
+
+    // 3.强制让数据立刻保存
+    [defaults synchronize];
+}
+
+/**
+ *  从偏好设置中恢复蓝牙设备的状态，即每个按钮按下的状态
+ *
+ */
+- (NSArray *) recoveryBlueDeviceStatus {
+    // 1.获取NSUserDefaults对象
+    NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
+    
+    NSArray *integerArray = [defaults objectForKey:@"offOnAndStatusbtnSendCode"];
+    
+    return integerArray;
+}
+
+/**
+ *  根据数组恢复开关按钮状态
+ *
+ */
+- (void)recoveryOnOffBtnValueWithIntegerArray:(NSArray *)integerArray {
+    
+    NSInteger onOffValue = [integerArray[3] integerValue];
+    NSLog(@"%zd", (onOffValue / 1) % 2);
+    
+    // 判断灯1
+    self.onOffBtn1.selected = ((onOffValue / 1) % 2) == 1 ? YES : NO;
+    self.offFlay1.highlighted = ((onOffValue / 1) % 2) == 1 ? YES : NO;
+    self.modelBtn1.selected = ((onOffValue / 1) % 2) == 1 ? YES : NO;
+    
+    // 判断灯2
+    self.onOffBtn2.selected = ((onOffValue / 2) % 2) == 1 ? YES : NO;
+    self.offFlay2.highlighted = ((onOffValue / 2) % 2) == 1 ? YES : NO;
+    self.modelBtn2.selected = ((onOffValue / 2) % 2) == 1 ? YES : NO;
+    
+    // 判断灯3
+    self.onOffBtn3.selected = ((onOffValue / 4) % 2) == 1 ? YES : NO;
+    self.offFlay3.highlighted = ((onOffValue / 4) % 2) == 1 ? YES : NO;
+    self.modelBtn3.selected = ((onOffValue / 4) % 2) == 1 ? YES : NO;
+    
+    // 判断灯4
+    self.onOffBtn4.selected = ((onOffValue / 8) % 2) == 1 ? YES : NO;
+    self.offFlay4.highlighted = ((onOffValue / 8) % 2) == 1 ? YES : NO;
+    self.modelBtn4.selected = ((onOffValue / 8) % 2) == 1 ? YES : NO;
+    
+    // 判断灯5
+    self.onOffBtn5.selected = ((onOffValue / 16) % 2) == 1 ? YES : NO;
+    self.offFlay5.highlighted = ((onOffValue / 16) % 2) == 1 ? YES : NO;
+    self.modelBtn5.selected = ((onOffValue / 16) % 2) == 1 ? YES : NO;
+    
+    // 判断灯6
+    self.onOffBtn6.selected = ((onOffValue / 32) % 2) == 1 ? YES : NO;
+    self.offFlay6.highlighted = ((onOffValue / 32) % 2) == 1 ? YES : NO;
+    self.modelBtn6.selected = ((onOffValue / 32) % 2) == 1 ? YES : NO;
+
+
+    
+}
+
+/**
+ *  根据数组恢复Model按钮状态
+ */
+- (void) recoveryModelBtnValueWithIntegerArray:(NSArray *)integerArray {
+    
+    // 恢复每个按钮的模式
+    for (int i = 0; i < 6; i++) {
+        self.allLabelStatus[i] = integerArray[i + 4];
+    }
+
+    // 根据存储的模式判断高亮
+    switch ([self.allLabelStatus[0] integerValue]) {
+        case kStrobe:
+            self.strobeIv1.highlighted = YES;
+            break;
+        case kFlash:
+            self.flashIv1.highlighted = YES;
+            break;
+        case kMomenyary:
+            self.momentaryIv1.highlighted = YES;
+            break;
+        default:
+            break;
+    }
+    
+    // 根据存储的模式判断高亮
+    switch ([self.allLabelStatus[1] integerValue]) {
+        case kStrobe:
+            self.strobeIv2.highlighted = YES;
+            break;
+        case kFlash:
+            self.flashIv2.highlighted = YES;
+            break;
+        case kMomenyary:
+            self.momentaryIv2.highlighted = YES;
+            break;
+        default:
+            break;
+    }
+    
+    // 根据存储的模式判断高亮
+    switch ([self.allLabelStatus[2] integerValue]) {
+        case kStrobe:
+            self.strobeIv3.highlighted = YES;
+            break;
+        case kFlash:
+            self.flashIv3.highlighted = YES;
+            break;
+        case kMomenyary:
+            self.momentaryIv3.highlighted = YES;
+            break;
+        default:
+            break;
+    }
+    
+    // 根据存储的模式判断高亮
+    switch ([self.allLabelStatus[3] integerValue]) {
+        case kStrobe:
+            self.strobeIv4.highlighted = YES;
+            break;
+        case kFlash:
+            self.flashIv4.highlighted = YES;
+            break;
+        case kMomenyary:
+            self.momentaryIv4.highlighted = YES;
+            break;
+        default:
+            break;
+    }
+    
+    // 根据存储的模式判断高亮
+    switch ([self.allLabelStatus[4] integerValue]) {
+        case kStrobe:
+            self.strobeIv5.highlighted = YES;
+            break;
+        case kFlash:
+            self.flashIv5.highlighted = YES;
+            break;
+        case kMomenyary:
+            self.momentaryIv5.highlighted = YES;
+            break;
+        default:
+            break;
+    }
+    
+    // 根据存储的模式判断高亮
+    switch ([self.allLabelStatus[5] integerValue]) {
+        case kStrobe:
+            self.strobeIv6.highlighted = YES;
+            break;
+        case kFlash:
+            self.flashIv6.highlighted = YES;
+            break;
+        case kMomenyary:
+            self.momentaryIv6.highlighted = YES;
+            break;
+        default:
+            break;
+    }
+}
+
+
 
 - (IBAction)backClick:(id)sender {
     
@@ -347,7 +589,7 @@ typedef enum {
                 
                 // 因为松开时是操作特定的位，需要传输操作位的码值
                 // 每个开关对应的码值，用于模式三松开按钮时，关闭对应开关发送的码值
-                offOnAndStatusbtnSendCode[3] = 1;
+                self.offOnAndStatusbtnSendCode[3] = @1;
                 // 修改开关状态
                 btn.selected = NO;
                 
@@ -357,10 +599,10 @@ typedef enum {
                 self.modelBtn1.selected = btn.isSelected;
                 
                 // 修改发送数据，改为关
-                offOnAndStatusbtnSendCode[4 + 0] = [self.statusHex[kMomenyary + 1] integerValue];
+                self.offOnAndStatusbtnSendCode[4 + 0] = self.statusHex[kMomenyary + 1];
                 
                 // 发送数据
-                [self writePeripheral:self.mPeripheral characteristic:self.FFFAcharacteristic value:[self convertCode:offOnAndStatusbtnSendCode]];
+                [self writePeripheral:self.mPeripheral characteristic:self.FFFAcharacteristic value:[self converToCharArrayWithIntegerArray:self.offOnAndStatusbtnSendCode]];
 
             }
             
@@ -370,7 +612,7 @@ typedef enum {
             if ([self.allLabelStatus[1] integerValue] == kMomenyary) {
                 
                 _whickLamp -= 2;
-                offOnAndStatusbtnSendCode[3] = 2;
+                self.offOnAndStatusbtnSendCode[3] = @2;
                 
                 btn.selected = NO;
                 
@@ -378,15 +620,16 @@ typedef enum {
                 
                 self.modelBtn2.selected = btn.isSelected;
                 
-                offOnAndStatusbtnSendCode[4 + 1] = [self.statusHex[kMomenyary + 1] integerValue];
-                
-                [self writePeripheral:self.mPeripheral characteristic:self.FFFAcharacteristic value:[self convertCode:offOnAndStatusbtnSendCode]];
+                self.offOnAndStatusbtnSendCode[4 + 1] = self.statusHex[kMomenyary + 1];
+            
+                [self writePeripheral:self.mPeripheral characteristic:self.FFFAcharacteristic value:[self converToCharArrayWithIntegerArray:self.offOnAndStatusbtnSendCode]];
             }
+            
             break;
         case 3:
             if ([self.allLabelStatus[2] integerValue] == kMomenyary) {
                 _whickLamp -= 4;
-                offOnAndStatusbtnSendCode[3] = 4;
+                self.offOnAndStatusbtnSendCode[3] = @4;
                 
                 btn.selected = NO;
                 
@@ -394,15 +637,15 @@ typedef enum {
                 
                 self.modelBtn3.selected = btn.isSelected;
                 
-                offOnAndStatusbtnSendCode[4 + 2] = [self.statusHex[kMomenyary + 1] integerValue];
+                self.offOnAndStatusbtnSendCode[4 + 2] = self.statusHex[kMomenyary + 1];
                 
-                [self writePeripheral:self.mPeripheral characteristic:self.FFFAcharacteristic value:[self convertCode:offOnAndStatusbtnSendCode]];
+                [self writePeripheral:self.mPeripheral characteristic:self.FFFAcharacteristic value:[self converToCharArrayWithIntegerArray:self.offOnAndStatusbtnSendCode]];
             }
             break;
         case 4:
             if ([self.allLabelStatus[3] integerValue] == kMomenyary) {
                 _whickLamp -= 8;
-                offOnAndStatusbtnSendCode[3] = 8;
+                self.offOnAndStatusbtnSendCode[3] = @8;
                 
                 btn.selected = NO;
                 
@@ -410,15 +653,15 @@ typedef enum {
                 
                 self.modelBtn4.selected = btn.isSelected;
                 
-                offOnAndStatusbtnSendCode[4 + 3] = [self.statusHex[kMomenyary + 1] integerValue];
+                self.offOnAndStatusbtnSendCode[4 + 3] = self.statusHex[kMomenyary + 1];
                 
-                [self writePeripheral:self.mPeripheral characteristic:self.FFFAcharacteristic value:[self convertCode:offOnAndStatusbtnSendCode]];
+                [self writePeripheral:self.mPeripheral characteristic:self.FFFAcharacteristic value:[self converToCharArrayWithIntegerArray:self.offOnAndStatusbtnSendCode]];
             }
             break;
         case 5:
             if ([self.allLabelStatus[4] integerValue] == kMomenyary) {
                 _whickLamp -= 16;
-                offOnAndStatusbtnSendCode[3] = 16;
+                self.offOnAndStatusbtnSendCode[3] = @16;
                 
                 btn.selected = NO;
                 
@@ -426,15 +669,15 @@ typedef enum {
                 
                 self.modelBtn5.selected = btn.isSelected;
                 
-                offOnAndStatusbtnSendCode[4 + 4] = [self.statusHex[kMomenyary + 1] integerValue];
+                self.offOnAndStatusbtnSendCode[4 + 4] = self.statusHex[kMomenyary + 1];
                 
-                [self writePeripheral:self.mPeripheral characteristic:self.FFFAcharacteristic value:[self convertCode:offOnAndStatusbtnSendCode]];
+                [self writePeripheral:self.mPeripheral characteristic:self.FFFAcharacteristic value:[self converToCharArrayWithIntegerArray:self.offOnAndStatusbtnSendCode]];
             }
             break;
         case 6:
             if ([self.allLabelStatus[5] integerValue] == kMomenyary) {
                 _whickLamp -= 32;
-                offOnAndStatusbtnSendCode[3] = 32;
+                self.offOnAndStatusbtnSendCode[3] = @32;
                 
                 btn.selected = NO;
                 
@@ -442,9 +685,9 @@ typedef enum {
                 
                 self.modelBtn6.selected = btn.isSelected;
                 
-                offOnAndStatusbtnSendCode[4 + 5] = [self.statusHex[kMomenyary + 1] integerValue];
+                self.offOnAndStatusbtnSendCode[4 + 5] = self.statusHex[kMomenyary + 1];
                 
-                [self writePeripheral:self.mPeripheral characteristic:self.FFFAcharacteristic value:[self convertCode:offOnAndStatusbtnSendCode]];
+                [self writePeripheral:self.mPeripheral characteristic:self.FFFAcharacteristic value:[self converToCharArrayWithIntegerArray:self.offOnAndStatusbtnSendCode]];
             }
             break;
         default:
@@ -461,9 +704,9 @@ typedef enum {
             if (btn.selected) {
                 // 关灯是操作具体那个开关
                 _whickLamp -= 1;
-                offOnAndStatusbtnSendCode[3] = 1;
+                self.offOnAndStatusbtnSendCode[3] = @1;
                 
-                offOnAndStatusbtnSendCode[4 + 0] = [self.statusHex[kMomenyary + 1] integerValue];
+                self.offOnAndStatusbtnSendCode[4 + 0] = self.statusHex[kMomenyary + 1];
                 
                 // 判断是否模式三
                 if ([self.allLabelStatus[0] integerValue] != kMomenyary) {
@@ -493,7 +736,7 @@ typedef enum {
             } else {
                 // 开灯是把所有打开的灯的值加起来
                 _whickLamp += 1;
-                offOnAndStatusbtnSendCode[3] = _whickLamp;
+                self.offOnAndStatusbtnSendCode[3] = @(_whickLamp);
                 
                 
                 // 判断是否模式三
@@ -508,7 +751,7 @@ typedef enum {
                     self.modelBtn1.selected = btn.isSelected;
                     
                     // 恢复之前的状态
-                    offOnAndStatusbtnSendCode[4 + 0] = [self.statusHex[[self.allLabelStatus[0] integerValue]] integerValue];
+                    self.offOnAndStatusbtnSendCode[4 + 0] = self.statusHex[[self.allLabelStatus[0] integerValue]];
                     
                 } else {
                     // 是模式三，是根据开关高亮来修改标识和Model按钮
@@ -522,12 +765,12 @@ typedef enum {
                     self.modelBtn1.selected = btn.highlighted;
                     
                     // 修改发送数据
-                    offOnAndStatusbtnSendCode[4 + 0] = [self.statusHex[kMomenyary] integerValue];
+                    self.offOnAndStatusbtnSendCode[4 + 0] = self.statusHex[kMomenyary];
                 }
             }
             
             // 发送数据
-            [self writePeripheral:self.mPeripheral characteristic:self.FFFAcharacteristic value:[self convertCode:offOnAndStatusbtnSendCode]];
+            [self writePeripheral:self.mPeripheral characteristic:self.FFFAcharacteristic value:[self converToCharArrayWithIntegerArray:self.offOnAndStatusbtnSendCode]];
             break;
         case 2:
             
@@ -535,9 +778,9 @@ typedef enum {
             if (btn.selected) {
                 // 关灯是操作具体那个开关
                 _whickLamp -= 2;
-                offOnAndStatusbtnSendCode[3] = 2;
+                self.offOnAndStatusbtnSendCode[3] = @2;
                 
-                offOnAndStatusbtnSendCode[4 + 1] = [self.statusHex[kMomenyary + 1] integerValue];
+                self.offOnAndStatusbtnSendCode[4 + 1] = self.statusHex[kMomenyary + 1];
                 
                 // 判断是否模式三
                 if ([self.allLabelStatus[1] integerValue] != kMomenyary) {
@@ -567,7 +810,7 @@ typedef enum {
             } else {
                 // 开灯是把所有打开的灯的值加起来
                 _whickLamp += 2;
-                offOnAndStatusbtnSendCode[3] = _whickLamp;
+                self.offOnAndStatusbtnSendCode[3] = @(_whickLamp);
                 
                 
                 // 判断是否模式三
@@ -582,7 +825,7 @@ typedef enum {
                     self.modelBtn2.selected = btn.isSelected;
                     
                     // 恢复之前的状态
-                    offOnAndStatusbtnSendCode[4 + 1] = [self.statusHex[[self.allLabelStatus[1] integerValue]] integerValue];
+                    self.offOnAndStatusbtnSendCode[4 + 1] = self.statusHex[[self.allLabelStatus[1] integerValue]];
                     
                 } else {
                     // 是模式三，是根据开关高亮来修改标识和Model按钮
@@ -596,12 +839,12 @@ typedef enum {
                     self.modelBtn2.selected = btn.highlighted;
                     
                     // 修改发送数据
-                    offOnAndStatusbtnSendCode[4 + 1] = [self.statusHex[kMomenyary] integerValue];
+                    self.offOnAndStatusbtnSendCode[4 + 1] = self.statusHex[kMomenyary];
                 }
             }
             
             
-            [self writePeripheral:self.mPeripheral characteristic:self.FFFAcharacteristic value:[self convertCode:offOnAndStatusbtnSendCode]];
+            [self writePeripheral:self.mPeripheral characteristic:self.FFFAcharacteristic value:[self converToCharArrayWithIntegerArray:self.offOnAndStatusbtnSendCode]];
             break;
         case 3:
             
@@ -610,9 +853,9 @@ typedef enum {
             if (btn.selected) {
                 // 关灯是操作具体那个开关
                 _whickLamp -= 4;
-                offOnAndStatusbtnSendCode[3] = 4;
+                self.offOnAndStatusbtnSendCode[3] = @4;
                 
-                offOnAndStatusbtnSendCode[4 + 2] = [self.statusHex[kMomenyary + 1] integerValue];
+                self.offOnAndStatusbtnSendCode[4 + 2] = self.statusHex[kMomenyary + 1];
                 
                 // 判断是否模式三
                 if ([self.allLabelStatus[2] integerValue] != kMomenyary) {
@@ -642,7 +885,7 @@ typedef enum {
             } else {
                 // 开灯是把所有打开的灯的值加起来
                 _whickLamp += 4;
-                offOnAndStatusbtnSendCode[3] = _whickLamp;
+                self.offOnAndStatusbtnSendCode[3] = @(_whickLamp);
                 
                 
                 // 判断是否模式三
@@ -657,7 +900,7 @@ typedef enum {
                     self.modelBtn3.selected = btn.isSelected;
                     
                     // 恢复之前的状态
-                    offOnAndStatusbtnSendCode[4 + 2] = [self.statusHex[[self.allLabelStatus[2] integerValue]] integerValue];
+                    self.offOnAndStatusbtnSendCode[4 + 2] = self.statusHex[[self.allLabelStatus[2] integerValue]];
                     
                 } else {
                     // 是模式三，是根据开关高亮来修改标识和Model按钮
@@ -671,11 +914,11 @@ typedef enum {
                     self.modelBtn3.selected = btn.highlighted;
                     
                     // 修改发送数据
-                    offOnAndStatusbtnSendCode[4 + 2] = [self.statusHex[kMomenyary] integerValue];
+                    self.offOnAndStatusbtnSendCode[4 + 2] = self.statusHex[kMomenyary];
                 }
             }
             
-            [self writePeripheral:self.mPeripheral characteristic:self.FFFAcharacteristic value:[self convertCode:offOnAndStatusbtnSendCode]];
+            [self writePeripheral:self.mPeripheral characteristic:self.FFFAcharacteristic value:[self converToCharArrayWithIntegerArray:self.offOnAndStatusbtnSendCode]];
             break;
         case 4:
             
@@ -684,9 +927,9 @@ typedef enum {
             if (btn.selected) {
                 // 关灯是操作具体那个开关
                 _whickLamp -= 8;
-                offOnAndStatusbtnSendCode[3] = 8;
+                self.offOnAndStatusbtnSendCode[3] = @8;
                 
-                offOnAndStatusbtnSendCode[4 + 3] = [self.statusHex[kMomenyary + 1] integerValue];
+                self.offOnAndStatusbtnSendCode[4 + 3] = self.statusHex[kMomenyary + 1];
                 
                 // 判断是否模式三
                 if ([self.allLabelStatus[3] integerValue] != kMomenyary) {
@@ -716,7 +959,7 @@ typedef enum {
             } else {
                 // 开灯是把所有打开的灯的值加起来
                 _whickLamp += 8;
-                offOnAndStatusbtnSendCode[3] = _whickLamp;
+                self.offOnAndStatusbtnSendCode[3] = @(_whickLamp);
                 
                 
                 // 判断是否模式三
@@ -731,7 +974,7 @@ typedef enum {
                     self.modelBtn4.selected = btn.isSelected;
                     
                     // 恢复之前的状态
-                    offOnAndStatusbtnSendCode[4 + 3] = [self.statusHex[[self.allLabelStatus[3] integerValue]] integerValue];
+                    self.offOnAndStatusbtnSendCode[4 + 3] = self.statusHex[[self.allLabelStatus[3] integerValue]];
                     
                 } else {
                     // 是模式三，是根据开关高亮来修改标识和Model按钮
@@ -745,12 +988,12 @@ typedef enum {
                     self.modelBtn4.selected = btn.highlighted;
                     
                     // 修改发送数据
-                    offOnAndStatusbtnSendCode[4 + 3] = [self.statusHex[kMomenyary] integerValue];
+                    self.offOnAndStatusbtnSendCode[4 + 3] = self.statusHex[kMomenyary];
                 }
             }
             
             
-            [self writePeripheral:self.mPeripheral characteristic:self.FFFAcharacteristic value:[self convertCode:offOnAndStatusbtnSendCode]];
+            [self writePeripheral:self.mPeripheral characteristic:self.FFFAcharacteristic value:[self converToCharArrayWithIntegerArray:self.offOnAndStatusbtnSendCode]];
             break;
         case 5:
             
@@ -758,9 +1001,9 @@ typedef enum {
             if (btn.selected) {
                 // 关灯是操作具体那个开关
                 _whickLamp -= 16;
-                offOnAndStatusbtnSendCode[3] = 16;
+                self.offOnAndStatusbtnSendCode[3] = @16;
                 
-                offOnAndStatusbtnSendCode[4 + 4] = [self.statusHex[kMomenyary + 1] integerValue];
+                self.offOnAndStatusbtnSendCode[4 + 4] = self.statusHex[kMomenyary + 1];
                 
                 // 判断是否模式三
                 if ([self.allLabelStatus[4] integerValue] != kMomenyary) {
@@ -790,7 +1033,7 @@ typedef enum {
             } else {
                 // 开灯是把所有打开的灯的值加起来
                 _whickLamp += 16;
-                offOnAndStatusbtnSendCode[3] = _whickLamp;
+                self.offOnAndStatusbtnSendCode[3] = @(_whickLamp);
                 
                 
                 // 判断是否模式三
@@ -805,7 +1048,7 @@ typedef enum {
                     self.modelBtn5.selected = btn.isSelected;
                     
                     // 恢复之前的状态
-                    offOnAndStatusbtnSendCode[4 + 4] = [self.statusHex[[self.allLabelStatus[4] integerValue]] integerValue];
+                    self.offOnAndStatusbtnSendCode[4 + 4] = self.statusHex[[self.allLabelStatus[4] integerValue]];
                     
                 } else {
                     // 是模式三，是根据开关高亮来修改标识和Model按钮
@@ -819,11 +1062,11 @@ typedef enum {
                     self.modelBtn5.selected = btn.highlighted;
                     
                     // 修改发送数据
-                    offOnAndStatusbtnSendCode[4 + 4] = [self.statusHex[kMomenyary] integerValue];
+                    self.offOnAndStatusbtnSendCode[4 + 4] = self.statusHex[kMomenyary];
                 }
             }
             
-            [self writePeripheral:self.mPeripheral characteristic:self.FFFAcharacteristic value:[self convertCode:offOnAndStatusbtnSendCode]];
+            [self writePeripheral:self.mPeripheral characteristic:self.FFFAcharacteristic value:[self converToCharArrayWithIntegerArray:self.offOnAndStatusbtnSendCode]];
             break;
         case 6:
             
@@ -831,9 +1074,9 @@ typedef enum {
             if (btn.selected) {
                 // 关灯是操作具体那个开关
                 _whickLamp -= 32;
-                offOnAndStatusbtnSendCode[3] = 32;
+                self.offOnAndStatusbtnSendCode[3] = @32;
                 
-                offOnAndStatusbtnSendCode[4 + 5] = [self.statusHex[kMomenyary + 1] integerValue];
+                self.offOnAndStatusbtnSendCode[4 + 5] = self.statusHex[kMomenyary + 1];
                 
                 // 判断是否模式三
                 if ([self.allLabelStatus[5] integerValue] != kMomenyary) {
@@ -863,7 +1106,7 @@ typedef enum {
             } else {
                 // 开灯是把所有打开的灯的值加起来
                 _whickLamp += 32;
-                offOnAndStatusbtnSendCode[3] = _whickLamp;
+                self.offOnAndStatusbtnSendCode[3] = @(_whickLamp);
                 
                 
                 // 判断是否模式三
@@ -878,7 +1121,7 @@ typedef enum {
                     self.modelBtn6.selected = btn.isSelected;
                     
                     // 恢复之前的状态
-                    offOnAndStatusbtnSendCode[4 + 5] = [self.statusHex[[self.allLabelStatus[5] integerValue]] integerValue];
+                    self.offOnAndStatusbtnSendCode[4 + 5] = self.statusHex[[self.allLabelStatus[5] integerValue]];
                     
                 } else {
                     // 是模式三，是根据开关高亮来修改标识和Model按钮
@@ -892,11 +1135,11 @@ typedef enum {
                     self.modelBtn6.selected = btn.highlighted;
                     
                     // 修改发送数据
-                    offOnAndStatusbtnSendCode[4 + 5] = [self.statusHex[kMomenyary] integerValue];
+                    self.offOnAndStatusbtnSendCode[4 + 5] = self.statusHex[kMomenyary];
                 }
             }
             
-            [self writePeripheral:self.mPeripheral characteristic:self.FFFAcharacteristic value:[self convertCode:offOnAndStatusbtnSendCode]];
+            [self writePeripheral:self.mPeripheral characteristic:self.FFFAcharacteristic value:[self converToCharArrayWithIntegerArray:self.offOnAndStatusbtnSendCode]];
             break;
         default:
             break;
@@ -911,7 +1154,7 @@ typedef enum {
             // 改变模式，修改发送的数据
             [self changeStatusWithArrayIndex:0 Num:[self.allLabelStatus[0] integerValue]];
             // 修改模式的开关位
-            offOnAndStatusbtnSendCode[3] = 1;
+            self.offOnAndStatusbtnSendCode[3] = @1;
             
             // 改变模式图片
             // 全不高亮
@@ -941,9 +1184,12 @@ typedef enum {
                     [self onOffBtnTouchDown:self.onOffBtn1];
                 } else {
                     // 其他模式正常发送数据
-                    [self writePeripheral:self.mPeripheral characteristic:self.FFFAcharacteristic value:[self convertCode:offOnAndStatusbtnSendCode]];
+                    [self writePeripheral:self.mPeripheral characteristic:self.FFFAcharacteristic value:[self converToCharArrayWithIntegerArray:self.offOnAndStatusbtnSendCode]];
                 }
             }
+            
+            // 保存发送数值到偏好设置
+            [self saveBlueDeviceStatusWithCode:self.offOnAndStatusbtnSendCode];
             
             break;
         case 2:
@@ -951,7 +1197,7 @@ typedef enum {
             [self changeStatusWithArrayIndex:1 Num:[self.allLabelStatus[1] integerValue]];
 
             // 修改模式的开关位
-            offOnAndStatusbtnSendCode[3] = 2;
+            self.offOnAndStatusbtnSendCode[3] = @2;
             
             // 改变模式图片
             // 全不高亮
@@ -982,9 +1228,12 @@ typedef enum {
                     [self onOffBtnTouchDown:self.onOffBtn2];
                 } else {
                     // 其他模式正常发送数据
-                    [self writePeripheral:self.mPeripheral characteristic:self.FFFAcharacteristic value:[self convertCode:offOnAndStatusbtnSendCode]];
+                    [self writePeripheral:self.mPeripheral characteristic:self.FFFAcharacteristic value:[self converToCharArrayWithIntegerArray:self.offOnAndStatusbtnSendCode]];
                 }
             }
+            
+            // 保存发送数值到偏好设置
+            [self saveBlueDeviceStatusWithCode:self.offOnAndStatusbtnSendCode];
             
             break;
         case 3:
@@ -992,7 +1241,7 @@ typedef enum {
             [self changeStatusWithArrayIndex:2 Num:[self.allLabelStatus[2] integerValue]];
 
             // 修改模式的开关位
-            offOnAndStatusbtnSendCode[3] = 4;
+            self.offOnAndStatusbtnSendCode[3] = @4;
             
             // 改变模式图片
             // 全不高亮
@@ -1022,9 +1271,12 @@ typedef enum {
                     [self onOffBtnTouchDown:self.onOffBtn3];
                 } else {
                     // 其他模式正常发送数据
-                    [self writePeripheral:self.mPeripheral characteristic:self.FFFAcharacteristic value:[self convertCode:offOnAndStatusbtnSendCode]];
+                    [self writePeripheral:self.mPeripheral characteristic:self.FFFAcharacteristic value:[self converToCharArrayWithIntegerArray:self.offOnAndStatusbtnSendCode]];
                 }
             }
+            
+            // 保存发送数值到偏好设置
+            [self saveBlueDeviceStatusWithCode:self.offOnAndStatusbtnSendCode];
             
             break;
         case 4:
@@ -1033,7 +1285,7 @@ typedef enum {
             [self changeStatusWithArrayIndex:3 Num:[self.allLabelStatus[3] integerValue]];
 
             // 修改模式的开关位
-            offOnAndStatusbtnSendCode[3] = 8;
+            self.offOnAndStatusbtnSendCode[3] = @8;
             
             // 改变模式图片
             // 全不高亮
@@ -1063,16 +1315,19 @@ typedef enum {
                     [self onOffBtnTouchDown:self.onOffBtn4];
                 } else {
                     // 其他模式正常发送数据
-                    [self writePeripheral:self.mPeripheral characteristic:self.FFFAcharacteristic value:[self convertCode:offOnAndStatusbtnSendCode]];
+                    [self writePeripheral:self.mPeripheral characteristic:self.FFFAcharacteristic value:[self converToCharArrayWithIntegerArray:self.offOnAndStatusbtnSendCode]];
                 }
             }
+            
+            // 保存发送数值到偏好设置
+            [self saveBlueDeviceStatusWithCode:self.offOnAndStatusbtnSendCode];
             
             break;
         case 5:
             [self changeStatusWithArrayIndex:4 Num:[self.allLabelStatus[4] integerValue]];
 
             // 修改模式的开关位
-            offOnAndStatusbtnSendCode[3] = 16;
+            self.offOnAndStatusbtnSendCode[3] = @16;
             
             // 改变模式图片
             // 全不高亮
@@ -1102,16 +1357,19 @@ typedef enum {
                     [self onOffBtnTouchDown:self.onOffBtn5];
                 } else {
                     // 其他模式正常发送数据
-                    [self writePeripheral:self.mPeripheral characteristic:self.FFFAcharacteristic value:[self convertCode:offOnAndStatusbtnSendCode]];
+                    [self writePeripheral:self.mPeripheral characteristic:self.FFFAcharacteristic value:[self converToCharArrayWithIntegerArray:self.offOnAndStatusbtnSendCode]];
                 }
             }
+            
+            // 保存发送数值到偏好设置
+            [self saveBlueDeviceStatusWithCode:self.offOnAndStatusbtnSendCode];
             
             break;
         case 6:
             [self changeStatusWithArrayIndex:5 Num:[self.allLabelStatus[5] integerValue]];
 
             // 修改模式的开关位
-            offOnAndStatusbtnSendCode[3] = 32;
+            self.offOnAndStatusbtnSendCode[3] = @32;
             
             // 改变模式图片
             // 全不高亮
@@ -1141,9 +1399,12 @@ typedef enum {
                     [self onOffBtnTouchDown:self.onOffBtn6];
                 } else {
                     // 其他模式正常发送数据
-                    [self writePeripheral:self.mPeripheral characteristic:self.FFFAcharacteristic value:[self convertCode:offOnAndStatusbtnSendCode]];
+                    [self writePeripheral:self.mPeripheral characteristic:self.FFFAcharacteristic value:[self converToCharArrayWithIntegerArray:self.offOnAndStatusbtnSendCode]];
                 }
             }
+            
+            // 保存发送数值到偏好设置
+            [self saveBlueDeviceStatusWithCode:self.offOnAndStatusbtnSendCode];
             
             break;
         default:
