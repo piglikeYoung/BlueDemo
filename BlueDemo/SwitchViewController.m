@@ -1464,6 +1464,9 @@ typedef enum {
                 [self writePeripheral:peripheral characteristic:characteristic value:[self startCode]];
                 self.FFFAcharacteristic = characteristic;
                 
+                // 发送回显数据
+                [self writePeripheral:peripheral characteristic:self.FFFAcharacteristic value:[self converToCharArrayWithIntegerArray:self.offOnAndStatusbtnSendCode]];
+                
             } else if ([characteristic.UUID isEqual:notifyCharacteristicUUID]) {
                 //情景一：通知
                 /*找到特征后设置外围设备为已通知状态（订阅特征）：

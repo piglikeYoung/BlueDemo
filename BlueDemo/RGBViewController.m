@@ -368,8 +368,40 @@ static NSString *const kStartNotifyCharacteristicUUID = @"0xFFFB";
             charArray[i] = [integerArray[i] charValue];
         }
     }
-//    NSLog(@"%zd", [self.transferCode[4] integerValue]);
+    
+    // 保存发送数值到偏好设置
+    [self saveBlueDeviceStatusWithCode:integerArray];
+    
     return [NSData dataWithBytes:charArray length:integerArray.count];
+}
+
+/**
+ *  保存蓝牙设备的状态，即每个按钮按下的状态
+ *
+ *  @param integerArray 按钮保存的状态，即发送给设备的数组
+ */
+- (void) saveBlueDeviceStatusWithCode:(NSMutableArray *)integerArray {
+    
+    // 1.获取NSUserDefaults对象
+    NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
+    // 2.保存数据
+    [defaults setObject:integerArray forKey:@"transferCode"];
+    
+    // 3.强制让数据立刻保存
+    [defaults synchronize];
+}
+
+/**
+ *  从偏好设置中恢复蓝牙设备的状态，即每个按钮按下的状态
+ *
+ */
+- (NSArray *) recoveryBlueDeviceStatus {
+    // 1.获取NSUserDefaults对象
+    NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
+    
+    NSArray *integerArray = [defaults objectForKey:@"transferCode"];
+    
+    return integerArray;
 }
 
 /**
@@ -598,6 +630,9 @@ static NSString *const kStartNotifyCharacteristicUUID = @"0xFFFB";
     
     
 }
+
+
+
 
 #pragma mark - 按钮点击处理
 /**
