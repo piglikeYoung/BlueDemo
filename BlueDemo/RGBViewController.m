@@ -78,6 +78,7 @@ static NSString *const kStartNotifyCharacteristicUUID = @"0xFFFB";
 // 存储carBtn选中按钮的model值，key是carBtn的tag，value是modelBtn的tag
 @property (nonatomic, strong) NSMutableDictionary *carSelectedModelDic;
 
+
 // 亮度的值
 @property (nonatomic, assign) NSInteger brightnessVal;
 // 速度的值
@@ -176,6 +177,8 @@ static NSString *const kStartNotifyCharacteristicUUID = @"0xFFFB";
         
         // 恢复car操作按钮状态
         [self recoveryOperationBtnValueWithIntegerArray:recoveryCode];
+        // 恢复Slider的状态
+        [self recoverySliderValueWithIntegerArray:recoveryCode];
     }
     
 }
@@ -627,6 +630,24 @@ static NSString *const kStartNotifyCharacteristicUUID = @"0xFFFB";
 }
 
 /**
+ *  根据数组恢复Slider状态
+ *
+ */
+- (void)recoverySliderValueWithIntegerArray:(NSArray *)integerArray {
+    // 解析存储的Slider数据
+    // 亮度：X / 16
+    // 速度：X % 16
+    
+    // 遍历
+    for (UIButton *selectBtn in self.carSelectedBtnArray) {
+        NSInteger allValue = [self.transferCode[selectBtn.tag - 30000 + 3] integerValue];
+        self.leftSlider.value = allValue / 16;
+        self.rightSlider.value = allValue % 16;
+    }
+    
+}
+
+/**
  *  CRC校验， 收到蓝牙设备返回数据时检验
  *
  */
@@ -729,6 +750,13 @@ static NSString *const kStartNotifyCharacteristicUUID = @"0xFFFB";
         }
     }
     
+    // 当每次点击carBtn时，重新对两个Slider赋值
+    // 1.解析存储的Slider数据
+    // 亮度：X / 16
+    // 速度：X % 16
+    NSInteger allValue = [self.transferCode[btn.tag - 30000 + 3] integerValue];
+    self.leftSlider.value = allValue / 16;
+    self.rightSlider.value = allValue % 16;
     
     if (self.masterSwitch.isOn) {
         [self writePeripheral:_mPeripheral characteristic:_FFFAcharacteristic value:[self converToCharArrayWithIntegerArray:self.transferCode]];
@@ -935,9 +963,9 @@ static NSString *const kStartNotifyCharacteristicUUID = @"0xFFFB";
             [self.carSelectedBtnArray enumerateObjectsUsingBlock:^(UIButton *selectedBtn, NSUInteger idx, BOOL * _Nonnull stop) {
                 NSInteger allVal = _brightnessVal * 16 + _speedVal;
                 self.transferCode[selectedBtn.tag - 30000 + 3] = @(allVal);
+
             }];
             
-            //        NSLog(@"%zd----%zd------%zd", _brightnessVal, _speedVal, _brightnessVal * 16 + _speedVal);
             [self writePeripheral:_mPeripheral characteristic:_FFFAcharacteristic value:[self converToCharArrayWithIntegerArray:self.transferCode]];
             
             self.sliderFirstSend = NO;
@@ -955,8 +983,7 @@ static NSString *const kStartNotifyCharacteristicUUID = @"0xFFFB";
                 NSInteger allVal = _brightnessVal * 16 + _speedVal;
                 self.transferCode[selectedBtn.tag - 30000 + 3] = @(allVal);
             }];
-            
-            //        NSLog(@"%zd----%zd------%zd", _brightnessVal, _speedVal, _brightnessVal * 16 + _speedVal);
+
             [self writePeripheral:_mPeripheral characteristic:_FFFAcharacteristic value:[self converToCharArrayWithIntegerArray:self.transferCode]];
         }
     }
@@ -967,34 +994,6 @@ static NSString *const kStartNotifyCharacteristicUUID = @"0xFFFB";
  *
  */
 -(void)modelBtnClick:(UIButton *)btn{
-//    switch (btn.tag - 40000) {
-//        case 1:
-//            [self modelBtnClickWithBtn:btn];
-//            break;
-//        case 2:
-//            [self modelBtnClickWithBtn:btn];
-//            break;
-//        case 3:
-//            [self modelBtnClickWithBtn:btn];
-//            break;
-//        case 4:
-//            [self modelBtnClickWithBtn:btn];
-//            break;
-//        case 5:
-//            [self modelBtnClickWithBtn:btn];
-//            break;
-//        case 6:
-//            [self modelBtnClickWithBtn:btn];
-//            break;
-//        case 7:
-//            [self modelBtnClickWithBtn:btn];
-//            break;
-//        case 8:
-//            [self modelBtnClickWithBtn:btn];
-//            break;
-//        default:
-//            break;
-//    }
     
     [self modelBtnClickWithBtn:btn];
 }
