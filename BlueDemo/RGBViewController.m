@@ -145,7 +145,21 @@ static NSString *const kStartNotifyCharacteristicUUID = @"0xFFFB";
     
     [self setUpEightModelBtn];
     
+    // 恢复存储数据
+    NSArray *recoveryCode = [self recoveryBlueDeviceStatus];
     
+    if (recoveryCode.count > 0) {
+        self.transferCode = [recoveryCode mutableCopy];
+        // 恢复car按钮状态
+        [self recoveryCarBtnValueWithIntegerArray:recoveryCode];
+        // 恢复model按钮状态
+        [self recoveryModelBtnValueWithIntegerArray:recoveryCode];
+        
+        // 恢复car操作按钮状态
+        [self recoveryOperationBtnValueWithIntegerArray:recoveryCode];
+        // 恢复Slider的状态
+        [self recoverySliderValueWithIntegerArray:recoveryCode];
+    }
     
 }
 
@@ -165,21 +179,7 @@ static NSString *const kStartNotifyCharacteristicUUID = @"0xFFFB";
         self.threeBtnViewBottomCons.constant = 8;
     }
     
-    // 恢复存储数据
-    NSArray *recoveryCode = [self recoveryBlueDeviceStatus];
     
-    if (recoveryCode.count > 0) {
-        self.transferCode = [recoveryCode mutableCopy];
-        // 恢复car按钮状态
-        [self recoveryCarBtnValueWithIntegerArray:recoveryCode];
-        // 恢复model按钮状态
-        [self recoveryModelBtnValueWithIntegerArray:recoveryCode];
-        
-        // 恢复car操作按钮状态
-        [self recoveryOperationBtnValueWithIntegerArray:recoveryCode];
-        // 恢复Slider的状态
-        [self recoverySliderValueWithIntegerArray:recoveryCode];
-    }
     
 }
 
@@ -1042,8 +1042,10 @@ static NSString *const kStartNotifyCharacteristicUUID = @"0xFFFB";
         for (CBCharacteristic *characteristic in service.characteristics) {
             if ([characteristic.UUID isEqual:characteristicUUID]) {
                 
+                if (self.masterSwitch.isOn) {
+                    [self writePeripheral:peripheral characteristic:characteristic value:[self converToCharArrayWithIntegerArray:self.transferCode]];
+                }
                 
-                [self writePeripheral:peripheral characteristic:characteristic value:[self converToCharArrayWithIntegerArray:self.transferCode]];
                 self.FFFAcharacteristic = characteristic;
                 
             } else if ([characteristic.UUID isEqual:notifyCharacteristicUUID]) {
