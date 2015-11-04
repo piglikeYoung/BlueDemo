@@ -143,6 +143,9 @@ static NSString *const kStartNotifyCharacteristicUUID = @"0xFFFB";
     [self setUpSlider];
     
     [self setUpEightModelBtn];
+    
+    
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -159,6 +162,20 @@ static NSString *const kStartNotifyCharacteristicUUID = @"0xFFFB";
     } else {
         self.selectCarViewBottomCons.constant = 20;
         self.threeBtnViewBottomCons.constant = 8;
+    }
+    
+    // 恢复存储数据
+    NSArray *recoveryCode = [self recoveryBlueDeviceStatus];
+    
+    if (recoveryCode.count > 0) {
+        self.transferCode = [recoveryCode mutableCopy];
+        // 恢复car按钮状态
+        [self recoveryCarBtnValueWithIntegerArray:recoveryCode];
+        // 恢复model按钮状态
+        [self recoveryModelBtnValueWithIntegerArray:recoveryCode];
+        
+        // 恢复car操作按钮状态
+        [self recoveryOperationBtnValueWithIntegerArray:recoveryCode];
     }
     
 }
@@ -405,6 +422,211 @@ static NSString *const kStartNotifyCharacteristicUUID = @"0xFFFB";
 }
 
 /**
+ *  根据数组恢复开关按钮状态
+ *
+ */
+- (void)recoveryCarBtnValueWithIntegerArray:(NSArray *)integerArray {
+    
+    NSInteger carBtnValue = [integerArray[2] integerValue];
+    
+    // 判断总开关
+    self.masterSwitch.on = ((carBtnValue / 128) % 2) == 1 ? YES : NO;
+    
+    
+    // 判断灯1
+    if (((carBtnValue / 1) % 2) == 1) {
+        self.carBtn1.selected = YES;
+        // 把选中的按钮添加到选中数组中
+//        [self.carSelectedBtnArray addObject:self.carBtn1];
+    } else {
+        self.carBtn1.selected = NO;
+    }
+    // 判断灯2
+    if (((carBtnValue / 2) % 2) == 1) {
+        self.carBtn2.selected = YES;
+        // 把选中的按钮添加到选中数组中
+//        [self.carSelectedBtnArray addObject:self.carBtn2];
+    } else {
+        self.carBtn2.selected = NO;
+    }
+    // 判断灯3
+    if (((carBtnValue / 4) % 2) == 1) {
+        self.carBtn3.selected = YES;
+        // 把选中的按钮添加到选中数组中
+//        [self.carSelectedBtnArray addObject:self.carBtn3];
+    } else {
+        self.carBtn3.selected = NO;
+    }
+    // 判断灯4
+    if (((carBtnValue / 8) % 2) == 1) {
+        self.carBtn4.selected = YES;
+        // 把选中的按钮添加到选中数组中
+//        [self.carSelectedBtnArray addObject:self.carBtn4];
+    } else {
+        self.carBtn4.selected = NO;
+    }
+    // 判断灯5
+    if (((carBtnValue / 16) % 2) == 1) {
+        self.carBtn5.selected = YES;
+        // 把选中的按钮添加到选中数组中
+//        [self.carSelectedBtnArray addObject:self.carBtn5];
+    } else {
+        self.carBtn5.selected = NO;
+    }
+    // 判断灯6
+    if (((carBtnValue / 32) % 2) == 1) {
+        self.carBtn6.selected = YES;
+        // 把选中的按钮添加到选中数组中
+//        [self.carSelectedBtnArray addObject:self.carBtn6];
+    } else {
+        self.carBtn6.selected = NO;
+    }
+
+}
+
+/**
+ *  根据数组恢复开关操作状态
+ *
+ */
+- (void)recoveryOperationBtnValueWithIntegerArray:(NSArray *)integerArray {
+    
+    NSInteger value = [integerArray[3] integerValue];
+    
+    
+    // 判断灯1
+    if (((value / 1) % 2) == 1) {
+        // 把选中的按钮添加到选中数组中
+        [self.carSelectedBtnArray addObject:self.carBtn1];
+        [self.carBtn1.layer setBorderWidth:5.0]; //边框宽度
+        [self.carBtn1.layer setBorderColor:[UIColor whiteColor].CGColor];//边框颜色
+        // 把操作按钮对应的model按钮选上
+        NSInteger carselectModel = [[self.carSelectedModelDic objectForKey:@(self.carBtn1.tag)] integerValue];
+        if (carselectModel > 0) {
+            UIButton *modelBtn = [self.eightBtnView viewWithTag:carselectModel];
+            modelBtn.selected = YES;
+        }
+        
+    } else {
+        [self.carBtn1.layer setBorderWidth:0.0]; //边框宽度
+        [self.carBtn1.layer setBorderColor:[UIColor clearColor].CGColor];//边框颜色
+    }
+    
+    // 判断灯2
+    if (((value / 2) % 2) == 1) {
+        [self.carSelectedBtnArray addObject:self.carBtn2];
+        [self.carBtn2.layer setBorderWidth:5.0]; //边框宽度
+        [self.carBtn2.layer setBorderColor:[UIColor whiteColor].CGColor];//边框颜色
+        // 把操作按钮对应的model按钮选上
+        NSInteger carselectModel = [[self.carSelectedModelDic objectForKey:@(self.carBtn2.tag)] integerValue];
+        if (carselectModel > 0) {
+            UIButton *modelBtn = [self.eightBtnView viewWithTag:carselectModel];
+            modelBtn.selected = YES;
+        }
+    } else {
+        [self.carBtn2.layer setBorderWidth:0.0]; //边框宽度
+        [self.carBtn2.layer setBorderColor:[UIColor clearColor].CGColor];//边框颜色
+    }
+    
+    // 判断灯3
+    if (((value / 4) % 2) == 1) {
+        [self.carSelectedBtnArray addObject:self.carBtn3];
+        [self.carBtn3.layer setBorderWidth:5.0]; //边框宽度
+        [self.carBtn3.layer setBorderColor:[UIColor whiteColor].CGColor];//边框颜色
+        // 把操作按钮对应的model按钮选上
+        NSInteger carselectModel = [[self.carSelectedModelDic objectForKey:@(self.carBtn3.tag)] integerValue];
+        if (carselectModel > 0) {
+            UIButton *modelBtn = [self.eightBtnView viewWithTag:carselectModel];
+            modelBtn.selected = YES;
+        }
+        
+    } else {
+        [self.carBtn3.layer setBorderWidth:0.0]; //边框宽度
+        [self.carBtn3.layer setBorderColor:[UIColor clearColor].CGColor];//边框颜色
+    }
+    
+    // 判断灯4
+    if (((value / 8) % 2) == 1) {
+        [self.carSelectedBtnArray addObject:self.carBtn4];
+        [self.carBtn4.layer setBorderWidth:5.0]; //边框宽度
+        [self.carBtn4.layer setBorderColor:[UIColor whiteColor].CGColor];//边框颜色
+        // 把操作按钮对应的model按钮选上
+        NSInteger carselectModel = [[self.carSelectedModelDic objectForKey:@(self.carBtn4.tag)] integerValue];
+        if (carselectModel > 0) {
+            UIButton *modelBtn = [self.eightBtnView viewWithTag:carselectModel];
+            modelBtn.selected = YES;
+        }
+    } else {
+        [self.carBtn4.layer setBorderWidth:0.0]; //边框宽度
+        [self.carBtn4.layer setBorderColor:[UIColor clearColor].CGColor];//边框颜色
+    }
+    
+    // 判断灯5
+    if (((value / 16) % 2) == 1) {
+        [self.carSelectedBtnArray addObject:self.carBtn5];
+        [self.carBtn5.layer setBorderWidth:5.0]; //边框宽度
+        [self.carBtn5.layer setBorderColor:[UIColor whiteColor].CGColor];//边框颜色
+        // 把操作按钮对应的model按钮选上
+        NSInteger carselectModel = [[self.carSelectedModelDic objectForKey:@(self.carBtn5.tag)] integerValue];
+        if (carselectModel > 0) {
+            UIButton *modelBtn = [self.eightBtnView viewWithTag:carselectModel];
+            modelBtn.selected = YES;
+        }
+    } else {
+        [self.carBtn5.layer setBorderWidth:0.0]; //边框宽度
+        [self.carBtn5.layer setBorderColor:[UIColor clearColor].CGColor];//边框颜色
+    }
+    
+    // 判断灯6
+    if (((value / 32) % 2) == 1) {
+        [self.carSelectedBtnArray addObject:self.carBtn6];
+        [self.carBtn6.layer setBorderWidth:5.0]; //边框宽度
+        [self.carBtn6.layer setBorderColor:[UIColor whiteColor].CGColor];//边框颜色
+        // 把操作按钮对应的model按钮选上
+        NSInteger carselectModel = [[self.carSelectedModelDic objectForKey:@(self.carBtn6.tag)] integerValue];
+        if (carselectModel > 0) {
+            UIButton *modelBtn = [self.eightBtnView viewWithTag:carselectModel];
+            modelBtn.selected = YES;
+        }
+    } else {
+        [self.carBtn6.layer setBorderWidth:0.0]; //边框宽度
+        [self.carBtn6.layer setBorderColor:[UIColor clearColor].CGColor];//边框颜色
+    }
+}
+
+/**
+ *  根据数组恢复model按钮状态
+ *
+ */
+- (void)recoveryModelBtnValueWithIntegerArray:(NSArray *)integerArray {
+    
+//    x值：Z / 16
+//    y值：Z % 16
+    NSInteger x = 0;
+    NSInteger y = 0;
+    
+    NSInteger value1 = [integerArray[10] integerValue];
+    x = value1 / 16;
+    y = value1 % 16;
+    
+    // 存储carBtn选中按钮的model值，key是carBtn的tag，value是modelBtn的tag
+    [self.carSelectedModelDic setObject:@(40000 + x) forKey:@(self.carBtn1.tag)];
+    [self.carSelectedModelDic setObject:@(40000 + y) forKey:@(self.carBtn2.tag)];
+
+    NSInteger value2 = [integerArray[11] integerValue];
+    x = value2 / 16;
+    y = value2 % 16;
+    [self.carSelectedModelDic setObject:@(40000 + x) forKey:@(self.carBtn3.tag)];
+    [self.carSelectedModelDic setObject:@(40000 + y) forKey:@(self.carBtn4.tag)];
+    
+    NSInteger value3 = [integerArray[12] integerValue];
+    x = value3 / 16;
+    y = value3 % 16;
+    [self.carSelectedModelDic setObject:@(40000 + x) forKey:@(self.carBtn5.tag)];
+    [self.carSelectedModelDic setObject:@(40000 + y) forKey:@(self.carBtn6.tag)];
+    
+}
+
+/**
  *  CRC校验， 收到蓝牙设备返回数据时检验
  *
  */
@@ -497,9 +719,13 @@ static NSString *const kStartNotifyCharacteristicUUID = @"0xFFFB";
     for (NSNumber *carSelectBtnTag in [self.carSelectedModelDic allKeys]) {
         // 当carBtn一样时才反选
         if (btn.tag == [carSelectBtnTag integerValue]) {
-            [self.carSelectedModelDic objectForKey:carSelectBtnTag];
-            UIButton *modelBtn = [self.view viewWithTag:[[self.carSelectedModelDic objectForKey:carSelectBtnTag] integerValue]];
-            modelBtn.selected = !modelBtn.selected;
+
+            NSInteger carselectModel = [[self.carSelectedModelDic objectForKey:carSelectBtnTag] integerValue];
+            if (carselectModel > 0) {
+                UIButton *modelBtn = [self.eightBtnView viewWithTag:carselectModel];
+                modelBtn.selected = !modelBtn.selected;
+            }
+            
         }
     }
     
@@ -644,8 +870,11 @@ static NSString *const kStartNotifyCharacteristicUUID = @"0xFFFB";
     if (sender.isOn) {
         self.transferCode[2] = @(masterSwitchVal);
     } else {
-        self.transferCode[2] = @0;
+        self.transferCode[2] = @([self.transferCode[2] integerValue] - masterSwitchVal);
     }
+    
+    // 保存数据，并发送数据
+    [self writePeripheral:_mPeripheral characteristic:_FFFAcharacteristic value:[self converToCharArrayWithIntegerArray:self.transferCode]];
 }
 
 
