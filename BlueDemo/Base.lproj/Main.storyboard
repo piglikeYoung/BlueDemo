@@ -20,11 +20,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="viewBg" translatesAutoresizingMaskIntoConstraints="NO" id="0zM-6g-7QH">
+                            <imageView userInteractionEnabled="NO" alpha="0.0" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="viewBg" translatesAutoresizingMaskIntoConstraints="NO" id="0zM-6g-7QH">
                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                 <animations/>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="avT-Lc-tZ5">
+                            <button opaque="NO" alpha="0.0" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="avT-Lc-tZ5">
                                 <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                 <animations/>
                                 <constraints>
@@ -63,7 +63,7 @@
                                     <segue destination="T6i-m9-jI6" kind="presentation" identifier="toRGBVc" id="tix-m5-ckc"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CX7-vG-eBI">
+                            <button opaque="NO" alpha="0.0" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CX7-vG-eBI">
                                 <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                 <animations/>
                                 <constraints>
@@ -99,7 +99,7 @@
                                     <segue destination="BYZ-38-t0r" kind="presentation" identifier="toSwitchVc" id="g01-er-JVc"/>
                                 </connections>
                             </button>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="conn_logo" translatesAutoresizingMaskIntoConstraints="NO" id="EPM-NO-2jR">
+                            <imageView userInteractionEnabled="NO" alpha="0.0" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="conn_logo" translatesAutoresizingMaskIntoConstraints="NO" id="EPM-NO-2jR">
                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                 <animations/>
                                 <constraints>
@@ -119,11 +119,11 @@
                                     </mask>
                                 </variation>
                             </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="rgbControl" translatesAutoresizingMaskIntoConstraints="NO" id="WPy-Lg-MNb">
+                            <imageView userInteractionEnabled="NO" alpha="0.0" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="rgbControl" translatesAutoresizingMaskIntoConstraints="NO" id="WPy-Lg-MNb">
                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                 <animations/>
                             </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="switchControl" translatesAutoresizingMaskIntoConstraints="NO" id="3ST-p5-PhI">
+                            <imageView userInteractionEnabled="NO" alpha="0.0" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="switchControl" translatesAutoresizingMaskIntoConstraints="NO" id="3ST-p5-PhI">
                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                 <animations/>
                                 <constraints>
@@ -250,8 +250,12 @@
                         </variation>
                     </view>
                     <connections>
+                        <outlet property="bgView" destination="0zM-6g-7QH" id="Hyw-zr-mCk"/>
+                        <outlet property="logoIv" destination="EPM-NO-2jR" id="QBF-To-XnY"/>
                         <outlet property="rgbBtn" destination="avT-Lc-tZ5" id="3gl-AM-tcy"/>
+                        <outlet property="rgbControlIv" destination="WPy-Lg-MNb" id="eAY-Fv-Ox8"/>
                         <outlet property="switchBtn" destination="CX7-vG-eBI" id="g4K-hd-1em"/>
+                        <outlet property="switchControlIv" destination="3ST-p5-PhI" id="8i8-ct-aq4"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="F4n-MP-wGi" userLabel="First Responder" sceneMemberID="firstResponder"/>

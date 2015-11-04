@@ -30,8 +30,12 @@ static NSString *const rgbDeviceName = @"XIANGXI-CSL-5233-2";
 @property (nonatomic, strong) CBPeripheral *rgbPeripheral;
 
 
+@property (weak, nonatomic) IBOutlet UIImageView *bgView;
 @property (weak, nonatomic) IBOutlet UIButton *rgbBtn;
 @property (weak, nonatomic) IBOutlet UIButton *switchBtn;
+@property (weak, nonatomic) IBOutlet UIImageView *logoIv;
+@property (weak, nonatomic) IBOutlet UIImageView *rgbControlIv;
+@property (weak, nonatomic) IBOutlet UIImageView *switchControlIv;
 
 @end
 
@@ -44,8 +48,12 @@ static NSString *const rgbDeviceName = @"XIANGXI-CSL-5233-2";
     return _mPeripheralList;
 }
 
+
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    // 设置启动界面动画
+    [self setUpLauchIvWithLaunchScreen];
     
     // 1.创建中心设备
     _manager = [[CBCentralManager alloc] initWithDelegate:self queue:nil];
@@ -97,6 +105,43 @@ static NSString *const rgbDeviceName = @"XIANGXI-CSL-5233-2";
 
 
 #pragma mark - 私有方法
+
+/**
+ *  设置启动界面动画
+ */
+- (void) setUpLauchIvWithLaunchScreen {
+    
+    // 加载LaunchScreen.storyboard
+    UIViewController *viewController = [[UIStoryboard storyboardWithName:@"LaunchScreen" bundle:nil] instantiateViewControllerWithIdentifier:@"LaunchScreen"];
+    
+    UIView *launchView = viewController.view;
+    [self.view addSubview:launchView];
+    
+    // 外圈转动动画
+    CABasicAnimation *rotationAnimation = [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
+    rotationAnimation.toValue = @(M_PI * 2.0);
+    rotationAnimation.duration = 1.f;
+    rotationAnimation.cumulative = YES;
+    rotationAnimation.repeatCount = 8;
+    [[launchView viewWithTag:1220].layer addAnimation:rotationAnimation forKey:@"rotationAnimation"];
+    
+    // 3秒后，移除加载动画并显示主界面
+    [UIView animateWithDuration:2.0f delay:3 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
+        launchView.alpha = 0.0f;
+        launchView.layer.transform = CATransform3DScale(CATransform3DIdentity, 1.3f, 1.3f, 1.0f);
+        _bgView.alpha = 1.0f;
+        _logoIv.alpha = 1.0f;
+        _rgbBtn.alpha = 1.0f;
+        _switchBtn.alpha= 1.0f;
+        _rgbControlIv.alpha = 1.0f;
+        _switchControlIv.alpha = 1.0f;
+    } completion:^(BOOL finished) {
+        [launchView removeFromSuperview];
+    }];
+}
+
+
+
 // 停止扫描并断开连接
 -(void)disconnectPeripheral:(CBCentralManager *)centralManager
                  peripheral:(CBPeripheral *)peripheral{
