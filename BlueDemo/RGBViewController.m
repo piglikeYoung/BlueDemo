@@ -32,7 +32,7 @@ static NSString *const kStartCharacteristicUUID = @"0xFFFA";
 static NSString *const kStartNotifyCharacteristicUUID = @"0xFFFB";
 
 
-@interface RGBViewController () <CBPeripheralDelegate>
+@interface RGBViewController () <CBPeripheralDelegate, UIAlertViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIButton *backBtn;
 
@@ -90,7 +90,8 @@ static NSString *const kStartNotifyCharacteristicUUID = @"0xFFFB";
 // slider是否第一次发送数据
 @property (nonatomic, assign, getter=isSliderFirstSend) BOOL sliderFirstSend;
 
-
+// 存储长按的按钮
+@property (nonatomic, weak) UIButton *longPressBtn;
 
 @end
 
@@ -160,6 +161,9 @@ static NSString *const kStartNotifyCharacteristicUUID = @"0xFFFB";
         // 恢复Slider的状态
         [self recoverySliderValueWithIntegerArray:recoveryCode];
     }
+    
+    // carBtn添加长按事件
+    [self setUpCarBtnLongPress];
     
 }
 
@@ -319,6 +323,37 @@ static NSString *const kStartNotifyCharacteristicUUID = @"0xFFFB";
             make.top.equalTo(self.eightBtnView.mas_top);
         }];
     }
+}
+
+/**
+ *  carBtn长按事件
+ */
+- (void) setUpCarBtnLongPress {
+    UILongPressGestureRecognizer *longPressGR1 =
+    [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressClick:)];
+    longPressGR1.minimumPressDuration = 1;
+    UILongPressGestureRecognizer *longPressGR2 =
+    [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressClick:)];
+    longPressGR2.minimumPressDuration = 1;
+    UILongPressGestureRecognizer *longPressGR3 =
+    [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressClick:)];
+    longPressGR3.minimumPressDuration = 1;
+    UILongPressGestureRecognizer *longPressGR4 =
+    [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressClick:)];
+    longPressGR4.minimumPressDuration = 1;
+    UILongPressGestureRecognizer *longPressGR5 =
+    [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressClick:)];
+    longPressGR5.minimumPressDuration = 1;
+    UILongPressGestureRecognizer *longPressGR6 =
+    [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressClick:)];
+    longPressGR6.minimumPressDuration = 1;
+    
+    [self.carBtn1 addGestureRecognizer:longPressGR1];
+    [self.carBtn2 addGestureRecognizer:longPressGR2];
+    [self.carBtn3 addGestureRecognizer:longPressGR3];
+    [self.carBtn4 addGestureRecognizer:longPressGR4];
+    [self.carBtn5 addGestureRecognizer:longPressGR5];
+    [self.carBtn6 addGestureRecognizer:longPressGR6];
 }
 
 
@@ -998,9 +1033,78 @@ static NSString *const kStartNotifyCharacteristicUUID = @"0xFFFB";
     [self modelBtnClickWithBtn:btn];
 }
 
+/**
+ *  carBtn长按点击
+ *
+ *  @param gesture 手势
+ */
+- (void) longPressClick:(UILongPressGestureRecognizer *)gesture {
+    if (gesture.state == UIGestureRecognizerStateBegan) {
+        
+        UIButton *btn = [self.view viewWithTag:gesture.view.tag];
+        _longPressBtn = btn;
+        NSString *onOff = btn.isSelected ? @"off" : @"on";
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:nil delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:onOff, @"Rename", @"Select Multiple", nil];
+        alertView.tag = 50001;
+        [alertView show];
+    }
+    
+}
+
 - (IBAction)backClick:(id)sender {
     
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+#pragma mark - UIAlertViewDelegate
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    
+    if(alertView.tag == 50000) {
+        if (buttonIndex == 0) {
+            return;
+        }
+        
+        // 获取修改后的数据
+        UITextField *textField = [alertView textFieldAtIndex:0];
+        NSString *newStr = textField.text;
+        _longPressBtn.titleLabel.text = newStr;
+    } else {
+        switch (buttonIndex) {
+            case 0:// cancel
+                break;
+            case 1: // on off
+                [self carBtnTouchUpInside:_longPressBtn];
+                break;
+            case 2: // Rename
+                [self popInputAlertView:_longPressBtn];
+                break;
+            case 3:// Select Multiple
+                break;
+            default:
+                break;
+        }
+    }
+    
+}
+
+/**
+ *  弹出修改名称的对话框
+ *
+ *  @param btn 需要修改的按钮
+ */
+- (void) popInputAlertView:(UIButton *)btn {
+    // 1.创建一个弹窗
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Rename" message:nil delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Save", nil];
+    
+    // 设置alert的样式, 让alert显示出uitextfield
+    alert.alertViewStyle = UIAlertViewStylePlainTextInput;
+    // 获取alert中的textfield
+    UITextField *textField = [alert textFieldAtIndex:0];
+    // 设置数据到textfield
+    textField.text = btn.titleLabel.text;
+    alert.tag = 50000;
+    // 2.显示窗口
+    [alert show];
 }
 
 #pragma mark - CBPeripheralDelegate

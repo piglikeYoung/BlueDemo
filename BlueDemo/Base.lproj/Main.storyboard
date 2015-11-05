@@ -28,8 +28,6 @@
                                 <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                 <animations/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="100" id="CdU-4t-jno"/>
-                                    <constraint firstAttribute="height" constant="100" id="Ch0-Lt-dAk"/>
                                     <constraint firstAttribute="width" secondItem="avT-Lc-tZ5" secondAttribute="height" multiplier="1:1" id="QRN-mE-f7b"/>
                                     <constraint firstAttribute="width" constant="87" id="kOK-ec-POZ"/>
                                 </constraints>
@@ -39,24 +37,20 @@
                                 </state>
                                 <variation key="default">
                                     <mask key="constraints">
-                                        <exclude reference="CdU-4t-jno"/>
-                                        <exclude reference="Ch0-Lt-dAk"/>
                                         <exclude reference="QRN-mE-f7b"/>
                                         <exclude reference="kOK-ec-POZ"/>
                                     </mask>
                                 </variation>
                                 <variation key="heightClass=compact-widthClass=compact">
                                     <mask key="constraints">
-                                        <exclude reference="CdU-4t-jno"/>
-                                        <exclude reference="Ch0-Lt-dAk"/>
                                         <include reference="QRN-mE-f7b"/>
                                         <include reference="kOK-ec-POZ"/>
                                     </mask>
                                 </variation>
                                 <variation key="heightClass=compact-widthClass=regular">
                                     <mask key="constraints">
-                                        <include reference="CdU-4t-jno"/>
-                                        <include reference="Ch0-Lt-dAk"/>
+                                        <include reference="QRN-mE-f7b"/>
+                                        <include reference="kOK-ec-POZ"/>
                                     </mask>
                                 </variation>
                                 <connections>
@@ -69,30 +63,24 @@
                                 <constraints>
                                     <constraint firstAttribute="width" constant="87" id="6BP-C6-sxD"/>
                                     <constraint firstAttribute="width" secondItem="CX7-vG-eBI" secondAttribute="height" multiplier="1:1" id="EzG-4D-wvT"/>
-                                    <constraint firstAttribute="height" constant="100" id="MKA-tf-kk6"/>
-                                    <constraint firstAttribute="width" constant="100" id="sWL-ge-KtN"/>
                                 </constraints>
                                 <state key="normal" image="conn_switchBtn_normal"/>
                                 <variation key="default">
                                     <mask key="constraints">
                                         <exclude reference="6BP-C6-sxD"/>
                                         <exclude reference="EzG-4D-wvT"/>
-                                        <exclude reference="MKA-tf-kk6"/>
-                                        <exclude reference="sWL-ge-KtN"/>
                                     </mask>
                                 </variation>
                                 <variation key="heightClass=compact-widthClass=compact">
                                     <mask key="constraints">
                                         <include reference="6BP-C6-sxD"/>
                                         <include reference="EzG-4D-wvT"/>
-                                        <exclude reference="MKA-tf-kk6"/>
-                                        <exclude reference="sWL-ge-KtN"/>
                                     </mask>
                                 </variation>
                                 <variation key="heightClass=compact-widthClass=regular">
                                     <mask key="constraints">
-                                        <include reference="MKA-tf-kk6"/>
-                                        <include reference="sWL-ge-KtN"/>
+                                        <include reference="6BP-C6-sxD"/>
+                                        <include reference="EzG-4D-wvT"/>
                                     </mask>
                                 </variation>
                                 <connections>
@@ -113,6 +101,12 @@
                                     </mask>
                                 </variation>
                                 <variation key="heightClass=compact-widthClass=compact">
+                                    <mask key="constraints">
+                                        <include reference="N1k-wu-kgI"/>
+                                        <include reference="yVD-Hd-6DF"/>
+                                    </mask>
+                                </variation>
+                                <variation key="heightClass=compact-widthClass=regular">
                                     <mask key="constraints">
                                         <include reference="N1k-wu-kgI"/>
                                         <include reference="yVD-Hd-6DF"/>
@@ -144,6 +138,12 @@
                                         <include reference="jmv-N6-mL0"/>
                                     </mask>
                                 </variation>
+                                <variation key="heightClass=compact-widthClass=regular">
+                                    <mask key="constraints">
+                                        <include reference="BaY-z6-2Pq"/>
+                                        <include reference="jmv-N6-mL0"/>
+                                    </mask>
+                                </variation>
                             </imageView>
                         </subviews>
                         <animations/>
@@ -167,14 +167,6 @@
                             <constraint firstItem="avT-Lc-tZ5" firstAttribute="centerX" secondItem="s1T-6F-0f8" secondAttribute="centerX" constant="-80" id="zIO-8G-L32"/>
                         </constraints>
                         <variation key="default">
-                            <mask key="subviews">
-                                <exclude reference="0zM-6g-7QH"/>
-                                <exclude reference="avT-Lc-tZ5"/>
-                                <exclude reference="CX7-vG-eBI"/>
-                                <exclude reference="EPM-NO-2jR"/>
-                                <exclude reference="WPy-Lg-MNb"/>
-                                <exclude reference="3ST-p5-PhI"/>
-                            </mask>
                             <mask key="constraints">
                                 <exclude reference="ArW-jY-pDC"/>
                                 <exclude reference="S9x-mp-Ww2"/>
@@ -192,15 +184,11 @@
                                 <exclude reference="wHw-V4-226"/>
                             </mask>
                         </variation>
-                        <variation key="heightClass=compact">
-                            <mask key="subviews">
-                                <include reference="avT-Lc-tZ5"/>
-                                <include reference="CX7-vG-eBI"/>
-                            </mask>
-                        </variation>
                         <variation key="heightClass=compact-widthClass=compact">
                             <mask key="subviews">
                                 <include reference="0zM-6g-7QH"/>
+                                <include reference="avT-Lc-tZ5"/>
+                                <include reference="CX7-vG-eBI"/>
                                 <include reference="EPM-NO-2jR"/>
                                 <include reference="WPy-Lg-MNb"/>
                                 <include reference="3ST-p5-PhI"/>
@@ -2863,6 +2851,6 @@
         <image name="switchControl" width="129" height="10"/>
         <image name="three" width="20" height="8"/>
         <image name="two" width="13" height="8"/>
-        <image name="viewBg" width="667" height="375"/>
+        <image name="viewBg" width="1000" height="562"/>
     </resources>
 </document>

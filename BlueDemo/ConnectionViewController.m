@@ -112,9 +112,10 @@ static NSString *const rgbDeviceName = @"XIANGXI-CSL-5233-2";
 - (void) setUpLauchIvWithLaunchScreen {
     
     // 加载LaunchScreen.storyboard
-    UIViewController *viewController = [[UIStoryboard storyboardWithName:@"LaunchScreen" bundle:nil] instantiateViewControllerWithIdentifier:@"LaunchScreen"];
+    UIViewController *launchScreenVc = [[UIStoryboard storyboardWithName:@"LaunchScreen" bundle:nil] instantiateViewControllerWithIdentifier:@"LaunchScreen"];
     
-    UIView *launchView = viewController.view;
+    UIView *launchView = launchScreenVc.view;
+    launchView.frame = self.view.bounds;
     [self.view addSubview:launchView];
     
     // 外圈转动动画

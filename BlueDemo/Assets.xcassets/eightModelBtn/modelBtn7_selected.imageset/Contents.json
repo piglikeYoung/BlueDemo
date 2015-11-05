@@ -2,11 +2,11 @@
   "images" : [
     {
       "idiom" : "universal",
+      "filename" : "modelBtn7_selected.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "viewBg.png",
       "scale" : "2x"
     },
     {
