@@ -10,6 +10,7 @@
 #import <CoreBluetooth/CoreBluetooth.h>
 #import "SwitchViewController.h"
 #import "RGBViewController.h"
+#import "Masonry.h"
 
 // 蓝牙外设名称
 static NSString *const switchDeviceName = @"XIANGXI-CSL-5233";
@@ -115,8 +116,13 @@ static NSString *const rgbDeviceName = @"XIANGXI-CSL-5233-2";
     UIViewController *launchScreenVc = [[UIStoryboard storyboardWithName:@"LaunchScreen" bundle:nil] instantiateViewControllerWithIdentifier:@"LaunchScreen"];
     
     UIView *launchView = launchScreenVc.view;
-    launchView.frame = self.view.bounds;
     [self.view addSubview:launchView];
+    [launchView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.width.equalTo(self.view.mas_width);
+        make.height.equalTo(self.view.mas_height);
+        make.top.equalTo(self.view.mas_top);
+        make.left.equalTo(self.view.mas_left);
+    }];
     
     // 外圈转动动画
     CABasicAnimation *rotationAnimation = [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];

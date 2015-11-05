@@ -61,6 +61,6 @@
     <resources>
         <image name="conn_logo" width="235" height="61"/>
         <image name="loading" width="227" height="226"/>
-        <image name="viewBg" width="667" height="375"/>
+        <image name="viewBg" width="1000" height="562"/>
     </resources>
 </document>
