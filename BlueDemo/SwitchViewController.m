@@ -104,6 +104,7 @@ typedef enum {
 @property (weak, nonatomic) IBOutlet UIImageView *momentaryIv6;
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *stackViewTopCons;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *logoIvTopCons;
 
 //@property (weak, nonatomic) IBOutlet UISwitch *lockSwichBtn;
 
@@ -179,6 +180,9 @@ typedef enum {
         self.stackViewTopCons.constant = 84;
     } else if (screenHeight == 414){
         self.stackViewTopCons.constant = 100;
+    } else if (screenHeight > 414) {
+        self.stackViewTopCons.constant = 180;
+        self.logoIvTopCons.constant = 60;
     } else {
         self.stackViewTopCons.constant = 76;
     }
