@@ -14,6 +14,8 @@
 
 // Slider的宽度
 static const CGFloat kSliderWidth = 160.f;
+static const CGFloat kSlideriPadWidth = 240.f;
+
 // 蓝牙传输数据的长度
 static const NSInteger kDataLength = 20;
 
@@ -264,6 +266,9 @@ static NSString *const kStartNotifyCharacteristicUUID = @"0xFFFB";
  *  设置左右Slider控件
  */
 - (void)setUpSlider {
+    
+    CGFloat screenHeight = [[UIScreen mainScreen] bounds].size.height;
+    
     UISlider *leftSlider = [[UISlider alloc] init];
     [self.view addSubview:leftSlider];
     [leftSlider setThumbImage:[UIImage imageNamed:@"slider_thumb"] forState:UIControlStateNormal];
@@ -275,9 +280,15 @@ static NSString *const kStartNotifyCharacteristicUUID = @"0xFFFB";
     leftSlider.transform =  CGAffineTransformMakeRotation( -M_PI * 0.5 );
     [leftSlider addTarget:self action:@selector(brightnessOrSpeedSlider:) forControlEvents:UIControlEventValueChanged];
     [leftSlider mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.view.mas_left).offset(-kSliderWidth * 0.5  + 25);
         make.centerY.equalTo(self.view.mas_centerY).offset(-20);
-        make.width.mas_equalTo(kSliderWidth);
+        if (screenHeight > 414) {
+            make.left.equalTo(self.view.mas_left).offset(-kSlideriPadWidth * 0.5  + 25);
+            make.width.mas_equalTo(kSlideriPadWidth);
+        } else {
+            make.left.equalTo(self.view.mas_left).offset(-kSliderWidth * 0.5  + 25);
+            make.width.mas_equalTo(kSliderWidth);
+        }
+        
     }];
     
     UISlider *rightSlider = [[UISlider alloc] init];
@@ -291,9 +302,15 @@ static NSString *const kStartNotifyCharacteristicUUID = @"0xFFFB";
     rightSlider.transform =  CGAffineTransformMakeRotation( -M_PI * 0.5 );
     [rightSlider addTarget:self action:@selector(brightnessOrSpeedSlider:) forControlEvents:UIControlEventValueChanged];
     [rightSlider mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(self.view.mas_right).offset(kSliderWidth * 0.5  - 25);
         make.centerY.equalTo(self.view.mas_centerY).offset(-20);
-        make.width.mas_equalTo(kSliderWidth);
+        if (screenHeight > 414) {
+            make.right.equalTo(self.view.mas_right).offset(kSlideriPadWidth * 0.5  - 25);
+            make.width.mas_equalTo(kSlideriPadWidth);
+        } else {
+            make.right.equalTo(self.view.mas_right).offset(kSlideriPadWidth * 0.5  - 25);
+            make.width.mas_equalTo(kSlideriPadWidth);
+        }
+        
     }];
 }
 
