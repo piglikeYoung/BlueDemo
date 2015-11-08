@@ -45,6 +45,10 @@
 		7DE5FFFD1BE2F87700282CAF /* UIImage+ColorAtPixel.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DE5FFFC1BE2F87700282CAF /* UIImage+ColorAtPixel.m */; };
 		7DF038F11BE3DB60007D49FF /* HSV.c in Sources */ = {isa = PBXBuildFile; fileRef = 7DF038EF1BE3DB60007D49FF /* HSV.c */; };
 		7DF038F41BE3DBB7007D49FF /* UIColor+Convert.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DF038F31BE3DBB7007D49FF /* UIColor+Convert.m */; };
+		7DF340D11BEF85450015B9A6 /* JHSelectPresetView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7DF340D01BEF85450015B9A6 /* JHSelectPresetView.xib */; };
+		7DF340D41BEF855B0015B9A6 /* JHSelectPresetView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DF340D31BEF855B0015B9A6 /* JHSelectPresetView.m */; };
+		7DF340D81BEF8FB60015B9A6 /* UIView+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DF340D71BEF8FB60015B9A6 /* UIView+Extension.m */; };
+		7DF340DC1BEF93370015B9A6 /* JHConst.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DF340DB1BEF93370015B9A6 /* JHConst.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -144,6 +148,13 @@
 		7DF038F01BE3DB60007D49FF /* HSV.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HSV.h; sourceTree = "<group>"; };
 		7DF038F21BE3DBB7007D49FF /* UIColor+Convert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+Convert.h"; sourceTree = "<group>"; };
 		7DF038F31BE3DBB7007D49FF /* UIColor+Convert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Convert.m"; sourceTree = "<group>"; };
+		7DF340D01BEF85450015B9A6 /* JHSelectPresetView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JHSelectPresetView.xib; sourceTree = "<group>"; };
+		7DF340D21BEF855B0015B9A6 /* JHSelectPresetView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHSelectPresetView.h; sourceTree = "<group>"; };
+		7DF340D31BEF855B0015B9A6 /* JHSelectPresetView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHSelectPresetView.m; sourceTree = "<group>"; };
+		7DF340D61BEF8FB60015B9A6 /* UIView+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Extension.h"; sourceTree = "<group>"; };
+		7DF340D71BEF8FB60015B9A6 /* UIView+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Extension.m"; sourceTree = "<group>"; };
+		7DF340DA1BEF93370015B9A6 /* JHConst.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHConst.h; sourceTree = "<group>"; };
+		7DF340DB1BEF93370015B9A6 /* JHConst.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHConst.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -254,6 +265,8 @@
 		7D652F4A1BCDE4460019BCA9 /* BlueDemo */ = {
 			isa = PBXGroup;
 			children = (
+				7DF340D91BEF93140015B9A6 /* Other */,
+				7DF340D51BEF8F470015B9A6 /* Category */,
 				7D84846D1BE5EEBE00C34D89 /* shapedButton */,
 				7D3133631BE21B0D00B7BB27 /* ColorBoard */,
 				7D3133341BE1F38500B7BB27 /* Masonry */,
@@ -269,6 +282,9 @@
 				7D38C0DB1BDF5AA00009D6E6 /* RGBViewController.m */,
 				7D3133601BE2182100B7BB27 /* ColorBoardViewController.h */,
 				7D3133611BE2182100B7BB27 /* ColorBoardViewController.m */,
+				7DF340D21BEF855B0015B9A6 /* JHSelectPresetView.h */,
+				7DF340D31BEF855B0015B9A6 /* JHSelectPresetView.m */,
+				7DF340D01BEF85450015B9A6 /* JHSelectPresetView.xib */,
 				7D652F541BCDE4460019BCA9 /* Main.storyboard */,
 				7D652F571BCDE4460019BCA9 /* Assets.xcassets */,
 				7D652F591BCDE4460019BCA9 /* LaunchScreen.storyboard */,
@@ -334,6 +350,24 @@
 				7D84846F1BE5EEBE00C34D89 /* OBShapedButton.m */,
 			);
 			path = shapedButton;
+			sourceTree = "<group>";
+		};
+		7DF340D51BEF8F470015B9A6 /* Category */ = {
+			isa = PBXGroup;
+			children = (
+				7DF340D61BEF8FB60015B9A6 /* UIView+Extension.h */,
+				7DF340D71BEF8FB60015B9A6 /* UIView+Extension.m */,
+			);
+			path = Category;
+			sourceTree = "<group>";
+		};
+		7DF340D91BEF93140015B9A6 /* Other */ = {
+			isa = PBXGroup;
+			children = (
+				7DF340DA1BEF93370015B9A6 /* JHConst.h */,
+				7DF340DB1BEF93370015B9A6 /* JHConst.m */,
+			);
+			path = Other;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -445,6 +479,7 @@
 				7D652F581BCDE4460019BCA9 /* Assets.xcassets in Resources */,
 				7D31334F1BE1F38500B7BB27 /* Info.plist in Resources */,
 				7D652F561BCDE4460019BCA9 /* Main.storyboard in Resources */,
+				7DF340D11BEF85450015B9A6 /* JHSelectPresetView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -484,6 +519,8 @@
 				7D652F961BCDE5880019BCA9 /* FDStackViewDistributionLayoutArrangement.m in Sources */,
 				7D652F981BCDE5880019BCA9 /* FDStackViewLayoutArrangement.m in Sources */,
 				7D3133591BE1F38500B7BB27 /* ViewController+MASAdditions.m in Sources */,
+				7DF340DC1BEF93370015B9A6 /* JHConst.m in Sources */,
+				7DF340D41BEF855B0015B9A6 /* JHSelectPresetView.m in Sources */,
 				7D38C0DC1BDF5AA00009D6E6 /* RGBViewController.m in Sources */,
 				7D652F501BCDE4460019BCA9 /* AppDelegate.m in Sources */,
 				7D652F931BCDE5880019BCA9 /* FDLayoutSpacer.m in Sources */,
@@ -492,6 +529,7 @@
 				7D0F24E11BCF3C9D001C9A06 /* MBProgressHUD.m in Sources */,
 				7D3133621BE2182100B7BB27 /* ColorBoardViewController.m in Sources */,
 				7DE5FFFD1BE2F87700282CAF /* UIImage+ColorAtPixel.m in Sources */,
+				7DF340D81BEF8FB60015B9A6 /* UIView+Extension.m in Sources */,
 				7D3133501BE1F38500B7BB27 /* MASCompositeConstraint.m in Sources */,
 				7D3133561BE1F38500B7BB27 /* NSArray+MASAdditions.m in Sources */,
 				7D652F951BCDE5880019BCA9 /* FDStackViewAlignmentLayoutArrangement.m in Sources */,

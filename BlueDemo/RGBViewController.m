@@ -11,6 +11,8 @@
 #import "UIImage+Extension.h"
 #import "ColorBoardViewController.h"
 #import "OBShapedButton.h"
+#import "JHSelectPresetView.h"
+#import "JHConst.h"
 
 // Slider的宽度
 static const CGFloat kSliderWidth = 160.f;
@@ -36,8 +38,6 @@ static NSString *const kStartNotifyCharacteristicUUID = @"0xFFFB";
 // transferCode偏好设置key
 static NSString *const kTransferCodeKey = @"transferCodeKey";
 
-// savePresetCode偏好设置key
-static NSString *const kSavePresetCodeKey = @"savePresetCodeKey";
 
 
 @interface RGBViewController () <CBPeripheralDelegate, UIAlertViewDelegate>
@@ -101,6 +101,11 @@ static NSString *const kSavePresetCodeKey = @"savePresetCodeKey";
 // 存储长按的按钮
 @property (nonatomic, weak) UIButton *longPressBtn;
 
+// selectPreset遮罩
+@property (nonatomic, weak) UIButton *selectPresetCoverBtn;
+// selectPreset
+@property (nonatomic, weak) JHSelectPresetView *selectPreset;
+
 @end
 
 @implementation RGBViewController
@@ -144,6 +149,7 @@ static NSString *const kSavePresetCodeKey = @"savePresetCodeKey";
     return _transferCode;
 }
 
+#pragma mark - 生命周期
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -172,6 +178,9 @@ static NSString *const kSavePresetCodeKey = @"savePresetCodeKey";
     
     // carBtn添加长按事件
     [self setUpCarBtnLongPress];
+    
+    // 监听城市改变
+    [JHNotificationCenter addObserver:self selector:@selector(selectPresetDidChange:) name:JHSelectPresetDidChangeNotification object:nil];
     
 }
 
@@ -209,6 +218,8 @@ static NSString *const kSavePresetCodeKey = @"savePresetCodeKey";
         self.mPeripheral = nil;
     }
     
+    [JHNotificationCenter removeObserver:self];
+    
     NSLog(@"RGBViewController销毁");
 }
 
@@ -236,6 +247,33 @@ static NSString *const kSavePresetCodeKey = @"savePresetCodeKey";
             [self writePeripheral:_mPeripheral characteristic:_FFFAcharacteristic value:[self converToCharArrayWithIntegerArray:self.transferCode]];
         }
     };
+}
+
+#pragma mark - 监听通知
+- (void)selectPresetDidChange:(NSNotification *)notification {
+    if (notification.userInfo) {
+        NSString *key = [notification.userInfo objectForKey:JHSelectPresetObjKey];
+        // 根据key恢复存储数据
+        NSDictionary *dic = [[self recoveryBlueDeviceStatusWithKeyName:kSavePresetCodeKey] copy];
+        
+        NSArray *savePresetCode = [dic objectForKey:key];
+        
+        if (savePresetCode.count > 0) {
+            self.transferCode = [savePresetCode mutableCopy];
+            // 恢复car按钮状态
+            [self recoveryCarBtnValueWithIntegerArray:savePresetCode];
+            // 恢复model按钮状态
+            [self recoveryModelBtnValueWithIntegerArray:savePresetCode];
+            
+            // 恢复car操作按钮状态
+            [self recoveryOperationBtnValueWithIntegerArray:savePresetCode];
+            // 恢复Slider的状态
+            [self recoverySliderValueWithIntegerArray:savePresetCode];
+        }
+    }
+    
+    [self.selectPreset removeFromSuperview];
+    [self.selectPresetCoverBtn removeFromSuperview];
 }
 
 
@@ -549,8 +587,10 @@ static NSString *const kSavePresetCodeKey = @"savePresetCodeKey";
  */
 - (void)recoveryOperationBtnValueWithIntegerArray:(NSArray *)integerArray {
     
-    NSInteger value = [integerArray[3] integerValue];
+    // 恢复前先移除所有的btn
+    [self.carSelectedBtnArray removeAllObjects];
     
+    NSInteger value = [integerArray[3] integerValue];
     
     // 判断灯1
     if (((value / 1) % 2) == 1) {
@@ -813,6 +853,8 @@ static NSString *const kSavePresetCodeKey = @"savePresetCodeKey";
     NSInteger allValue = [self.transferCode[btn.tag - 30000 + 3] integerValue];
     self.leftSlider.value = allValue / 16;
     self.rightSlider.value = allValue % 16;
+    _brightnessTmpVal = self.leftSlider.value;
+    _speedTmpVal = self.rightSlider.value;
     
     if (self.masterSwitch.isOn) {
         [self writePeripheral:_mPeripheral characteristic:_FFFAcharacteristic value:[self converToCharArrayWithIntegerArray:self.transferCode]];
@@ -998,6 +1040,7 @@ static NSString *const kSavePresetCodeKey = @"savePresetCodeKey";
  */
 - (void) brightnessOrSpeedSlider:(UISlider *)slider {
 
+    
     // 亮度
     if (slider == self.leftSlider) {
         _brightnessTmpVal = [[NSNumber numberWithFloat:slider.value] integerValue];
@@ -1085,6 +1128,39 @@ static NSString *const kSavePresetCodeKey = @"savePresetCodeKey";
     [alert show];
 }
 
+/**
+ *  选择之前保存的状态
+ *
+ */
+- (IBAction)selectPresetClick:(UIButton *)sender {
+    
+    // 遮罩btn
+    UIButton *coverBtn = [UIButton buttonWithType:UIButtonTypeSystem];
+    [coverBtn setBackgroundColor:[UIColor blackColor]];
+    coverBtn.alpha = 0.2;
+    self.selectPresetCoverBtn = coverBtn;
+    [self.view addSubview:coverBtn];
+    [coverBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.width.equalTo(self.view.mas_width);
+        make.height.equalTo(self.view.mas_height);
+        make.centerX.equalTo(self.view.mas_centerX);
+        make.centerY.equalTo(self.view.mas_centerY);
+    }];
+    
+    JHSelectPresetView *selectPresetView = [JHSelectPresetView showView];
+    self.selectPreset = selectPresetView;
+    [self.view addSubview:selectPresetView];
+    [selectPresetView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(self.view.mas_centerX);
+        make.centerY.equalTo(self.view.mas_centerY);
+        make.width.mas_equalTo(350);
+        make.height.mas_equalTo(280);
+    }];
+    
+    
+    
+}
+
 - (IBAction)backClick:(id)sender {
     
     [self dismissViewControllerAnimated:YES completion:nil];
@@ -1124,27 +1200,26 @@ static NSString *const kSavePresetCodeKey = @"savePresetCodeKey";
     }
     // savePreset弹出框
     else if(alertView.tag == 50002) {
-        
-        // 获取savePreset名称
-        UITextField *textField = [alertView textFieldAtIndex:0];
-        NSMutableDictionary *savePresetDic = [[self recoveryBlueDeviceStatusWithKeyName:kSavePresetCodeKey] mutableCopy];
-        
-        // 不存在，创建新的
-        if (!savePresetDic) {
-            savePresetDic = [NSMutableDictionary dictionary];
-        }
-        
-        if (savePresetDic.count > 10) {
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"Max number of presets is 10" delegate:nil cancelButtonTitle:@"Cancel" otherButtonTitles: nil];
-            [alertView show];
-        } else {
-            // 添加到savePreset数组
-            [savePresetDic setObject:self.transferCode forKey:textField.text];
+        if (buttonIndex == 1) {
+            // 获取savePreset名称
+            UITextField *textField = [alertView textFieldAtIndex:0];
+            NSMutableDictionary *savePresetDic = [[self recoveryBlueDeviceStatusWithKeyName:kSavePresetCodeKey] mutableCopy];
             
-            [self saveBlueDeviceStatusWithCode:savePresetDic keyName:kSavePresetCodeKey];
+            // 不存在，创建新的
+            if (!savePresetDic) {
+                savePresetDic = [NSMutableDictionary dictionary];
+            }
+            
+            if (savePresetDic.count > 10) {
+                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"Max number of presets is 10" delegate:nil cancelButtonTitle:@"Cancel" otherButtonTitles: nil];
+                [alertView show];
+            } else {
+                // 添加到savePreset数组
+                [savePresetDic setObject:self.transferCode forKey:textField.text];
+                
+                [self saveBlueDeviceStatusWithCode:savePresetDic keyName:kSavePresetCodeKey];
+            }
         }
-        
-        
         
     }
     

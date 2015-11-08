@@ -2472,6 +2472,9 @@
                                         <animations/>
                                         <state key="normal" image="btn_selectPreset"/>
                                         <state key="highlighted" image="btn_selectPreset_highlight"/>
+                                        <connections>
+                                            <action selector="selectPresetClick:" destination="T6i-m9-jI6" eventType="touchUpInside" id="vq3-J2-Lq0"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="d3g-uP-lPI" userLabel="selectColor">
                                         <rect key="frame" x="108" y="20" width="0.0" height="42"/>
