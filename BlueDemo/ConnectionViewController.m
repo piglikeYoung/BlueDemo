@@ -11,6 +11,7 @@
 #import "SwitchViewController.h"
 #import "RGBViewController.h"
 #import "Masonry.h"
+#import "JHConst.h"
 
 // 蓝牙外设名称
 static NSString *const switchDeviceName = @"XIANGXI-CSL-5233";
@@ -168,22 +169,22 @@ static NSString *const rgbDeviceName = @"XIANGXI-CSL-5233-2";
     
     switch (central.state) {
         case CBCentralManagerStateUnknown:
-            NSLog(@">>>CBCentralManagerStateUnknown");
+            JHLog(@">>>CBCentralManagerStateUnknown");
             break;
         case CBCentralManagerStateResetting:
-            NSLog(@">>>CBCentralManagerStateResetting");
+            JHLog(@">>>CBCentralManagerStateResetting");
             break;
         case CBCentralManagerStateUnsupported:
-            NSLog(@">>>CBCentralManagerStateUnsupported");
+            JHLog(@">>>CBCentralManagerStateUnsupported");
             break;
         case CBCentralManagerStateUnauthorized:
-            NSLog(@">>>CBCentralManagerStateUnauthorized");
+            JHLog(@">>>CBCentralManagerStateUnauthorized");
             break;
         case CBCentralManagerStatePoweredOff:
-            NSLog(@">>>CBCentralManagerStatePoweredOff");
+            JHLog(@">>>CBCentralManagerStatePoweredOff");
             break;
         case CBCentralManagerStatePoweredOn:
-            NSLog(@">>>CBCentralManagerStatePoweredOn");
+            JHLog(@">>>CBCentralManagerStatePoweredOn");
             //开始扫描周围的外设
             /*
              第一个参数nil就是扫描周围所有的外设，扫描到外设后会进入
@@ -201,8 +202,8 @@ static NSString *const rgbDeviceName = @"XIANGXI-CSL-5233-2";
 // 扫描到设备会进入方法
 -(void)centralManager:(CBCentralManager *)central didDiscoverPeripheral:(CBPeripheral *)peripheral advertisementData:(NSDictionary *)advertisementData RSSI:(NSNumber *)RSSI{
     
-    NSLog(@"扫描到设备:%@",peripheral);
-    NSLog(@"信号强度:%@",RSSI);
+    JHLog(@"扫描到设备:%@",peripheral);
+    JHLog(@"信号强度:%@",RSSI);
     
     // 添加到数组
     if (![self.mPeripheralList containsObject:peripheral]) {
@@ -222,7 +223,7 @@ static NSString *const rgbDeviceName = @"XIANGXI-CSL-5233-2";
  连接到Peripherals失败
  */
 -(void)centralManager:(CBCentralManager *)central didFailToConnectPeripheral:(CBPeripheral *)peripheral error:(NSError *)error {
-    NSLog(@">>>连接到名称为（%@）的设备-失败,原因:%@",[peripheral name],[error localizedDescription]);
+    JHLog(@">>>连接到名称为（%@）的设备-失败,原因:%@",[peripheral name],[error localizedDescription]);
     
     if ([peripheral.name isEqualToString:switchDeviceName]) {
         [self.switchBtn setImage:[UIImage imageNamed:@"conn_switchBtn_notConnected"] forState:UIControlStateSelected];
@@ -237,7 +238,7 @@ static NSString *const rgbDeviceName = @"XIANGXI-CSL-5233-2";
  Peripherals断开连接
  */
 - (void)centralManager:(CBCentralManager *)central didDisconnectPeripheral:(CBPeripheral *)peripheral error:(NSError *)error{
-    NSLog(@">>>外设连接断开连接 %@: %@\n", [peripheral name], [error localizedDescription]);
+    JHLog(@">>>外设连接断开连接 %@: %@\n", [peripheral name], [error localizedDescription]);
     
     if (self.mPeripheralList.count > 0) {
         [self.mPeripheralList removeAllObjects];
@@ -263,7 +264,7 @@ static NSString *const rgbDeviceName = @"XIANGXI-CSL-5233-2";
  连接到Peripherals-成功
  */
 - (void)centralManager:(CBCentralManager *)central didConnectPeripheral:(CBPeripheral *)peripheral {
-    NSLog(@">>>连接到名称为（%@）的设备-成功",peripheral.name);
+    JHLog(@">>>连接到名称为（%@）的设备-成功",peripheral.name);
     
     // 停止扫描
     [self.manager stopScan];

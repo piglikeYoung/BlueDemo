@@ -9,6 +9,7 @@
 #import "ColorBoardViewController.h"
 #import "Masonry.h"
 #import "UIImage+ColorAtPixel.h"
+#import "JHConst.h"
 
 @interface ColorBoardViewController ()
 @property (weak, nonatomic) IBOutlet UIImageView *circleImageView;
@@ -96,7 +97,7 @@
 }
 
 - (void)dealloc {
-    NSLog(@"ColorBoardViewController销毁");
+    JHLog(@"ColorBoardViewController销毁");
 }
 
 
@@ -143,10 +144,10 @@
         RGBType rgba = [self.circleImageView.image colorAtPixel2:tapPoint];
         NSInteger hex = RGB_to_HEX(rgba.r, rgba.g, rgba.b);
         NSString *hexString = [NSString stringWithFormat:@"0x%06lx", (long)hex];
-//        NSLog(@"%@", hexString);
+//        JHLog(@"%@", hexString);
         [self.colorList enumerateObjectsUsingBlock:^(NSString *obj, NSUInteger idx, BOOL * _Nonnull stop) {
             if ([obj isEqualToString:hexString]) {
-//                NSLog(@"%zd",idx);
+//                JHLog(@"%zd",idx);
                 // 第一次发送数据不用判断值是否相同
                 if (self.isFirstSend) {
                     _currentColorTag = idx;
@@ -179,10 +180,10 @@
         RGBType rgba = [self.circleImageView.image colorAtPixel2:tapPoint];
         NSInteger hex = RGB_to_HEX(rgba.r, rgba.g, rgba.b);
         NSString *hexString = [NSString stringWithFormat:@"0x%06lx", (long)hex];
-//        NSLog(@"%@", hexString);
+//        JHLog(@"%@", hexString);
         [self.colorList enumerateObjectsUsingBlock:^(NSString *obj, NSUInteger idx, BOOL * _Nonnull stop) {
             if ([obj isEqualToString:hexString]) {
-//                NSLog(@"%zd",idx);
+//                JHLog(@"%zd",idx);
                 // 第一次发送数据不用判断值是否相同
                 if (self.isFirstSend) {
                     _currentColorTag = idx;
