@@ -33,6 +33,12 @@ static NSString *const kStartCharacteristicUUID = @"0xFFFA";
 // 开始连接返回Notify的CharacteristicUUID
 static NSString *const kStartNotifyCharacteristicUUID = @"0xFFFB";
 
+// transferCode偏好设置key
+static NSString *const kTransferCodeKey = @"transferCodeKey";
+
+// savePresetCode偏好设置key
+static NSString *const kSavePresetCodeKey = @"savePresetCodeKey";
+
 
 @interface RGBViewController () <CBPeripheralDelegate, UIAlertViewDelegate>
 
@@ -149,7 +155,7 @@ static NSString *const kStartNotifyCharacteristicUUID = @"0xFFFB";
     [self setUpEightModelBtn];
     
     // 恢复存储数据
-    NSArray *recoveryCode = [self recoveryBlueDeviceStatus];
+    NSArray *recoveryCode = [[self recoveryBlueDeviceStatusWithKeyName:kTransferCodeKey] copy];
     
     if (recoveryCode.count > 0) {
         self.transferCode = [recoveryCode mutableCopy];
@@ -307,8 +313,8 @@ static NSString *const kStartNotifyCharacteristicUUID = @"0xFFFB";
             make.right.equalTo(self.view.mas_right).offset(kSlideriPadWidth * 0.5  - 25);
             make.width.mas_equalTo(kSlideriPadWidth);
         } else {
-            make.right.equalTo(self.view.mas_right).offset(kSlideriPadWidth * 0.5  - 25);
-            make.width.mas_equalTo(kSlideriPadWidth);
+            make.right.equalTo(self.view.mas_right).offset(kSliderWidth * 0.5  - 25);
+            make.width.mas_equalTo(kSliderWidth);
         }
         
     }];
@@ -442,7 +448,7 @@ static NSString *const kStartNotifyCharacteristicUUID = @"0xFFFB";
     }
     
     // 保存发送数值到偏好设置
-    [self saveBlueDeviceStatusWithCode:integerArray];
+    [self saveBlueDeviceStatusWithCode:integerArray keyName:kTransferCodeKey];
     
     return [NSData dataWithBytes:charArray length:integerArray.count];
 }
@@ -452,12 +458,12 @@ static NSString *const kStartNotifyCharacteristicUUID = @"0xFFFB";
  *
  *  @param integerArray 按钮保存的状态，即发送给设备的数组
  */
-- (void) saveBlueDeviceStatusWithCode:(NSMutableArray *)integerArray {
+- (void) saveBlueDeviceStatusWithCode:(id)integerArray keyName:(NSString *)keyName {
     
     // 1.获取NSUserDefaults对象
     NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
     // 2.保存数据
-    [defaults setObject:integerArray forKey:@"transferCode"];
+    [defaults setObject:integerArray forKey:keyName];
     
     // 3.强制让数据立刻保存
     [defaults synchronize];
@@ -467,13 +473,11 @@ static NSString *const kStartNotifyCharacteristicUUID = @"0xFFFB";
  *  从偏好设置中恢复蓝牙设备的状态，即每个按钮按下的状态
  *
  */
-- (NSArray *) recoveryBlueDeviceStatus {
+- (instancetype) recoveryBlueDeviceStatusWithKeyName:(NSString *)keyName {
     // 1.获取NSUserDefaults对象
     NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
     
-    NSArray *integerArray = [defaults objectForKey:@"transferCode"];
-    
-    return integerArray;
+    return [defaults objectForKey:keyName];
 }
 
 /**
@@ -939,7 +943,6 @@ static NSString *const kStartNotifyCharacteristicUUID = @"0xFFFB";
 
 
 
-
 #pragma mark - 按钮点击处理
 /**
  *  总开关，开或关
@@ -1068,6 +1071,20 @@ static NSString *const kStartNotifyCharacteristicUUID = @"0xFFFB";
     
 }
 
+/**
+ *  保存当前状态
+ *
+ */
+- (IBAction)savePresetClick:(UIButton *)sender {
+    // 1.创建一个弹窗
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Save Preset" message:nil delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Save", nil];
+    // 设置alert的样式, 让alert显示出uitextfield
+    alert.alertViewStyle = UIAlertViewStylePlainTextInput;
+    alert.tag = 50002;
+    // 2.显示窗口
+    [alert show];
+}
+
 - (IBAction)backClick:(id)sender {
     
     [self dismissViewControllerAnimated:YES completion:nil];
@@ -1076,6 +1093,7 @@ static NSString *const kStartNotifyCharacteristicUUID = @"0xFFFB";
 #pragma mark - UIAlertViewDelegate
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     
+    // 修改carBtn名字
     if(alertView.tag == 50000) {
         if (buttonIndex == 0) {
             return;
@@ -1085,7 +1103,9 @@ static NSString *const kStartNotifyCharacteristicUUID = @"0xFFFB";
         UITextField *textField = [alertView textFieldAtIndex:0];
         NSString *newStr = textField.text;
         _longPressBtn.titleLabel.text = newStr;
-    } else {
+    }
+    // 长按carBtn弹出框
+    else if (alertView.tag == 50001) {
         switch (buttonIndex) {
             case 0:// cancel
                 break;
@@ -1100,6 +1120,32 @@ static NSString *const kStartNotifyCharacteristicUUID = @"0xFFFB";
             default:
                 break;
         }
+
+    }
+    // savePreset弹出框
+    else if(alertView.tag == 50002) {
+        
+        // 获取savePreset名称
+        UITextField *textField = [alertView textFieldAtIndex:0];
+        NSMutableDictionary *savePresetDic = [[self recoveryBlueDeviceStatusWithKeyName:kSavePresetCodeKey] mutableCopy];
+        
+        // 不存在，创建新的
+        if (!savePresetDic) {
+            savePresetDic = [NSMutableDictionary dictionary];
+        }
+        
+        if (savePresetDic.count > 10) {
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"Max number of presets is 10" delegate:nil cancelButtonTitle:@"Cancel" otherButtonTitles: nil];
+            [alertView show];
+        } else {
+            // 添加到savePreset数组
+            [savePresetDic setObject:self.transferCode forKey:textField.text];
+            
+            [self saveBlueDeviceStatusWithCode:savePresetDic keyName:kSavePresetCodeKey];
+        }
+        
+        
+        
     }
     
 }
