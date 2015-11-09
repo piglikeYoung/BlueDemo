@@ -1205,21 +1205,26 @@ static NSString *const kTransferCodeKey = @"transferCodeKey";
         if (buttonIndex == 1) {
             // 获取savePreset名称
             UITextField *textField = [alertView textFieldAtIndex:0];
-            NSMutableDictionary *savePresetDic = [[self recoveryBlueDeviceStatusWithKeyName:kSavePresetCodeKey] mutableCopy];
-            
-            // 不存在，创建新的
-            if (!savePresetDic) {
-                savePresetDic = [NSMutableDictionary dictionary];
-            }
-            
-            if (savePresetDic.count > 10) {
-                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"Max number of presets is 10" delegate:nil cancelButtonTitle:@"Cancel" otherButtonTitles: nil];
+            if (textField.text.length <= 0) {
+                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"Input text can not be empty" delegate:nil cancelButtonTitle:@"Cancel" otherButtonTitles: nil];
                 [alertView show];
             } else {
-                // 添加到savePreset数组
-                [savePresetDic setObject:self.transferCode forKey:textField.text];
+                NSMutableDictionary *savePresetDic = [[self recoveryBlueDeviceStatusWithKeyName:kSavePresetCodeKey] mutableCopy];
                 
-                [self saveBlueDeviceStatusWithCode:savePresetDic keyName:kSavePresetCodeKey];
+                // 不存在，创建新的
+                if (!savePresetDic) {
+                    savePresetDic = [NSMutableDictionary dictionary];
+                }
+                
+                if (savePresetDic.count > 10) {
+                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"Max number of presets is 10" delegate:nil cancelButtonTitle:@"Cancel" otherButtonTitles: nil];
+                    [alertView show];
+                } else {
+                    // 添加到savePreset数组
+                    [savePresetDic setObject:self.transferCode forKey:textField.text];
+                    
+                    [self saveBlueDeviceStatusWithCode:savePresetDic keyName:kSavePresetCodeKey];
+                }
             }
         }
         
