@@ -1192,6 +1192,8 @@ static NSString *const kTransferCodeKey = @"transferCodeKey";
         
         if (screenHeight > 414) {
             make.height.mas_equalTo(400);
+        } else if(screenHeight == 414) {
+            make.height.mas_equalTo(250);
         } else {
             make.height.mas_equalTo(200);
         }
