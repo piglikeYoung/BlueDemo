@@ -326,12 +326,12 @@ static NSString *const kTransferCodeKey = @"transferCodeKey";
     leftSlider.transform =  CGAffineTransformMakeRotation( -M_PI * 0.5 );
     [leftSlider addTarget:self action:@selector(brightnessOrSpeedSlider:) forControlEvents:UIControlEventValueChanged];
     [leftSlider mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(self.view.mas_centerY).offset(-20);
+        make.centerY.equalTo(self.view.mas_centerY);
         if (screenHeight > 414) {
-            make.left.equalTo(self.view.mas_left).offset(-kSlideriPadWidth * 0.5  + 25);
+            make.left.equalTo(self.view.mas_left).offset(-kSlideriPadWidth * 0.4  + 25);
             make.width.mas_equalTo(kSlideriPadWidth);
         } else {
-            make.left.equalTo(self.view.mas_left).offset(-kSliderWidth * 0.5  + 25);
+            make.left.equalTo(self.view.mas_left).offset(-kSliderWidth * 0.4  + 25);
             make.width.mas_equalTo(kSliderWidth);
         }
         
@@ -348,15 +348,46 @@ static NSString *const kTransferCodeKey = @"transferCodeKey";
     rightSlider.transform =  CGAffineTransformMakeRotation( -M_PI * 0.5 );
     [rightSlider addTarget:self action:@selector(brightnessOrSpeedSlider:) forControlEvents:UIControlEventValueChanged];
     [rightSlider mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(self.view.mas_centerY).offset(-20);
+        make.centerY.equalTo(self.view.mas_centerY);
         if (screenHeight > 414) {
-            make.right.equalTo(self.view.mas_right).offset(kSlideriPadWidth * 0.5  - 25);
+            make.right.equalTo(self.view.mas_right).offset(kSlideriPadWidth * 0.4  - 25);
             make.width.mas_equalTo(kSlideriPadWidth);
         } else {
-            make.right.equalTo(self.view.mas_right).offset(kSliderWidth * 0.5  - 25);
+            make.right.equalTo(self.view.mas_right).offset(kSliderWidth * 0.4  - 25);
             make.width.mas_equalTo(kSliderWidth);
         }
         
+    }];
+    
+    UILabel *brightnessLabel = [[UILabel alloc] init];
+    brightnessLabel.text = @"BRIGHTNESS";
+    brightnessLabel.font = [UIFont systemFontOfSize:12];
+    brightnessLabel.textColor = [UIColor whiteColor];
+    [self.view addSubview:brightnessLabel];
+    [brightnessLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        if (screenHeight > 414) {
+            make.bottom.equalTo(leftSlider.mas_top).offset(-kSlideriPadWidth * 0.45);
+            make.centerX.equalTo(leftSlider.mas_centerX);
+        } else {
+            make.bottom.equalTo(leftSlider.mas_top).offset(-kSliderWidth * 0.4);
+            make.centerX.equalTo(leftSlider.mas_centerX);
+        }
+        
+    }];
+    
+    UILabel *speedLabel = [[UILabel alloc] init];
+    speedLabel.text = @"SPEED";
+    speedLabel.font = [UIFont systemFontOfSize:12];
+    speedLabel.textColor = [UIColor whiteColor];
+    [self.view addSubview:speedLabel];
+    [speedLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        if (screenHeight > 414) {
+            make.bottom.equalTo(rightSlider.mas_top).offset(-kSlideriPadWidth * 0.45);
+            make.centerX.equalTo(rightSlider.mas_centerX);
+        } else {
+            make.bottom.equalTo(rightSlider.mas_top).offset(-kSliderWidth * 0.4);
+            make.centerX.equalTo(rightSlider.mas_centerX);
+        }
     }];
 }
 
