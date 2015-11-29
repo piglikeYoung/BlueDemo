@@ -295,6 +295,9 @@
             </variation>
             <connections>
                 <outlet property="currentSelect" destination="zoT-vn-UhM" id="S7K-u2-Ch7"/>
+                <outlet property="leftBtn" destination="N8B-sF-f3V" id="ZWk-VD-SmT"/>
+                <outlet property="rightBtn" destination="soB-WG-bij" id="t5R-nS-spt"/>
+                <outlet property="saveBtn" destination="YIg-fK-0t3" id="ox3-6l-JqG"/>
             </connections>
             <point key="canvasLocation" x="186" y="362"/>
         </view>

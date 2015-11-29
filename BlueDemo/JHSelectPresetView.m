@@ -16,6 +16,9 @@
 @property (nonatomic, strong) NSArray *keyNameList;
 @property (nonatomic, assign) NSInteger currentIndex;
 @property (weak, nonatomic) IBOutlet UILabel *currentSelect;
+@property (weak, nonatomic) IBOutlet UIButton *leftBtn;
+@property (weak, nonatomic) IBOutlet UIButton *rightBtn;
+@property (weak, nonatomic) IBOutlet UIButton *saveBtn;
 
 @end
 
@@ -33,6 +36,12 @@
     // 默认第一个
     self.currentIndex = 0;
     self.currentSelect.text = self.keyNameList[self.currentIndex];
+    
+    if (self.keyNameList.count <= 0) {
+        self.leftBtn.enabled = NO;
+        self.rightBtn.enabled = NO;
+        self.saveBtn.enabled = NO;
+    }
 }
 
 - (IBAction)cancel:(UIButton *)sender {
