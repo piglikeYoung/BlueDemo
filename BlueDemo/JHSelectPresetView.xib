@@ -3,75 +3,80 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="JHSelectPresetView">
-            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+            <rect key="frame" x="0.0" y="0.0" width="600" height="200"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="vFZ-Hk-2LA">
-                    <rect key="frame" x="0.0" y="44" width="600" height="507"/>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="selectPreset" translatesAutoresizingMaskIntoConstraints="NO" id="omT-7U-Li0">
+                    <rect key="frame" x="0.0" y="0.0" width="600" height="200"/>
                     <animations/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    <connections>
-                        <outlet property="dataSource" destination="iN0-l3-epB" id="Lau-rg-FSr"/>
-                        <outlet property="delegate" destination="iN0-l3-epB" id="EQX-0Y-cgr"/>
-                    </connections>
-                </tableView>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DFM-IM-AI2">
-                    <rect key="frame" x="0.0" y="551" width="600" height="49"/>
-                    <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oiP-ls-cm7">
-                            <rect key="frame" x="0.0" y="0.0" width="600" height="49"/>
-                            <animations/>
-                            <state key="normal" title="Cancel"/>
-                            <connections>
-                                <action selector="cancel:" destination="iN0-l3-epB" eventType="touchUpInside" id="xR7-lX-WS5"/>
-                            </connections>
-                        </button>
-                    </subviews>
+                </imageView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kGK-mP-tLx" userLabel="cancel">
+                    <rect key="frame" x="102" y="135" width="105" height="35"/>
                     <animations/>
-                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                    <constraints>
-                        <constraint firstItem="oiP-ls-cm7" firstAttribute="leading" secondItem="DFM-IM-AI2" secondAttribute="leading" id="6AC-9G-qM0"/>
-                        <constraint firstAttribute="bottom" secondItem="oiP-ls-cm7" secondAttribute="bottom" id="Eeg-kG-HLq"/>
-                        <constraint firstAttribute="height" constant="49" id="Mmi-x7-PoC"/>
-                        <constraint firstAttribute="trailing" secondItem="oiP-ls-cm7" secondAttribute="trailing" id="PRZ-ra-zoZ"/>
-                        <constraint firstItem="oiP-ls-cm7" firstAttribute="top" secondItem="DFM-IM-AI2" secondAttribute="top" id="jmG-tu-mJg"/>
-                    </constraints>
-                </view>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Select Preset" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q91-fX-10x">
-                    <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
+                    <state key="normal" image="selectPreset_cancel"/>
+                    <state key="highlighted" image="selectPreset_cancel_highlight"/>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YIg-fK-0t3" userLabel="save">
+                    <rect key="frame" x="247" y="135" width="105" height="35"/>
                     <animations/>
-                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="44" id="VQG-QI-Wnn"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <state key="normal" image="selectPreset_save"/>
+                    <state key="highlighted" image="selectPreset_save_highlight"/>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="N8B-sF-f3V">
+                    <rect key="frame" x="20" y="56" width="24" height="48"/>
+                    <animations/>
+                    <state key="normal" image="leftArrow"/>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="soB-WG-bij">
+                    <rect key="frame" x="408" y="56" width="24" height="48"/>
+                    <animations/>
+                    <state key="normal" image="rightArrow"/>
+                </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zoT-vn-UhM">
+                    <rect key="frame" x="197.5" y="64.5" width="55" height="31.5"/>
+                    <animations/>
+                    <fontDescription key="fontDescription" type="system" pointSize="26"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                 </label>
             </subviews>
             <animations/>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="Q91-fX-10x" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="3YL-nC-2GF"/>
-                <constraint firstAttribute="bottom" secondItem="DFM-IM-AI2" secondAttribute="bottom" id="9yN-DM-MS4"/>
-                <constraint firstItem="vFZ-Hk-2LA" firstAttribute="top" secondItem="Q91-fX-10x" secondAttribute="bottom" id="BZb-hz-ceP"/>
-                <constraint firstItem="DFM-IM-AI2" firstAttribute="top" secondItem="vFZ-Hk-2LA" secondAttribute="bottom" id="Bqh-sa-DvL"/>
-                <constraint firstItem="Q91-fX-10x" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="HlS-v6-dUw"/>
-                <constraint firstItem="vFZ-Hk-2LA" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="LxT-XX-3YC"/>
-                <constraint firstAttribute="trailing" secondItem="vFZ-Hk-2LA" secondAttribute="trailing" id="NjH-pF-sSy"/>
-                <constraint firstAttribute="trailing" secondItem="Q91-fX-10x" secondAttribute="trailing" id="Vfa-jT-8Zn"/>
-                <constraint firstAttribute="trailing" secondItem="DFM-IM-AI2" secondAttribute="trailing" id="aRL-g2-Meu"/>
-                <constraint firstItem="DFM-IM-AI2" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="ozI-kG-s3J"/>
+                <constraint firstAttribute="bottom" secondItem="omT-7U-Li0" secondAttribute="bottom" id="23h-7i-2Tt"/>
+                <constraint firstItem="zoT-vn-UhM" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="N8B-sF-f3V" secondAttribute="trailing" constant="20" id="AbB-9e-C4M"/>
+                <constraint firstItem="YIg-fK-0t3" firstAttribute="leading" secondItem="kGK-mP-tLx" secondAttribute="trailing" constant="40" id="BXz-Hx-mHn"/>
+                <constraint firstItem="omT-7U-Li0" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="IAu-zy-aUG"/>
+                <constraint firstItem="soB-WG-bij" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" constant="120" id="LiE-lJ-xDO"/>
+                <constraint firstItem="YIg-fK-0t3" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="TRp-rU-E2a"/>
+                <constraint firstItem="zoT-vn-UhM" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" multiplier="0.75" id="YyO-5Y-2Vo"/>
+                <constraint firstAttribute="trailing" secondItem="omT-7U-Li0" secondAttribute="trailing" id="bOk-Ln-lnv"/>
+                <constraint firstItem="soB-WG-bij" firstAttribute="centerY" secondItem="N8B-sF-f3V" secondAttribute="centerY" id="eIk-eq-upM"/>
+                <constraint firstItem="zoT-vn-UhM" firstAttribute="centerY" secondItem="N8B-sF-f3V" secondAttribute="centerY" id="eke-mc-6fL"/>
+                <constraint firstItem="N8B-sF-f3V" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" constant="-20" id="nT8-oQ-2ig"/>
+                <constraint firstItem="omT-7U-Li0" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="p2l-s0-DMF"/>
+                <constraint firstItem="N8B-sF-f3V" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" id="rH0-Xo-TRn"/>
+                <constraint firstItem="soB-WG-bij" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="zoT-vn-UhM" secondAttribute="trailing" constant="20" id="rIU-VE-rEE"/>
+                <constraint firstItem="YIg-fK-0t3" firstAttribute="top" secondItem="kGK-mP-tLx" secondAttribute="top" id="rSt-mF-B0a"/>
+                <constraint firstAttribute="bottom" secondItem="YIg-fK-0t3" secondAttribute="bottom" constant="30" id="ulP-1G-tdL"/>
             </constraints>
-            <connections>
-                <outlet property="tableView" destination="vFZ-Hk-2LA" id="FmW-uU-9H7"/>
-            </connections>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <point key="canvasLocation" x="186" y="362"/>
         </view>
     </objects>
+    <resources>
+        <image name="leftArrow" width="24" height="48"/>
+        <image name="rightArrow" width="24" height="48"/>
+        <image name="selectPreset" width="641" height="232"/>
+        <image name="selectPreset_cancel" width="105" height="35"/>
+        <image name="selectPreset_cancel_highlight" width="105" height="35"/>
+        <image name="selectPreset_save" width="105" height="35"/>
+        <image name="selectPreset_save_highlight" width="105" height="35"/>
+    </resources>
 </document>

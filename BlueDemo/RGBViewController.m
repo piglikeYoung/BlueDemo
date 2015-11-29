@@ -1184,10 +1184,10 @@ static NSString *const kTransferCodeKey = @"transferCodeKey";
     self.selectPreset = selectPresetView;
     [self.view addSubview:selectPresetView];
     [selectPresetView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.equalTo(self.view.mas_centerX);
         make.centerY.equalTo(self.view.mas_centerY);
-        make.width.mas_equalTo(350);
-        make.height.mas_equalTo(280);
+        make.left.equalTo(self.view.mas_left);
+        make.width.mas_equalTo(self.view.mas_width).offset(-30);
+        make.height.mas_equalTo(200);
     }];
     
     
