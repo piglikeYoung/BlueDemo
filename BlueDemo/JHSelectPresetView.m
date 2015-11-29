@@ -10,10 +10,12 @@
 #import "UIView+Extension.h"
 #import "JHConst.h"
 
-@interface JHSelectPresetView()<UITableViewDataSource, UITableViewDelegate>
+@interface JHSelectPresetView()
 
 @property (nonatomic, strong) NSDictionary *selectPresetDic;
-@property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (nonatomic, strong) NSArray *keyNameList;
+@property (nonatomic, assign) NSInteger currentIndex;
+@property (weak, nonatomic) IBOutlet UILabel *currentSelect;
 
 @end
 
@@ -27,6 +29,10 @@
 
 - (void)awakeFromNib {
     self.selectPresetDic = [[NSUserDefaults standardUserDefaults] objectForKey:kSavePresetCodeKey];
+    self.keyNameList = [self.selectPresetDic allKeys];
+    // 默认第一个
+    self.currentIndex = 0;
+    self.currentSelect.text = self.keyNameList[self.currentIndex];
 }
 
 - (IBAction)cancel:(UIButton *)sender {
@@ -35,32 +41,29 @@
     [JHNotificationCenter postNotificationName:JHSelectPresetDidChangeNotification object:nil userInfo:nil];
 }
 
-#pragma mark - 数据源方法
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    return _selectPresetDic.count;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    static NSString *ID = @"JHSelectPresetViewCell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ID];
-    if (!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ID];
-    }
-    
-    cell.textLabel.text = [_selectPresetDic allKeys][indexPath.row];
-    
-    return cell;
-}
-
-#pragma mark - 代理方法
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    NSString *key = [_selectPresetDic allKeys][indexPath.row];
+- (IBAction)save:(UIButton *)sender {
+    NSString *key = self.currentSelect.text;
     // 发出通知
     [JHNotificationCenter postNotificationName:JHSelectPresetDidChangeNotification object:nil userInfo:@{JHSelectPresetObjKey : key}];
 }
 
+- (IBAction)leftBtnClick:(id)sender {
+    if (self.currentIndex == 0) {
+        return;
+    } else {
+        self.currentIndex--;
+        self.currentSelect.text = self.keyNameList[self.currentIndex];
+    }
+    
+}
+
+- (IBAction)rightBtnClick:(id)sender {
+    if (self.currentIndex == self.keyNameList.count - 1) {
+        return;
+    } else {
+        self.currentIndex++;
+        self.currentSelect.text = self.keyNameList[self.currentIndex];
+    }
+}
 
 @end

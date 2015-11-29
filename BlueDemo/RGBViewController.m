@@ -1167,6 +1167,8 @@ static NSString *const kTransferCodeKey = @"transferCodeKey";
  */
 - (IBAction)selectPresetClick:(UIButton *)sender {
     
+    CGFloat screenHeight = [[UIScreen mainScreen] bounds].size.height;
+    
     // 遮罩btn
     UIButton *coverBtn = [UIButton buttonWithType:UIButtonTypeSystem];
     [coverBtn setBackgroundColor:[UIColor blackColor]];
@@ -1187,7 +1189,12 @@ static NSString *const kTransferCodeKey = @"transferCodeKey";
         make.centerY.equalTo(self.view.mas_centerY);
         make.left.equalTo(self.view.mas_left);
         make.width.mas_equalTo(self.view.mas_width).offset(-30);
-        make.height.mas_equalTo(200);
+        
+        if (screenHeight > 414) {
+            make.height.mas_equalTo(400);
+        } else {
+            make.height.mas_equalTo(200);
+        }
     }];
     
     

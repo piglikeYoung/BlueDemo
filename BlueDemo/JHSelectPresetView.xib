@@ -21,22 +21,34 @@
                     <animations/>
                     <state key="normal" image="selectPreset_cancel"/>
                     <state key="highlighted" image="selectPreset_cancel_highlight"/>
+                    <connections>
+                        <action selector="cancel:" destination="iN0-l3-epB" eventType="touchUpInside" id="yf7-e4-xM7"/>
+                    </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YIg-fK-0t3" userLabel="save">
                     <rect key="frame" x="247" y="135" width="105" height="35"/>
                     <animations/>
                     <state key="normal" image="selectPreset_save"/>
                     <state key="highlighted" image="selectPreset_save_highlight"/>
+                    <connections>
+                        <action selector="save:" destination="iN0-l3-epB" eventType="touchUpInside" id="WOF-LI-Z2b"/>
+                    </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="N8B-sF-f3V">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="N8B-sF-f3V" userLabel="leftBtn">
                     <rect key="frame" x="20" y="56" width="24" height="48"/>
                     <animations/>
                     <state key="normal" image="leftArrow"/>
+                    <connections>
+                        <action selector="leftBtnClick:" destination="iN0-l3-epB" eventType="touchUpInside" id="qMt-FO-oGD"/>
+                    </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="soB-WG-bij">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="soB-WG-bij" userLabel="rightBtn">
                     <rect key="frame" x="408" y="56" width="24" height="48"/>
                     <animations/>
                     <state key="normal" image="rightArrow"/>
+                    <connections>
+                        <action selector="rightBtnClick:" destination="iN0-l3-epB" eventType="touchUpInside" id="dh1-DV-STf"/>
+                    </connections>
                 </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zoT-vn-UhM">
                     <rect key="frame" x="197.5" y="64.5" width="55" height="31.5"/>
@@ -51,11 +63,20 @@
             <constraints>
                 <constraint firstAttribute="bottom" secondItem="omT-7U-Li0" secondAttribute="bottom" id="23h-7i-2Tt"/>
                 <constraint firstItem="zoT-vn-UhM" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="N8B-sF-f3V" secondAttribute="trailing" constant="20" id="AbB-9e-C4M"/>
-                <constraint firstItem="YIg-fK-0t3" firstAttribute="leading" secondItem="kGK-mP-tLx" secondAttribute="trailing" constant="40" id="BXz-Hx-mHn"/>
+                <constraint firstItem="YIg-fK-0t3" firstAttribute="leading" secondItem="kGK-mP-tLx" secondAttribute="trailing" constant="40" id="BXz-Hx-mHn">
+                    <variation key="widthClass=regular" constant="80"/>
+                    <variation key="heightClass=compact-widthClass=regular" constant="40"/>
+                </constraint>
                 <constraint firstItem="omT-7U-Li0" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="IAu-zy-aUG"/>
                 <constraint firstItem="soB-WG-bij" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" constant="120" id="LiE-lJ-xDO"/>
-                <constraint firstItem="YIg-fK-0t3" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="TRp-rU-E2a"/>
-                <constraint firstItem="zoT-vn-UhM" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" multiplier="0.75" id="YyO-5Y-2Vo"/>
+                <constraint firstItem="YIg-fK-0t3" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="TRp-rU-E2a">
+                    <variation key="widthClass=regular" constant="-40"/>
+                    <variation key="heightClass=compact-widthClass=regular" constant="0.0"/>
+                </constraint>
+                <constraint firstItem="zoT-vn-UhM" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" multiplier="0.75" id="YyO-5Y-2Vo">
+                    <variation key="widthClass=regular" constant="-50"/>
+                    <variation key="heightClass=compact-widthClass=regular" constant="0.0"/>
+                </constraint>
                 <constraint firstAttribute="trailing" secondItem="omT-7U-Li0" secondAttribute="trailing" id="bOk-Ln-lnv"/>
                 <constraint firstItem="soB-WG-bij" firstAttribute="centerY" secondItem="N8B-sF-f3V" secondAttribute="centerY" id="eIk-eq-upM"/>
                 <constraint firstItem="zoT-vn-UhM" firstAttribute="centerY" secondItem="N8B-sF-f3V" secondAttribute="centerY" id="eke-mc-6fL"/>
@@ -64,9 +85,126 @@
                 <constraint firstItem="N8B-sF-f3V" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" id="rH0-Xo-TRn"/>
                 <constraint firstItem="soB-WG-bij" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="zoT-vn-UhM" secondAttribute="trailing" constant="20" id="rIU-VE-rEE"/>
                 <constraint firstItem="YIg-fK-0t3" firstAttribute="top" secondItem="kGK-mP-tLx" secondAttribute="top" id="rSt-mF-B0a"/>
-                <constraint firstAttribute="bottom" secondItem="YIg-fK-0t3" secondAttribute="bottom" constant="30" id="ulP-1G-tdL"/>
+                <constraint firstAttribute="bottom" secondItem="YIg-fK-0t3" secondAttribute="bottom" constant="30" id="ulP-1G-tdL">
+                    <variation key="widthClass=regular" constant="75"/>
+                    <variation key="heightClass=compact-widthClass=regular" constant="30"/>
+                </constraint>
             </constraints>
-            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <variation key="default">
+                <mask key="subviews">
+                    <exclude reference="omT-7U-Li0"/>
+                    <exclude reference="kGK-mP-tLx"/>
+                    <exclude reference="YIg-fK-0t3"/>
+                    <exclude reference="N8B-sF-f3V"/>
+                    <exclude reference="soB-WG-bij"/>
+                    <exclude reference="zoT-vn-UhM"/>
+                </mask>
+                <mask key="constraints">
+                    <exclude reference="23h-7i-2Tt"/>
+                    <exclude reference="IAu-zy-aUG"/>
+                    <exclude reference="bOk-Ln-lnv"/>
+                    <exclude reference="p2l-s0-DMF"/>
+                    <exclude reference="nT8-oQ-2ig"/>
+                    <exclude reference="rH0-Xo-TRn"/>
+                    <exclude reference="AbB-9e-C4M"/>
+                    <exclude reference="YyO-5Y-2Vo"/>
+                    <exclude reference="eke-mc-6fL"/>
+                    <exclude reference="BXz-Hx-mHn"/>
+                    <exclude reference="TRp-rU-E2a"/>
+                    <exclude reference="rSt-mF-B0a"/>
+                    <exclude reference="ulP-1G-tdL"/>
+                    <exclude reference="LiE-lJ-xDO"/>
+                    <exclude reference="eIk-eq-upM"/>
+                    <exclude reference="rIU-VE-rEE"/>
+                </mask>
+            </variation>
+            <variation key="widthClass=regular">
+                <mask key="subviews">
+                    <include reference="omT-7U-Li0"/>
+                    <include reference="kGK-mP-tLx"/>
+                    <include reference="YIg-fK-0t3"/>
+                    <include reference="N8B-sF-f3V"/>
+                    <include reference="soB-WG-bij"/>
+                    <include reference="zoT-vn-UhM"/>
+                </mask>
+                <mask key="constraints">
+                    <include reference="23h-7i-2Tt"/>
+                    <include reference="IAu-zy-aUG"/>
+                    <include reference="bOk-Ln-lnv"/>
+                    <include reference="p2l-s0-DMF"/>
+                    <include reference="nT8-oQ-2ig"/>
+                    <include reference="rH0-Xo-TRn"/>
+                    <include reference="AbB-9e-C4M"/>
+                    <include reference="YyO-5Y-2Vo"/>
+                    <include reference="eke-mc-6fL"/>
+                    <include reference="BXz-Hx-mHn"/>
+                    <include reference="TRp-rU-E2a"/>
+                    <include reference="rSt-mF-B0a"/>
+                    <include reference="ulP-1G-tdL"/>
+                    <include reference="LiE-lJ-xDO"/>
+                    <include reference="eIk-eq-upM"/>
+                    <include reference="rIU-VE-rEE"/>
+                </mask>
+            </variation>
+            <variation key="heightClass=compact-widthClass=compact">
+                <mask key="subviews">
+                    <include reference="omT-7U-Li0"/>
+                    <include reference="kGK-mP-tLx"/>
+                    <include reference="YIg-fK-0t3"/>
+                    <include reference="N8B-sF-f3V"/>
+                    <include reference="soB-WG-bij"/>
+                    <include reference="zoT-vn-UhM"/>
+                </mask>
+                <mask key="constraints">
+                    <include reference="23h-7i-2Tt"/>
+                    <include reference="IAu-zy-aUG"/>
+                    <include reference="bOk-Ln-lnv"/>
+                    <include reference="p2l-s0-DMF"/>
+                    <include reference="nT8-oQ-2ig"/>
+                    <include reference="rH0-Xo-TRn"/>
+                    <include reference="AbB-9e-C4M"/>
+                    <include reference="YyO-5Y-2Vo"/>
+                    <include reference="eke-mc-6fL"/>
+                    <include reference="BXz-Hx-mHn"/>
+                    <include reference="TRp-rU-E2a"/>
+                    <include reference="rSt-mF-B0a"/>
+                    <include reference="ulP-1G-tdL"/>
+                    <include reference="LiE-lJ-xDO"/>
+                    <include reference="eIk-eq-upM"/>
+                    <include reference="rIU-VE-rEE"/>
+                </mask>
+            </variation>
+            <variation key="heightClass=compact-widthClass=regular">
+                <mask key="subviews">
+                    <include reference="omT-7U-Li0"/>
+                    <include reference="kGK-mP-tLx"/>
+                    <include reference="YIg-fK-0t3"/>
+                    <include reference="N8B-sF-f3V"/>
+                    <include reference="soB-WG-bij"/>
+                    <include reference="zoT-vn-UhM"/>
+                </mask>
+                <mask key="constraints">
+                    <include reference="23h-7i-2Tt"/>
+                    <include reference="IAu-zy-aUG"/>
+                    <include reference="bOk-Ln-lnv"/>
+                    <include reference="p2l-s0-DMF"/>
+                    <include reference="nT8-oQ-2ig"/>
+                    <include reference="rH0-Xo-TRn"/>
+                    <include reference="AbB-9e-C4M"/>
+                    <include reference="YyO-5Y-2Vo"/>
+                    <include reference="eke-mc-6fL"/>
+                    <include reference="BXz-Hx-mHn"/>
+                    <include reference="TRp-rU-E2a"/>
+                    <include reference="rSt-mF-B0a"/>
+                    <include reference="ulP-1G-tdL"/>
+                    <include reference="LiE-lJ-xDO"/>
+                    <include reference="eIk-eq-upM"/>
+                    <include reference="rIU-VE-rEE"/>
+                </mask>
+            </variation>
+            <connections>
+                <outlet property="currentSelect" destination="zoT-vn-UhM" id="S7K-u2-Ch7"/>
+            </connections>
             <point key="canvasLocation" x="186" y="362"/>
         </view>
     </objects>
