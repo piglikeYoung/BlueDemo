@@ -116,13 +116,16 @@ static NSString *const rgbDeviceName = @"XIANGXI-CSL-5233-2";
     // 加载LaunchScreen.storyboard
     UIViewController *launchScreenVc = [[UIStoryboard storyboardWithName:@"LaunchScreen" bundle:nil] instantiateViewControllerWithIdentifier:@"LaunchScreen"];
     
+//    // 添加背景图片
+//    UIImageView *bgIv = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"viewBg"]];
+//    [launchScreenVc.view insertSubview:bgIv atIndex:0];
+//    [bgIv mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.edges.equalTo(launchScreenVc.view);
+//    }];
+    
     UIView *launchView = launchScreenVc.view;
     [self.view addSubview:launchView];
     [launchView mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.width.equalTo(self.view.mas_width);
-//        make.height.equalTo(self.view.mas_height);
-//        make.top.equalTo(self.view.mas_top);
-//        make.left.equalTo(self.view.mas_left);
         make.edges.equalTo(self.view);
     }];
     
