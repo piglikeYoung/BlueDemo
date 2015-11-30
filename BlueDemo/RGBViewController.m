@@ -359,12 +359,9 @@ static NSString *const kTransferCodeKey = @"transferCodeKey";
         
     }];
     
-    UILabel *brightnessLabel = [[UILabel alloc] init];
-    brightnessLabel.text = @"BRIGHTNESS";
-    brightnessLabel.font = [UIFont systemFontOfSize:12];
-    brightnessLabel.textColor = [UIColor whiteColor];
-    [self.view addSubview:brightnessLabel];
-    [brightnessLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+    UIImageView *brightnessIv = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"brightnessText"]];
+    [self.view addSubview:brightnessIv];
+    [brightnessIv mas_makeConstraints:^(MASConstraintMaker *make) {
         if (screenHeight > 414) {
             make.bottom.equalTo(leftSlider.mas_top).offset(-kSlideriPadWidth * 0.45);
             make.centerX.equalTo(leftSlider.mas_centerX);
@@ -375,12 +372,9 @@ static NSString *const kTransferCodeKey = @"transferCodeKey";
         
     }];
     
-    UILabel *speedLabel = [[UILabel alloc] init];
-    speedLabel.text = @"SPEED";
-    speedLabel.font = [UIFont systemFontOfSize:12];
-    speedLabel.textColor = [UIColor whiteColor];
-    [self.view addSubview:speedLabel];
-    [speedLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+    UIImageView *speedIv = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"speedText"]];
+    [self.view addSubview:speedIv];
+    [speedIv mas_makeConstraints:^(MASConstraintMaker *make) {
         if (screenHeight > 414) {
             make.bottom.equalTo(rightSlider.mas_top).offset(-kSlideriPadWidth * 0.45);
             make.centerX.equalTo(rightSlider.mas_centerX);
