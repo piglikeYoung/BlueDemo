@@ -2998,7 +2998,7 @@
                                 <constraints>
                                     <constraint firstItem="3fu-UD-3es" firstAttribute="centerX" secondItem="7zJ-NM-cG9" secondAttribute="centerX" id="099-Xy-2mQ"/>
                                     <constraint firstAttribute="width" constant="200" id="2Bn-zB-W1u">
-                                        <variation key="heightClass=compact-widthClass=compact" constant="150"/>
+                                        <variation key="heightClass=compact-widthClass=compact" constant="160"/>
                                         <variation key="heightClass=compact-widthClass=regular" constant="200"/>
                                     </constraint>
                                     <constraint firstItem="aFu-NM-Z1R" firstAttribute="leading" secondItem="7zJ-NM-cG9" secondAttribute="leading" constant="4" id="5wR-zI-wwV">
@@ -3018,8 +3018,8 @@
                                     <constraint firstItem="Qfk-sY-2of" firstAttribute="width" secondItem="aFu-NM-Z1R" secondAttribute="width" id="g9d-UX-nUN"/>
                                     <constraint firstAttribute="height" constant="100" id="jYO-c0-wIN">
                                         <variation key="widthClass=regular" constant="150"/>
-                                        <variation key="heightClass=compact-widthClass=compact" constant="100"/>
-                                        <variation key="heightClass=compact-widthClass=regular" constant="130"/>
+                                        <variation key="heightClass=compact-widthClass=compact" constant="150"/>
+                                        <variation key="heightClass=compact-widthClass=regular" constant="150"/>
                                     </constraint>
                                     <constraint firstAttribute="trailing" secondItem="Qfk-sY-2of" secondAttribute="trailing" constant="4" id="mrJ-bv-4QS">
                                         <variation key="heightClass=compact-widthClass=compact" constant="4"/>
@@ -3246,7 +3246,7 @@
                             </constraint>
                             <constraint firstItem="7zJ-NM-cG9" firstAttribute="centerX" secondItem="5Xe-7T-c8I" secondAttribute="centerX" constant="-100" id="jou-bh-PHH">
                                 <variation key="widthClass=regular" constant="-180"/>
-                                <variation key="heightClass=compact-widthClass=compact" constant="-150"/>
+                                <variation key="heightClass=compact-widthClass=compact" constant="-160"/>
                                 <variation key="heightClass=compact-widthClass=regular" constant="-150"/>
                             </constraint>
                             <constraint firstItem="Don-zS-keR" firstAttribute="centerY" secondItem="5Xe-7T-c8I" secondAttribute="centerY" id="onO-U8-6GT"/>
