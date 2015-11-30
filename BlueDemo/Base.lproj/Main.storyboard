@@ -2957,32 +2957,27 @@
                                                 <variation key="heightClass=compact-widthClass=compact" constant="70"/>
                                                 <variation key="heightClass=compact-widthClass=regular" constant="100"/>
                                             </constraint>
-                                            <constraint firstAttribute="width" secondItem="aFu-NM-Z1R" secondAttribute="height" multiplier="2:1" id="aVq-lW-wXZ"/>
                                         </constraints>
                                         <state key="normal" image="cancel_normal"/>
                                         <state key="highlighted" image="cancel_highlinght"/>
                                         <variation key="default">
                                             <mask key="constraints">
                                                 <exclude reference="1bL-if-JJy"/>
-                                                <exclude reference="aVq-lW-wXZ"/>
                                             </mask>
                                         </variation>
                                         <variation key="widthClass=regular">
                                             <mask key="constraints">
                                                 <include reference="1bL-if-JJy"/>
-                                                <include reference="aVq-lW-wXZ"/>
                                             </mask>
                                         </variation>
                                         <variation key="heightClass=compact-widthClass=compact">
                                             <mask key="constraints">
                                                 <include reference="1bL-if-JJy"/>
-                                                <include reference="aVq-lW-wXZ"/>
                                             </mask>
                                         </variation>
                                         <variation key="heightClass=compact-widthClass=regular">
                                             <mask key="constraints">
                                                 <include reference="1bL-if-JJy"/>
-                                                <include reference="aVq-lW-wXZ"/>
                                             </mask>
                                         </variation>
                                         <connections>
