@@ -119,10 +119,11 @@ static NSString *const rgbDeviceName = @"XIANGXI-CSL-5233-2";
     UIView *launchView = launchScreenVc.view;
     [self.view addSubview:launchView];
     [launchView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.width.equalTo(self.view.mas_width);
-        make.height.equalTo(self.view.mas_height);
-        make.top.equalTo(self.view.mas_top);
-        make.left.equalTo(self.view.mas_left);
+//        make.width.equalTo(self.view.mas_width);
+//        make.height.equalTo(self.view.mas_height);
+//        make.top.equalTo(self.view.mas_top);
+//        make.left.equalTo(self.view.mas_left);
+        make.edges.equalTo(self.view);
     }];
     
     // 外圈转动动画

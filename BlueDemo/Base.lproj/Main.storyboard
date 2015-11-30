@@ -3184,6 +3184,42 @@
                                     </mask>
                                 </variation>
                             </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="colorKuang" translatesAutoresizingMaskIntoConstraints="NO" id="Don-zS-keR">
+                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="Don-zS-keR" secondAttribute="height" multiplier="1:1" id="6Ci-2U-Lw1"/>
+                                    <constraint firstAttribute="width" constant="250" id="obS-mM-pYn">
+                                        <variation key="widthClass=regular" constant="315"/>
+                                        <variation key="heightClass=compact-widthClass=compact" constant="315"/>
+                                        <variation key="heightClass=compact-widthClass=regular" constant="315"/>
+                                    </constraint>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="6Ci-2U-Lw1"/>
+                                        <exclude reference="obS-mM-pYn"/>
+                                    </mask>
+                                </variation>
+                                <variation key="widthClass=regular">
+                                    <mask key="constraints">
+                                        <include reference="6Ci-2U-Lw1"/>
+                                        <include reference="obS-mM-pYn"/>
+                                    </mask>
+                                </variation>
+                                <variation key="heightClass=compact-widthClass=compact">
+                                    <mask key="constraints">
+                                        <include reference="6Ci-2U-Lw1"/>
+                                        <include reference="obS-mM-pYn"/>
+                                    </mask>
+                                </variation>
+                                <variation key="heightClass=compact-widthClass=regular">
+                                    <mask key="constraints">
+                                        <include reference="6Ci-2U-Lw1"/>
+                                        <include reference="obS-mM-pYn"/>
+                                    </mask>
+                                </variation>
+                            </imageView>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
@@ -3192,10 +3228,15 @@
                             <constraint firstItem="6uW-hO-FFd" firstAttribute="top" secondItem="5Xe-7T-c8I" secondAttribute="top" id="2vY-g4-dAc"/>
                             <constraint firstItem="IUi-Jl-KKT" firstAttribute="centerX" secondItem="5Xe-7T-c8I" secondAttribute="centerX" constant="100" id="93g-gd-n1g">
                                 <variation key="widthClass=regular" constant="180"/>
-                                <variation key="heightClass=compact-widthClass=compact" constant="100"/>
-                                <variation key="heightClass=compact-widthClass=regular" constant="100"/>
+                                <variation key="heightClass=compact-widthClass=compact" constant="84"/>
+                                <variation key="heightClass=compact-widthClass=regular" constant="120"/>
                             </constraint>
                             <constraint firstItem="6uW-hO-FFd" firstAttribute="leading" secondItem="5Xe-7T-c8I" secondAttribute="leading" id="ECM-n3-Luv"/>
+                            <constraint firstItem="Don-zS-keR" firstAttribute="centerX" secondItem="5Xe-7T-c8I" secondAttribute="centerX" constant="100" id="K8u-Bt-Pmd">
+                                <variation key="widthClass=regular" constant="181"/>
+                                <variation key="heightClass=compact-widthClass=compact" constant="85"/>
+                                <variation key="heightClass=compact-widthClass=regular" constant="121"/>
+                            </constraint>
                             <constraint firstItem="7zJ-NM-cG9" firstAttribute="centerY" secondItem="5Xe-7T-c8I" secondAttribute="centerY" id="Ozw-Pi-bi9"/>
                             <constraint firstAttribute="trailing" secondItem="6uW-hO-FFd" secondAttribute="trailing" id="VoV-X8-wf3"/>
                             <constraint firstItem="K1a-1u-FMH" firstAttribute="top" secondItem="5Xe-7T-c8I" secondAttribute="top" constant="12" id="aTD-Sh-XVN">
@@ -3213,6 +3254,7 @@
                                 <variation key="heightClass=compact-widthClass=compact" constant="-150"/>
                                 <variation key="heightClass=compact-widthClass=regular" constant="-150"/>
                             </constraint>
+                            <constraint firstItem="Don-zS-keR" firstAttribute="centerY" secondItem="5Xe-7T-c8I" secondAttribute="centerY" id="onO-U8-6GT"/>
                             <constraint firstItem="oMy-pz-Fph" firstAttribute="top" secondItem="6uW-hO-FFd" secondAttribute="bottom" id="u8G-1E-QWs"/>
                         </constraints>
                         <variation key="default">
@@ -3221,18 +3263,21 @@
                                 <exclude reference="7zJ-NM-cG9"/>
                                 <exclude reference="K1a-1u-FMH"/>
                                 <exclude reference="IUi-Jl-KKT"/>
+                                <exclude reference="Don-zS-keR"/>
                             </mask>
                             <mask key="constraints">
-                                <exclude reference="u8G-1E-QWs"/>
-                                <exclude reference="aTD-Sh-XVN"/>
-                                <exclude reference="clF-ST-QDQ"/>
                                 <exclude reference="2vY-g4-dAc"/>
                                 <exclude reference="ECM-n3-Luv"/>
                                 <exclude reference="VoV-X8-wf3"/>
+                                <exclude reference="aTD-Sh-XVN"/>
+                                <exclude reference="clF-ST-QDQ"/>
                                 <exclude reference="Ozw-Pi-bi9"/>
                                 <exclude reference="jou-bh-PHH"/>
                                 <exclude reference="0Wl-Ej-1lP"/>
                                 <exclude reference="93g-gd-n1g"/>
+                                <exclude reference="K8u-Bt-Pmd"/>
+                                <exclude reference="onO-U8-6GT"/>
+                                <exclude reference="u8G-1E-QWs"/>
                             </mask>
                         </variation>
                         <variation key="widthClass=regular">
@@ -3241,18 +3286,21 @@
                                 <include reference="7zJ-NM-cG9"/>
                                 <include reference="K1a-1u-FMH"/>
                                 <include reference="IUi-Jl-KKT"/>
+                                <include reference="Don-zS-keR"/>
                             </mask>
                             <mask key="constraints">
-                                <include reference="u8G-1E-QWs"/>
-                                <include reference="aTD-Sh-XVN"/>
-                                <include reference="clF-ST-QDQ"/>
                                 <include reference="2vY-g4-dAc"/>
                                 <include reference="ECM-n3-Luv"/>
                                 <include reference="VoV-X8-wf3"/>
+                                <include reference="aTD-Sh-XVN"/>
+                                <include reference="clF-ST-QDQ"/>
                                 <include reference="Ozw-Pi-bi9"/>
                                 <include reference="jou-bh-PHH"/>
                                 <include reference="0Wl-Ej-1lP"/>
                                 <include reference="93g-gd-n1g"/>
+                                <include reference="K8u-Bt-Pmd"/>
+                                <include reference="onO-U8-6GT"/>
+                                <include reference="u8G-1E-QWs"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=compact-widthClass=compact">
@@ -3261,18 +3309,21 @@
                                 <include reference="7zJ-NM-cG9"/>
                                 <include reference="K1a-1u-FMH"/>
                                 <include reference="IUi-Jl-KKT"/>
+                                <include reference="Don-zS-keR"/>
                             </mask>
                             <mask key="constraints">
-                                <include reference="u8G-1E-QWs"/>
-                                <include reference="aTD-Sh-XVN"/>
-                                <include reference="clF-ST-QDQ"/>
                                 <include reference="2vY-g4-dAc"/>
                                 <include reference="ECM-n3-Luv"/>
                                 <include reference="VoV-X8-wf3"/>
+                                <include reference="aTD-Sh-XVN"/>
+                                <include reference="clF-ST-QDQ"/>
                                 <include reference="Ozw-Pi-bi9"/>
                                 <include reference="jou-bh-PHH"/>
                                 <include reference="0Wl-Ej-1lP"/>
                                 <include reference="93g-gd-n1g"/>
+                                <include reference="K8u-Bt-Pmd"/>
+                                <include reference="onO-U8-6GT"/>
+                                <include reference="u8G-1E-QWs"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=compact-widthClass=regular">
@@ -3281,18 +3332,21 @@
                                 <include reference="7zJ-NM-cG9"/>
                                 <include reference="K1a-1u-FMH"/>
                                 <include reference="IUi-Jl-KKT"/>
+                                <include reference="Don-zS-keR"/>
                             </mask>
                             <mask key="constraints">
-                                <include reference="u8G-1E-QWs"/>
-                                <include reference="aTD-Sh-XVN"/>
-                                <include reference="clF-ST-QDQ"/>
                                 <include reference="2vY-g4-dAc"/>
                                 <include reference="ECM-n3-Luv"/>
                                 <include reference="VoV-X8-wf3"/>
+                                <include reference="aTD-Sh-XVN"/>
+                                <include reference="clF-ST-QDQ"/>
                                 <include reference="Ozw-Pi-bi9"/>
                                 <include reference="jou-bh-PHH"/>
                                 <include reference="0Wl-Ej-1lP"/>
                                 <include reference="93g-gd-n1g"/>
+                                <include reference="K8u-Bt-Pmd"/>
+                                <include reference="onO-U8-6GT"/>
+                                <include reference="u8G-1E-QWs"/>
                             </mask>
                         </variation>
                     </view>
@@ -3338,6 +3392,7 @@
         <image name="carBtn_on_5" width="40" height="40"/>
         <image name="carBtn_on_6" width="41" height="40"/>
         <image name="color" width="250" height="250"/>
+        <image name="colorKuang" width="250" height="250"/>
         <image name="confirm_highlinght" width="101" height="27"/>
         <image name="confirm_normal" width="104" height="31"/>
         <image name="conn_logo" width="235" height="61"/>

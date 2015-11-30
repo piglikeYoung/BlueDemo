@@ -52,6 +52,7 @@
                             <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="n8p-UL-Tav" secondAttribute="bottom" id="z91-s3-6YE"/>
                         </constraints>
                     </view>
+                    <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
