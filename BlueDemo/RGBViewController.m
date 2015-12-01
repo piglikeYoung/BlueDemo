@@ -13,6 +13,7 @@
 #import "OBShapedButton.h"
 #import "JHSelectPresetView.h"
 #import "JHConst.h"
+#import "JHSavePresetView.h"
 
 // Slider的宽度
 static const CGFloat kSliderWidth = 160.f;
@@ -101,10 +102,11 @@ static NSString *const kTransferCodeKey = @"transferCodeKey";
 // 存储长按的按钮
 @property (nonatomic, weak) UIButton *longPressBtn;
 
-// selectPreset遮罩
-@property (nonatomic, weak) UIButton *selectPresetCoverBtn;
+// Preset遮罩
+@property (nonatomic, weak) UIButton *presetCoverBtn;
 // selectPreset
 @property (nonatomic, weak) JHSelectPresetView *selectPreset;
+@property (nonatomic, weak) JHSavePresetView *savetPresetView;
 
 @end
 
@@ -179,9 +181,11 @@ static NSString *const kTransferCodeKey = @"transferCodeKey";
     // carBtn添加长按事件
     [self setUpCarBtnLongPress];
     
-    // 监听城市改变
+    // 监听改变
     [JHNotificationCenter addObserver:self selector:@selector(selectPresetDidChange:) name:JHSelectPresetDidChangeNotification object:nil];
     
+    // 监听保存
+    [JHNotificationCenter addObserver:self selector:@selector(savePresetDidClick:) name:JHSavePresetNotification object:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -275,7 +279,29 @@ static NSString *const kTransferCodeKey = @"transferCodeKey";
     }
     
     [self.selectPreset removeFromSuperview];
-    [self.selectPresetCoverBtn removeFromSuperview];
+    [self.presetCoverBtn removeFromSuperview];
+}
+
+- (void) savePresetDidClick:(NSNotification *)notification {
+    if (notification.userInfo) {
+        NSString *key = [notification.userInfo objectForKey:JHSavePresetObjKey];
+        
+        NSMutableDictionary *savePresetDic = [[self recoveryBlueDeviceStatusWithKeyName:kSavePresetCodeKey] mutableCopy];
+        
+        // 不存在，创建新的
+        if (!savePresetDic) {
+            savePresetDic = [NSMutableDictionary dictionary];
+        }
+        
+        // 添加到savePreset数组
+        [savePresetDic setObject:self.transferCode forKey:key];
+        
+        [self saveBlueDeviceStatusWithCode:savePresetDic keyName:kSavePresetCodeKey];
+       
+    }
+    
+    [self.savetPresetView removeFromSuperview];
+    [self.presetCoverBtn removeFromSuperview];
 }
 
 
@@ -1146,13 +1172,37 @@ static NSString *const kTransferCodeKey = @"transferCodeKey";
  *
  */
 - (IBAction)savePresetClick:(UIButton *)sender {
-    // 1.创建一个弹窗
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Save Preset" message:nil delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Save", nil];
-    // 设置alert的样式, 让alert显示出uitextfield
-    alert.alertViewStyle = UIAlertViewStylePlainTextInput;
-    alert.tag = 50002;
-    // 2.显示窗口
-    [alert show];
+    CGFloat screenHeight = [[UIScreen mainScreen] bounds].size.height;
+    
+    // 遮罩btn
+    UIButton *coverBtn = [UIButton buttonWithType:UIButtonTypeSystem];
+    [coverBtn setBackgroundColor:[UIColor blackColor]];
+    coverBtn.alpha = 0.2;
+    self.presetCoverBtn = coverBtn;
+    [self.view addSubview:coverBtn];
+    [coverBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.width.equalTo(self.view.mas_width);
+        make.height.equalTo(self.view.mas_height);
+        make.centerX.equalTo(self.view.mas_centerX);
+        make.centerY.equalTo(self.view.mas_centerY);
+    }];
+    
+    JHSavePresetView *savetPresetView = [JHSavePresetView showView];
+    self.savetPresetView = savetPresetView;
+    [self.view addSubview:savetPresetView];
+    [savetPresetView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(self.view.mas_centerY);
+        make.left.equalTo(self.view.mas_left);
+        make.width.mas_equalTo(self.view.mas_width).offset(-30);
+        
+        if (screenHeight > 414) {
+            make.height.mas_equalTo(400);
+        } else if(screenHeight == 414) {
+            make.height.mas_equalTo(250);
+        } else {
+            make.height.mas_equalTo(200);
+        }
+    }];
 }
 
 /**
@@ -1167,7 +1217,7 @@ static NSString *const kTransferCodeKey = @"transferCodeKey";
     UIButton *coverBtn = [UIButton buttonWithType:UIButtonTypeSystem];
     [coverBtn setBackgroundColor:[UIColor blackColor]];
     coverBtn.alpha = 0.2;
-    self.selectPresetCoverBtn = coverBtn;
+    self.presetCoverBtn = coverBtn;
     [self.view addSubview:coverBtn];
     [coverBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.width.equalTo(self.view.mas_width);

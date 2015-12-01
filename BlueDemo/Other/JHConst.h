@@ -19,4 +19,8 @@
 extern NSString *const JHSelectPresetDidChangeNotification;
 extern NSString *const JHSelectPresetObjKey;
 
+extern NSString *const JHSavePresetNotification;
+extern NSString *const JHSavePresetObjKey;
+
+
 extern NSString *const kSavePresetCodeKey;

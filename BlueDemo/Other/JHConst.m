@@ -11,4 +11,7 @@
 NSString *const JHSelectPresetDidChangeNotification = @"JHSelectPresetDidChangeNotification";
 NSString *const JHSelectPresetObjKey = @"JHSelectPresetObjKey";
 
+NSString *const JHSavePresetNotification = @"JHSavePresetNotification";
+NSString *const JHSavePresetObjKey = @"JHSavePresetObjKey";
+
 NSString *const kSavePresetCodeKey = @"savePresetCodeKey";
