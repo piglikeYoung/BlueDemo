@@ -29,8 +29,8 @@
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YIg-fK-0t3" userLabel="save">
                     <rect key="frame" x="247" y="135" width="105" height="35"/>
                     <animations/>
-                    <state key="normal" image="selectPreset_save"/>
-                    <state key="highlighted" image="selectPreset_save_highlight"/>
+                    <state key="normal" image="selectPreset_confirm"/>
+                    <state key="highlighted" image="selectPreset_confirm_highlight"/>
                     <connections>
                         <action selector="save:" destination="iN0-l3-epB" eventType="touchUpInside" id="WOF-LI-Z2b"/>
                     </connections>
@@ -58,7 +58,7 @@
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="savePresetText" translatesAutoresizingMaskIntoConstraints="NO" id="DL2-8g-1am">
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="selectPresetText" translatesAutoresizingMaskIntoConstraints="NO" id="DL2-8g-1am">
                     <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                     <animations/>
                     <constraints>
@@ -305,11 +305,11 @@
     <resources>
         <image name="leftArrow" width="24" height="48"/>
         <image name="rightArrow" width="24" height="48"/>
-        <image name="savePresetText" width="182" height="19"/>
         <image name="selectPreset" width="641" height="232"/>
+        <image name="selectPresetText" width="210" height="19"/>
         <image name="selectPreset_cancel" width="105" height="35"/>
         <image name="selectPreset_cancel_highlight" width="105" height="35"/>
-        <image name="selectPreset_save" width="105" height="35"/>
-        <image name="selectPreset_save_highlight" width="105" height="35"/>
+        <image name="selectPreset_confirm" width="105" height="35"/>
+        <image name="selectPreset_confirm_highlight" width="105" height="35"/>
     </resources>
 </document>
