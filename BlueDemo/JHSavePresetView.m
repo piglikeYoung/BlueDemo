@@ -28,6 +28,7 @@
 
 - (void)awakeFromNib {
     
+    [_textField becomeFirstResponder];
 }
 
 - (IBAction)cancel:(UIButton *)sender {

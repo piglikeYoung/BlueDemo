@@ -82,32 +82,36 @@
                         </mask>
                     </variation>
                 </view>
-                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="84w-Lp-f6a">
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="84w-Lp-f6a">
                     <rect key="frame" x="-25" y="-30" width="97" height="30"/>
                     <animations/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="100" id="GsV-cQ-rUL"/>
+                        <constraint firstAttribute="width" constant="160" id="MD1-8A-m8x">
+                            <variation key="widthClass=regular" constant="450"/>
+                            <variation key="heightClass=compact-widthClass=compact" constant="250"/>
+                            <variation key="heightClass=compact-widthClass=regular" constant="350"/>
+                        </constraint>
                     </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="26"/>
                     <textInputTraits key="textInputTraits"/>
                     <variation key="default">
                         <mask key="constraints">
-                            <exclude reference="GsV-cQ-rUL"/>
+                            <exclude reference="MD1-8A-m8x"/>
                         </mask>
                     </variation>
                     <variation key="widthClass=regular">
                         <mask key="constraints">
-                            <include reference="GsV-cQ-rUL"/>
+                            <include reference="MD1-8A-m8x"/>
                         </mask>
                     </variation>
                     <variation key="heightClass=compact-widthClass=compact">
                         <mask key="constraints">
-                            <include reference="GsV-cQ-rUL"/>
+                            <include reference="MD1-8A-m8x"/>
                         </mask>
                     </variation>
                     <variation key="heightClass=compact-widthClass=regular">
                         <mask key="constraints">
-                            <include reference="GsV-cQ-rUL"/>
+                            <include reference="MD1-8A-m8x"/>
                         </mask>
                     </variation>
                 </textField>
@@ -119,6 +123,11 @@
                     <variation key="widthClass=regular" constant="80"/>
                     <variation key="heightClass=compact-widthClass=regular" constant="40"/>
                 </constraint>
+                <constraint firstItem="84w-Lp-f6a" firstAttribute="leading" secondItem="Ua6-x7-3o7" secondAttribute="leading" constant="20" id="5Ap-Xj-9Ls">
+                    <variation key="widthClass=regular" constant="140"/>
+                    <variation key="heightClass=compact-widthClass=compact" constant="40"/>
+                    <variation key="heightClass=compact-widthClass=regular" constant="70"/>
+                </constraint>
                 <constraint firstItem="kJC-Oo-MYu" firstAttribute="leading" secondItem="Ua6-x7-3o7" secondAttribute="leading" constant="20" id="DOd-we-yfx"/>
                 <constraint firstItem="Irb-Tq-GmS" firstAttribute="top" secondItem="Ua6-x7-3o7" secondAttribute="top" id="E1K-Ba-EIg"/>
                 <constraint firstItem="84w-Lp-f6a" firstAttribute="centerY" secondItem="Ua6-x7-3o7" secondAttribute="centerY" id="GTY-pD-BEi"/>
@@ -127,7 +136,6 @@
                     <variation key="heightClass=compact-widthClass=compact" constant="100"/>
                     <variation key="heightClass=compact-widthClass=regular" constant="120"/>
                 </constraint>
-                <constraint firstItem="84w-Lp-f6a" firstAttribute="centerX" secondItem="Ua6-x7-3o7" secondAttribute="centerX" id="R2e-mr-LnQ"/>
                 <constraint firstAttribute="bottom" secondItem="Irb-Tq-GmS" secondAttribute="bottom" id="TBl-we-hnZ"/>
                 <constraint firstItem="MWw-ID-JUD" firstAttribute="centerX" secondItem="Ua6-x7-3o7" secondAttribute="centerX" id="fwE-fG-U9K">
                     <variation key="widthClass=regular" constant="-40"/>
@@ -167,8 +175,8 @@
                     <exclude reference="Kdi-5b-fyc"/>
                     <exclude reference="l1W-ka-K4G"/>
                     <exclude reference="vlL-iZ-5fn"/>
+                    <exclude reference="5Ap-Xj-9Ls"/>
                     <exclude reference="GTY-pD-BEi"/>
-                    <exclude reference="R2e-mr-LnQ"/>
                     <exclude reference="17v-k4-LNk"/>
                     <exclude reference="fwE-fG-U9K"/>
                     <exclude reference="lzH-9X-ugN"/>
@@ -194,8 +202,8 @@
                     <include reference="Kdi-5b-fyc"/>
                     <include reference="l1W-ka-K4G"/>
                     <include reference="vlL-iZ-5fn"/>
+                    <include reference="5Ap-Xj-9Ls"/>
                     <include reference="GTY-pD-BEi"/>
-                    <include reference="R2e-mr-LnQ"/>
                     <include reference="17v-k4-LNk"/>
                     <include reference="fwE-fG-U9K"/>
                     <include reference="lzH-9X-ugN"/>
@@ -221,8 +229,8 @@
                     <include reference="Kdi-5b-fyc"/>
                     <include reference="l1W-ka-K4G"/>
                     <include reference="vlL-iZ-5fn"/>
+                    <include reference="5Ap-Xj-9Ls"/>
                     <include reference="GTY-pD-BEi"/>
-                    <include reference="R2e-mr-LnQ"/>
                     <include reference="17v-k4-LNk"/>
                     <include reference="fwE-fG-U9K"/>
                     <include reference="lzH-9X-ugN"/>
@@ -246,8 +254,8 @@
                     <include reference="Kdi-5b-fyc"/>
                     <include reference="l1W-ka-K4G"/>
                     <include reference="vlL-iZ-5fn"/>
+                    <include reference="5Ap-Xj-9Ls"/>
                     <include reference="GTY-pD-BEi"/>
-                    <include reference="R2e-mr-LnQ"/>
                     <include reference="17v-k4-LNk"/>
                     <include reference="fwE-fG-U9K"/>
                     <include reference="lzH-9X-ugN"/>
