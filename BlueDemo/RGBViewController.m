@@ -649,7 +649,7 @@ static NSString *const kTransferCodeKey = @"transferCodeKey";
     if (((value / 1) % 2) == 1) {
         // 把选中的按钮添加到选中数组中
         [self.carSelectedBtnArray addObject:self.carBtn1];
-        [self.carBtn1.layer setBorderWidth:5.0]; //边框宽度
+        [self.carBtn1.layer setBorderWidth:2.0]; //边框宽度
         [self.carBtn1.layer setBorderColor:[UIColor whiteColor].CGColor];//边框颜色
         // 把操作按钮对应的model按钮选上
         NSInteger carselectModel = [[self.carSelectedModelDic objectForKey:@(self.carBtn1.tag)] integerValue];
@@ -666,7 +666,7 @@ static NSString *const kTransferCodeKey = @"transferCodeKey";
     // 判断灯2
     if (((value / 2) % 2) == 1) {
         [self.carSelectedBtnArray addObject:self.carBtn2];
-        [self.carBtn2.layer setBorderWidth:5.0]; //边框宽度
+        [self.carBtn2.layer setBorderWidth:2.0]; //边框宽度
         [self.carBtn2.layer setBorderColor:[UIColor whiteColor].CGColor];//边框颜色
         // 把操作按钮对应的model按钮选上
         NSInteger carselectModel = [[self.carSelectedModelDic objectForKey:@(self.carBtn2.tag)] integerValue];
@@ -682,7 +682,7 @@ static NSString *const kTransferCodeKey = @"transferCodeKey";
     // 判断灯3
     if (((value / 4) % 2) == 1) {
         [self.carSelectedBtnArray addObject:self.carBtn3];
-        [self.carBtn3.layer setBorderWidth:5.0]; //边框宽度
+        [self.carBtn3.layer setBorderWidth:2.0]; //边框宽度
         [self.carBtn3.layer setBorderColor:[UIColor whiteColor].CGColor];//边框颜色
         // 把操作按钮对应的model按钮选上
         NSInteger carselectModel = [[self.carSelectedModelDic objectForKey:@(self.carBtn3.tag)] integerValue];
@@ -699,7 +699,7 @@ static NSString *const kTransferCodeKey = @"transferCodeKey";
     // 判断灯4
     if (((value / 8) % 2) == 1) {
         [self.carSelectedBtnArray addObject:self.carBtn4];
-        [self.carBtn4.layer setBorderWidth:5.0]; //边框宽度
+        [self.carBtn4.layer setBorderWidth:2.0]; //边框宽度
         [self.carBtn4.layer setBorderColor:[UIColor whiteColor].CGColor];//边框颜色
         // 把操作按钮对应的model按钮选上
         NSInteger carselectModel = [[self.carSelectedModelDic objectForKey:@(self.carBtn4.tag)] integerValue];
@@ -715,7 +715,7 @@ static NSString *const kTransferCodeKey = @"transferCodeKey";
     // 判断灯5
     if (((value / 16) % 2) == 1) {
         [self.carSelectedBtnArray addObject:self.carBtn5];
-        [self.carBtn5.layer setBorderWidth:5.0]; //边框宽度
+        [self.carBtn5.layer setBorderWidth:2.0]; //边框宽度
         [self.carBtn5.layer setBorderColor:[UIColor whiteColor].CGColor];//边框颜色
         // 把操作按钮对应的model按钮选上
         NSInteger carselectModel = [[self.carSelectedModelDic objectForKey:@(self.carBtn5.tag)] integerValue];
@@ -731,7 +731,7 @@ static NSString *const kTransferCodeKey = @"transferCodeKey";
     // 判断灯6
     if (((value / 32) % 2) == 1) {
         [self.carSelectedBtnArray addObject:self.carBtn6];
-        [self.carBtn6.layer setBorderWidth:5.0]; //边框宽度
+        [self.carBtn6.layer setBorderWidth:2.0]; //边框宽度
         [self.carBtn6.layer setBorderColor:[UIColor whiteColor].CGColor];//边框颜色
         // 把操作按钮对应的model按钮选上
         NSInteger carselectModel = [[self.carSelectedModelDic objectForKey:@(self.carBtn6.tag)] integerValue];
@@ -864,7 +864,7 @@ static NSString *const kTransferCodeKey = @"transferCodeKey";
             self.transferCode[2] = @([self.transferCode[2] integerValue] + [obj integerValue]);
         }
         
-        [btn.layer setBorderWidth:5.0]; //边框宽度
+        [btn.layer setBorderWidth:2.0]; //边框宽度
         [btn.layer setBorderColor:[UIColor whiteColor].CGColor];//边框颜色
         //        [btn.layer setCornerRadius:5.0];
         // 因为不在选中按钮数组里，要把之前的组里的按钮边框去掉
@@ -1160,7 +1160,7 @@ static NSString *const kTransferCodeKey = @"transferCodeKey";
         UIButton *btn = [self.view viewWithTag:gesture.view.tag];
         _longPressBtn = btn;
         NSString *onOff = btn.isSelected ? @"off" : @"on";
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:nil delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:onOff, @"Rename", @"Select Multiple", nil];
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:nil delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:onOff, @"Select Multiple", nil];
         alertView.tag = 50001;
         [alertView show];
     }
@@ -1274,10 +1274,7 @@ static NSString *const kTransferCodeKey = @"transferCodeKey";
             case 1: // on off
                 [self carBtnTouchUpInside:_longPressBtn];
                 break;
-            case 2: // Rename
-                [self popInputAlertView:_longPressBtn];
-                break;
-            case 3:// Select Multiple
+            case 2:// Select Multiple
                 break;
             default:
                 break;
