@@ -234,6 +234,13 @@ static NSString *const kMultipleSelectedKey = @"multipleSelectedKey";
 
 - (void)dealloc {
     
+    // 防止多选时，单点某个多选按钮回显错误
+    if (self.isMultipleSelected && self.multipleSelectedValue > 0) {
+        self.transferCode[3] = @(self.multipleSelectedValue);
+    }
+    // 保存发送数值到偏好设置
+    [self saveBlueDeviceStatusWithCode:self.transferCode keyName:kTransferCodeKey];
+    
     if (self.mPeripheral) {
         self.mPeripheral = nil;
     }
@@ -569,7 +576,7 @@ static NSString *const kMultipleSelectedKey = @"multipleSelectedKey";
  *  @param integerArray 按钮保存的状态，即发送给设备的数组
  */
 - (void) saveBlueDeviceStatusWithCode:(id)integerArray keyName:(NSString *)keyName {
-    
+    JHLog(@"%@", integerArray);
     // 1.获取NSUserDefaults对象
     NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
     // 2.保存数据
@@ -783,6 +790,10 @@ static NSString *const kMultipleSelectedKey = @"multipleSelectedKey";
     
     // 如果是多选状态，没有一起选择状态前，按钮状态默认是第一个按钮的状态
     if (self.isMultipleSelected) {
+        
+        // 恢复多选状态的按钮值
+        self.multipleSelectedValue = [self.transferCode[3] integerValue];
+        
         // 全部model取消选中
         [self.eightModelBtnArray makeObjectsPerformSelector:@selector(setSelected:) withObject:NO];
         
