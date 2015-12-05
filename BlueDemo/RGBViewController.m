@@ -1202,7 +1202,7 @@ static NSString *const kTransferCodeKey = @"transferCodeKey";
     if (gesture.state == UIGestureRecognizerStateBegan) {
         
         NSString *multipleText = @"";
-        // 判断是否多选
+        // 判断是否6个按钮全选了
         if (self.carSelectedBtnArray.count >= self.carBtnValueArray.count) {
             multipleText = @"Ungroup";
         } else  {
@@ -1328,28 +1328,50 @@ static NSString *const kTransferCodeKey = @"transferCodeKey";
                 break;
             case 2:// Select Multiple
             {
-                JHGroupButtonView *groupView = [JHGroupButtonView showView];
-                if (self.isMultipleSelected) {
+                // 判断是否6个按钮全选了
+                if (self.carSelectedBtnArray.count >= self.carBtnValueArray.count) {
+                    // 取消多选状态
+                    self.multipleSelected = NO;
+                    self.multipleSelectedValue = 0;
+                    
+                    // 修改第三个字节
                     self.transferCode[3] = @(self.multipleSelectedValue);
-                }
-                groupView.recoveryCode = self.transferCode;
-                __weak typeof(self) weakSelf = self;
-                groupView.multipleSelectedClickBlock = ^(NSArray *integerArray) {
-                    [weakSelf setupBtnFromGroupViewWith:integerArray];
-                };
-                groupView.multipleCanelClickBlock = ^() {
-                    // 如果选中的按钮>1个，说明现在还是多选状态
-                    if (!(weakSelf.carSelectedBtnArray.count > 1)) {
-                        weakSelf.multipleSelected = NO;
+                    
+                    // 所有选中按钮去边框
+                    [self.carSelectedBtnArray enumerateObjectsUsingBlock:^(UIButton *selectedBtn, NSUInteger idx, BOOL * _Nonnull stop) {
+                        [selectedBtn.layer setBorderWidth:0.0]; //边框宽度
+                        [selectedBtn.layer setBorderColor:[UIColor clearColor].CGColor];//边框颜色
+                    }];
+                    
+                    [self.carSelectedBtnArray removeAllObjects];
+                    // 发送数据
+                    [self writePeripheral:_mPeripheral characteristic:_FFFAcharacteristic value:[self converToCharArrayWithIntegerArray:self.transferCode]];
+                    
+                } else  {
+                    JHGroupButtonView *groupView = [JHGroupButtonView showView];
+                    if (self.isMultipleSelected) {
+                        self.transferCode[3] = @(self.multipleSelectedValue);
                     }
-                };
-                self.groupView = groupView;
-                [self.view addSubview:groupView];
-                [groupView mas_makeConstraints:^(MASConstraintMaker *make) {
-                    make.edges.equalTo(self.view);
-                }];
+                    groupView.recoveryCode = self.transferCode;
+                    __weak typeof(self) weakSelf = self;
+                    groupView.multipleSelectedClickBlock = ^(NSArray *integerArray) {
+                        [weakSelf setupBtnFromGroupViewWith:integerArray];
+                    };
+                    groupView.multipleCanelClickBlock = ^() {
+                        // 如果选中的按钮>1个，说明现在还是多选状态
+                        if (!(weakSelf.carSelectedBtnArray.count > 1)) {
+                            weakSelf.multipleSelected = NO;
+                        }
+                    };
+                    self.groupView = groupView;
+                    [self.view addSubview:groupView];
+                    [groupView mas_makeConstraints:^(MASConstraintMaker *make) {
+                        make.edges.equalTo(self.view);
+                    }];
+                    
+                    self.multipleSelected = YES;
+                }
                 
-                self.multipleSelected = YES;
             }
                 break;
             default:
