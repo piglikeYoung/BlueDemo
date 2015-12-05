@@ -8,7 +8,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view contentMode="scaleToFill" id="DeU-Ms-wN3">
+        <view contentMode="scaleToFill" id="DeU-Ms-wN3" customClass="JHGroupButtonView">
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
@@ -23,7 +23,7 @@
                             <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                             <animations/>
                         </imageView>
-                        <button opaque="NO" tag="30001" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Smy-gS-FVq" userLabel="CarBtn1">
+                        <button opaque="NO" tag="60001" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Smy-gS-FVq" userLabel="CarBtn1">
                             <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                             <animations/>
                             <constraints>
@@ -60,36 +60,54 @@
                                     <include reference="Thy-vr-1hz"/>
                                 </mask>
                             </variation>
+                            <connections>
+                                <action selector="btnClick:" destination="DeU-Ms-wN3" eventType="touchUpInside" id="PpJ-m4-1sX"/>
+                            </connections>
                         </button>
-                        <button opaque="NO" tag="30002" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nly-fy-n4x" userLabel="CarBtn2">
+                        <button opaque="NO" tag="60002" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nly-fy-n4x" userLabel="CarBtn2">
                             <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                             <animations/>
                             <state key="normal" image="carBtn_2"/>
                             <state key="selected" image="carBtn_on_2"/>
+                            <connections>
+                                <action selector="btnClick:" destination="DeU-Ms-wN3" eventType="touchUpInside" id="c7V-b1-FPS"/>
+                            </connections>
                         </button>
-                        <button opaque="NO" tag="30003" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="M5h-mh-RDF" userLabel="CarBtn3">
+                        <button opaque="NO" tag="60003" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="M5h-mh-RDF" userLabel="CarBtn3">
                             <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                             <animations/>
                             <state key="normal" image="carBtn_3"/>
                             <state key="selected" image="carBtn_on_3"/>
+                            <connections>
+                                <action selector="btnClick:" destination="DeU-Ms-wN3" eventType="touchUpInside" id="xfk-tj-BBG"/>
+                            </connections>
                         </button>
-                        <button opaque="NO" tag="30004" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wqy-fD-y7l" userLabel="CarBtn4">
+                        <button opaque="NO" tag="60004" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wqy-fD-y7l" userLabel="CarBtn4">
                             <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                             <animations/>
                             <state key="normal" image="carBtn_4"/>
                             <state key="selected" image="carBtn_on_4"/>
+                            <connections>
+                                <action selector="btnClick:" destination="DeU-Ms-wN3" eventType="touchUpInside" id="Slj-cl-FcN"/>
+                            </connections>
                         </button>
-                        <button opaque="NO" tag="30005" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oIW-qJ-wmh" userLabel="CarBtn5">
+                        <button opaque="NO" tag="60005" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oIW-qJ-wmh" userLabel="CarBtn5">
                             <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                             <animations/>
                             <state key="normal" image="carBtn_5"/>
                             <state key="selected" image="carBtn_on_5"/>
+                            <connections>
+                                <action selector="btnClick:" destination="DeU-Ms-wN3" eventType="touchUpInside" id="pMV-oO-EUr"/>
+                            </connections>
                         </button>
-                        <button opaque="NO" tag="30006" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TD2-vk-U7e" userLabel="CarBtn6">
+                        <button opaque="NO" tag="60006" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TD2-vk-U7e" userLabel="CarBtn6">
                             <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                             <animations/>
                             <state key="normal" image="carBtn_6"/>
                             <state key="selected" image="carBtn_on_6"/>
+                            <connections>
+                                <action selector="btnClick:" destination="DeU-Ms-wN3" eventType="touchUpInside" id="orb-ps-uAO"/>
+                            </connections>
                         </button>
                     </subviews>
                     <animations/>
@@ -309,12 +327,18 @@
                     <animations/>
                     <state key="normal" image="selectPreset_confirm"/>
                     <state key="highlighted" image="selectPreset_confirm_highlight"/>
+                    <connections>
+                        <action selector="confirmBtnClick:" destination="DeU-Ms-wN3" eventType="touchUpInside" id="gDh-qq-rS9"/>
+                    </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="inN-4I-G4v" userLabel="cancel">
                     <rect key="frame" x="102" y="135" width="105" height="35"/>
                     <animations/>
                     <state key="normal" image="selectPreset_cancel"/>
                     <state key="highlighted" image="selectPreset_cancel_highlight"/>
+                    <connections>
+                        <action selector="cancelBtnClick:" destination="DeU-Ms-wN3" eventType="touchUpInside" id="LHR-WM-NYQ"/>
+                    </connections>
                 </button>
             </subviews>
             <animations/>
@@ -425,6 +449,14 @@
                     <include reference="fCD-Ls-13M"/>
                 </mask>
             </variation>
+            <connections>
+                <outlet property="carBtn1" destination="Smy-gS-FVq" id="9o3-l5-zAq"/>
+                <outlet property="carBtn2" destination="nly-fy-n4x" id="97X-9D-ngS"/>
+                <outlet property="carBtn3" destination="M5h-mh-RDF" id="nxC-6W-adm"/>
+                <outlet property="carBtn4" destination="Wqy-fD-y7l" id="8FH-X2-hP4"/>
+                <outlet property="carBtn5" destination="oIW-qJ-wmh" id="kja-FL-BZS"/>
+                <outlet property="carBtn6" destination="TD2-vk-U7e" id="VSF-2X-ODH"/>
+            </connections>
             <point key="canvasLocation" x="245" y="377"/>
         </view>
     </objects>

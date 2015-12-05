@@ -8,6 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
+typedef void(^MultipleSelectedClickBlock)(NSMutableArray *integerArray);
+
 @interface JHGroupButtonView : UIView
+
++ (instancetype)showView;
+
+@property (nonatomic, copy) NSMutableArray *recoveryCode;
+
+@property (nonatomic, copy) MultipleSelectedClickBlock multipleSelectedClickBlock;
 
 @end

@@ -14,6 +14,7 @@
 #import "JHSelectPresetView.h"
 #import "JHConst.h"
 #import "JHSavePresetView.h"
+#import "JHGroupButtonView.h"
 
 // Slider的宽度
 static const CGFloat kSliderWidth = 160.f;
@@ -107,6 +108,11 @@ static NSString *const kTransferCodeKey = @"transferCodeKey";
 // selectPreset
 @property (nonatomic, weak) JHSelectPresetView *selectPreset;
 @property (nonatomic, weak) JHSavePresetView *savetPresetView;
+
+// 是否多选
+@property (nonatomic, assign, getter=isMultipleSelected) BOOL multipleSelected;
+// 多选View
+@property (nonatomic, weak) JHGroupButtonView *groupView;
 
 @end
 
@@ -1037,6 +1043,15 @@ static NSString *const kTransferCodeKey = @"transferCodeKey";
 }
 
 
+/**
+ *  处理从分组界面返回的数据
+ *
+ *  @param integerArray 数据
+ */
+- (void) setupBtnFromGroupViewWith:(NSArray *)integerArray {
+    
+}
+
 
 #pragma mark - 按钮点击处理
 /**
@@ -1275,6 +1290,19 @@ static NSString *const kTransferCodeKey = @"transferCodeKey";
                 [self carBtnTouchUpInside:_longPressBtn];
                 break;
             case 2:// Select Multiple
+            {
+                JHGroupButtonView *groupView = [JHGroupButtonView showView];
+                groupView.recoveryCode = self.transferCode;
+                __weak typeof(self) weakSelf = self;
+                groupView.multipleSelectedClickBlock = ^(NSArray *integerArray) {
+                    [weakSelf setupBtnFromGroupViewWith:integerArray];
+                };
+                self.groupView = groupView;
+                [self.view addSubview:groupView];
+                [groupView mas_makeConstraints:^(MASConstraintMaker *make) {
+                    make.edges.equalTo(self.view);
+                }];
+            }
                 break;
             default:
                 break;
