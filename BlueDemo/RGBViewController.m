@@ -1049,6 +1049,8 @@ static NSString *const kTransferCodeKey = @"transferCodeKey";
  *  @param integerArray 数据
  */
 - (void) setupBtnFromGroupViewWith:(NSArray *)integerArray {
+    __weak typeof(self) weakSelf = self;
+    
     
 }
 
@@ -1297,11 +1299,16 @@ static NSString *const kTransferCodeKey = @"transferCodeKey";
                 groupView.multipleSelectedClickBlock = ^(NSArray *integerArray) {
                     [weakSelf setupBtnFromGroupViewWith:integerArray];
                 };
+                groupView.multipleCanelClickBlock = ^() {
+                    weakSelf.multipleSelected = NO;
+                };
                 self.groupView = groupView;
                 [self.view addSubview:groupView];
                 [groupView mas_makeConstraints:^(MASConstraintMaker *make) {
                     make.edges.equalTo(self.view);
                 }];
+                
+                self.multipleSelected = YES;
             }
                 break;
             default:

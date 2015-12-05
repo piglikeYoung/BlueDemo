@@ -100,10 +100,11 @@
 - (IBAction)cancelBtnClick:(id)sender {
     
     [self removeFromSuperview];
+    self.multipleCanelClickBlock();
 }
 
 - (IBAction)confirmBtnClick:(id)sender {
-    
+    self.multipleSelectedClickBlock(self.recoveryCode);
 }
 
 #pragma mark - 回显方法

@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 typedef void(^MultipleSelectedClickBlock)(NSMutableArray *integerArray);
+typedef void(^MultipleCanelClickBlock)();
 
 @interface JHGroupButtonView : UIView
 
@@ -17,5 +18,6 @@ typedef void(^MultipleSelectedClickBlock)(NSMutableArray *integerArray);
 @property (nonatomic, copy) NSMutableArray *recoveryCode;
 
 @property (nonatomic, copy) MultipleSelectedClickBlock multipleSelectedClickBlock;
+@property (nonatomic, copy) MultipleCanelClickBlock multipleCanelClickBlock;
 
 @end
