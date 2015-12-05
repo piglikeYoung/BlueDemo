@@ -105,6 +105,7 @@
 
 - (IBAction)confirmBtnClick:(id)sender {
     self.multipleSelectedClickBlock(self.recoveryCode);
+    [self removeFromSuperview];
 }
 
 #pragma mark - 回显方法

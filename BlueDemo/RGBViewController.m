@@ -1051,7 +1051,27 @@ static NSString *const kTransferCodeKey = @"transferCodeKey";
 - (void) setupBtnFromGroupViewWith:(NSArray *)integerArray {
     __weak typeof(self) weakSelf = self;
     
+    // 发送数据，数据转换的适合保存到了偏好设置
+    if (weakSelf.masterSwitch.isOn) {
+        [weakSelf writePeripheral:_mPeripheral characteristic:_FFFAcharacteristic value:[self converToCharArrayWithIntegerArray:[integerArray mutableCopy]]];
+    }
     
+    
+    // 恢复存储数据
+    NSArray *recoveryCode = [[self recoveryBlueDeviceStatusWithKeyName:kTransferCodeKey] copy];
+    
+    if (recoveryCode.count > 0) {
+        self.transferCode = [recoveryCode mutableCopy];
+        // 恢复car按钮状态
+        [self recoveryCarBtnValueWithIntegerArray:recoveryCode];
+        // 恢复model按钮状态
+        [self recoveryModelBtnValueWithIntegerArray:recoveryCode];
+        
+        // 恢复car操作按钮状态
+        [self recoveryOperationBtnValueWithIntegerArray:recoveryCode];
+        // 恢复Slider的状态
+        [self recoverySliderValueWithIntegerArray:recoveryCode];
+    }
 }
 
 
