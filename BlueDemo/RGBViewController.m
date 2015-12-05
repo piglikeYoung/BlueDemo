@@ -1392,7 +1392,7 @@ static NSString *const kMultipleSelectedKey = @"multipleSelectedKey";
                     
                 } else  {
                     JHGroupButtonView *groupView = [JHGroupButtonView showView];
-                    if (self.isMultipleSelected) {
+                    if (self.isMultipleSelected && self.multipleSelectedValue > 0) {
                         self.transferCode[3] = @(self.multipleSelectedValue);
                     }
                     groupView.recoveryCode = self.transferCode;
