@@ -1320,7 +1320,10 @@ static NSString *const kTransferCodeKey = @"transferCodeKey";
                     [weakSelf setupBtnFromGroupViewWith:integerArray];
                 };
                 groupView.multipleCanelClickBlock = ^() {
-                    weakSelf.multipleSelected = NO;
+                    // 如果选中的按钮>1个，说明现在还是多选状态
+                    if (!(weakSelf.carSelectedBtnArray.count > 1)) {
+                        weakSelf.multipleSelected = NO;
+                    }
                 };
                 self.groupView = groupView;
                 [self.view addSubview:groupView];

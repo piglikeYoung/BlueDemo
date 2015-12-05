@@ -175,8 +175,6 @@
         [self.carBorderBtnArray addObject:self.carBtn1];
         [self.carBtn1.layer setBorderWidth:2.0]; //边框宽度
         [self.carBtn1.layer setBorderColor:[UIColor whiteColor].CGColor];//边框颜色
-        // 把选中的按钮添加到选中数组中
-        [self.carBorderBtnArray addObject:self.carBtn1];
     } else {
         [self.carBtn1.layer setBorderWidth:0.0]; //边框宽度
         [self.carBtn1.layer setBorderColor:[UIColor clearColor].CGColor];//边框颜色
@@ -187,8 +185,6 @@
         [self.carBorderBtnArray addObject:self.carBtn2];
         [self.carBtn2.layer setBorderWidth:2.0]; //边框宽度
         [self.carBtn2.layer setBorderColor:[UIColor whiteColor].CGColor];//边框颜色
-        // 把选中的按钮添加到选中数组中
-        [self.carBorderBtnArray addObject:self.carBtn2];
     } else {
         [self.carBtn2.layer setBorderWidth:0.0]; //边框宽度
         [self.carBtn2.layer setBorderColor:[UIColor clearColor].CGColor];//边框颜色
@@ -199,8 +195,6 @@
         [self.carBorderBtnArray addObject:self.carBtn3];
         [self.carBtn3.layer setBorderWidth:2.0]; //边框宽度
         [self.carBtn3.layer setBorderColor:[UIColor whiteColor].CGColor];//边框颜色
-        // 把选中的按钮添加到选中数组中
-        [self.carBorderBtnArray addObject:self.carBtn3];
     } else {
         [self.carBtn3.layer setBorderWidth:0.0]; //边框宽度
         [self.carBtn3.layer setBorderColor:[UIColor clearColor].CGColor];//边框颜色
@@ -211,8 +205,6 @@
         [self.carBorderBtnArray addObject:self.carBtn4];
         [self.carBtn4.layer setBorderWidth:2.0]; //边框宽度
         [self.carBtn4.layer setBorderColor:[UIColor whiteColor].CGColor];//边框颜色
-        // 把选中的按钮添加到选中数组中
-        [self.carBorderBtnArray addObject:self.carBtn4];
     } else {
         [self.carBtn4.layer setBorderWidth:0.0]; //边框宽度
         [self.carBtn4.layer setBorderColor:[UIColor clearColor].CGColor];//边框颜色
@@ -223,8 +215,6 @@
         [self.carBorderBtnArray addObject:self.carBtn5];
         [self.carBtn5.layer setBorderWidth:2.0]; //边框宽度
         [self.carBtn5.layer setBorderColor:[UIColor whiteColor].CGColor];//边框颜色
-        // 把选中的按钮添加到选中数组中
-        [self.carBorderBtnArray addObject:self.carBtn5];
     } else {
         [self.carBtn5.layer setBorderWidth:0.0]; //边框宽度
         [self.carBtn5.layer setBorderColor:[UIColor clearColor].CGColor];//边框颜色
@@ -235,8 +225,6 @@
         [self.carBorderBtnArray addObject:self.carBtn6];
         [self.carBtn6.layer setBorderWidth:2.0]; //边框宽度
         [self.carBtn6.layer setBorderColor:[UIColor whiteColor].CGColor];//边框颜色
-        // 把选中的按钮添加到选中数组中
-        [self.carBorderBtnArray addObject:self.carBtn6];
     } else {
         [self.carBtn6.layer setBorderWidth:0.0]; //边框宽度
         [self.carBtn6.layer setBorderColor:[UIColor clearColor].CGColor];//边框颜色
