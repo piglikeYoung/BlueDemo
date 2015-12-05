@@ -2016,6 +2016,10 @@
                             <view contentMode="scaleAspectFill" translatesAutoresizingMaskIntoConstraints="NO" id="f3A-fI-24f" userLabel="selectCarView">
                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                 <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="car1" translatesAutoresizingMaskIntoConstraints="NO" id="VVG-hZ-AoZ">
+                                        <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                        <animations/>
+                                    </imageView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BKJ-6x-64U" userLabel="left">
                                         <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                         <animations/>
@@ -2186,10 +2190,6 @@
                                             <action selector="carBtnTouchUpInside:" destination="T6i-m9-jI6" eventType="touchUpInside" id="GlU-iT-32l"/>
                                         </connections>
                                     </button>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="car1" translatesAutoresizingMaskIntoConstraints="NO" id="VVG-hZ-AoZ">
-                                        <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
-                                        <animations/>
-                                    </imageView>
                                 </subviews>
                                 <animations/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -2252,6 +2252,7 @@
                                 </constraints>
                                 <variation key="default">
                                     <mask key="subviews">
+                                        <exclude reference="VVG-hZ-AoZ"/>
                                         <exclude reference="BKJ-6x-64U"/>
                                         <exclude reference="66w-gE-JN3"/>
                                         <exclude reference="ETW-WA-d7o"/>
@@ -2260,7 +2261,6 @@
                                         <exclude reference="KhB-Ta-DlU"/>
                                         <exclude reference="vaJ-1c-MHK"/>
                                         <exclude reference="trH-d2-yJC"/>
-                                        <exclude reference="VVG-hZ-AoZ"/>
                                     </mask>
                                     <mask key="constraints">
                                         <exclude reference="avk-sJ-GI8"/>
@@ -2298,6 +2298,7 @@
                                 </variation>
                                 <variation key="widthClass=regular">
                                     <mask key="subviews">
+                                        <include reference="VVG-hZ-AoZ"/>
                                         <include reference="BKJ-6x-64U"/>
                                         <include reference="66w-gE-JN3"/>
                                         <include reference="ETW-WA-d7o"/>
@@ -2306,7 +2307,6 @@
                                         <include reference="KhB-Ta-DlU"/>
                                         <include reference="vaJ-1c-MHK"/>
                                         <include reference="trH-d2-yJC"/>
-                                        <include reference="VVG-hZ-AoZ"/>
                                     </mask>
                                     <mask key="constraints">
                                         <include reference="avk-sJ-GI8"/>
@@ -2344,6 +2344,7 @@
                                 </variation>
                                 <variation key="heightClass=compact-widthClass=compact">
                                     <mask key="subviews">
+                                        <include reference="VVG-hZ-AoZ"/>
                                         <include reference="BKJ-6x-64U"/>
                                         <include reference="66w-gE-JN3"/>
                                         <include reference="ETW-WA-d7o"/>
@@ -2352,7 +2353,6 @@
                                         <include reference="KhB-Ta-DlU"/>
                                         <include reference="vaJ-1c-MHK"/>
                                         <include reference="trH-d2-yJC"/>
-                                        <include reference="VVG-hZ-AoZ"/>
                                     </mask>
                                     <mask key="constraints">
                                         <include reference="avk-sJ-GI8"/>
@@ -2390,6 +2390,7 @@
                                 </variation>
                                 <variation key="heightClass=compact-widthClass=regular">
                                     <mask key="subviews">
+                                        <include reference="VVG-hZ-AoZ"/>
                                         <include reference="BKJ-6x-64U"/>
                                         <include reference="66w-gE-JN3"/>
                                         <include reference="ETW-WA-d7o"/>
@@ -2398,7 +2399,6 @@
                                         <include reference="KhB-Ta-DlU"/>
                                         <include reference="vaJ-1c-MHK"/>
                                         <include reference="trH-d2-yJC"/>
-                                        <include reference="VVG-hZ-AoZ"/>
                                     </mask>
                                     <mask key="constraints">
                                         <include reference="avk-sJ-GI8"/>

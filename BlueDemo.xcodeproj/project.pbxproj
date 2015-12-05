@@ -51,6 +51,8 @@
 		7DF340D41BEF855B0015B9A6 /* JHSelectPresetView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DF340D31BEF855B0015B9A6 /* JHSelectPresetView.m */; };
 		7DF340D81BEF8FB60015B9A6 /* UIView+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DF340D71BEF8FB60015B9A6 /* UIView+Extension.m */; };
 		7DF340DC1BEF93370015B9A6 /* JHConst.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DF340DB1BEF93370015B9A6 /* JHConst.m */; };
+		7DF677F91C12F2560071716B /* JHGroupButtonView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DF677F81C12F2560071716B /* JHGroupButtonView.m */; };
+		7DF677FB1C12F2780071716B /* JHGroupButtonView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7DF677FA1C12F2780071716B /* JHGroupButtonView.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -160,6 +162,9 @@
 		7DF340D71BEF8FB60015B9A6 /* UIView+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Extension.m"; sourceTree = "<group>"; };
 		7DF340DA1BEF93370015B9A6 /* JHConst.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHConst.h; sourceTree = "<group>"; };
 		7DF340DB1BEF93370015B9A6 /* JHConst.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHConst.m; sourceTree = "<group>"; };
+		7DF677F71C12F2560071716B /* JHGroupButtonView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHGroupButtonView.h; sourceTree = "<group>"; };
+		7DF677F81C12F2560071716B /* JHGroupButtonView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHGroupButtonView.m; sourceTree = "<group>"; };
+		7DF677FA1C12F2780071716B /* JHGroupButtonView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JHGroupButtonView.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -293,6 +298,9 @@
 				7DDC86251C0D891200D533E8 /* JHSavePresetView.h */,
 				7DDC86261C0D891200D533E8 /* JHSavePresetView.m */,
 				7DDC86281C0D891C00D533E8 /* JHSavePresetView.xib */,
+				7DF677F71C12F2560071716B /* JHGroupButtonView.h */,
+				7DF677F81C12F2560071716B /* JHGroupButtonView.m */,
+				7DF677FA1C12F2780071716B /* JHGroupButtonView.xib */,
 				7D652F541BCDE4460019BCA9 /* Main.storyboard */,
 				7D652F571BCDE4460019BCA9 /* Assets.xcassets */,
 				7D652F591BCDE4460019BCA9 /* LaunchScreen.storyboard */,
@@ -486,6 +494,7 @@
 				7D0F24E01BCF3C9D001C9A06 /* MBProgressHUD.bundle in Resources */,
 				7D652F581BCDE4460019BCA9 /* Assets.xcassets in Resources */,
 				7D31334F1BE1F38500B7BB27 /* Info.plist in Resources */,
+				7DF677FB1C12F2780071716B /* JHGroupButtonView.xib in Resources */,
 				7D652F561BCDE4460019BCA9 /* Main.storyboard in Resources */,
 				7DDC86291C0D891C00D533E8 /* JHSavePresetView.xib in Resources */,
 				7DF340D11BEF85450015B9A6 /* JHSelectPresetView.xib in Resources */,
@@ -513,6 +522,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7DF677F91C12F2560071716B /* JHGroupButtonView.m in Sources */,
 				7D0F24DF1BCF3C9D001C9A06 /* MBProgressHUD+MJ.m in Sources */,
 				7D8484701BE5EEBE00C34D89 /* OBShapedButton.m in Sources */,
 				7DDC86271C0D891200D533E8 /* JHSavePresetView.m in Sources */,
