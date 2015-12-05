@@ -40,6 +40,9 @@ static NSString *const kStartNotifyCharacteristicUUID = @"0xFFFB";
 // transferCode偏好设置key
 static NSString *const kTransferCodeKey = @"transferCodeKey";
 
+// 是否多选状态偏好设置key
+static NSString *const kMultipleSelectedKey = @"multipleSelectedKey";
+
 
 @interface RGBViewController () <CBPeripheralDelegate, UIAlertViewDelegate>
 
@@ -169,6 +172,9 @@ static NSString *const kTransferCodeKey = @"transferCodeKey";
     
     [self setUpEightModelBtn];
     
+    // 恢复是否多选状态
+    self.multipleSelected = [self recoveryBlueDeviceStatusWithKeyName:kMultipleSelectedKey];
+    
     // 恢复存储数据
     NSArray *recoveryCode = [[self recoveryBlueDeviceStatusWithKeyName:kTransferCodeKey] copy];
     
@@ -184,6 +190,8 @@ static NSString *const kTransferCodeKey = @"transferCodeKey";
         // 恢复Slider的状态
         [self recoverySliderValueWithIntegerArray:recoveryCode];
     }
+    
+    
     
     // carBtn添加长按事件
     [self setUpCarBtnLongPress];
@@ -225,6 +233,7 @@ static NSString *const kTransferCodeKey = @"transferCodeKey";
 
 
 - (void)dealloc {
+    
     if (self.mPeripheral) {
         self.mPeripheral = nil;
     }
@@ -548,6 +557,9 @@ static NSString *const kTransferCodeKey = @"transferCodeKey";
     // 保存发送数值到偏好设置
     [self saveBlueDeviceStatusWithCode:integerArray keyName:kTransferCodeKey];
     
+    // 保存多选状态到偏好设置
+    [self saveBlueDeviceStatusWithCode:[NSNumber numberWithBool:self.isMultipleSelected] keyName:kMultipleSelectedKey];
+    
     return [NSData dataWithBytes:charArray length:integerArray.count];
 }
 
@@ -658,12 +670,15 @@ static NSString *const kTransferCodeKey = @"transferCodeKey";
         [self.carSelectedBtnArray addObject:self.carBtn1];
         [self.carBtn1.layer setBorderWidth:2.0]; //边框宽度
         [self.carBtn1.layer setBorderColor:[UIColor whiteColor].CGColor];//边框颜色
-        // 把操作按钮对应的model按钮选上
-        NSInteger carselectModel = [[self.carSelectedModelDic objectForKey:@(self.carBtn1.tag)] integerValue];
-        if (carselectModel > 0) {
-            UIButton *modelBtn = [self.eightBtnView viewWithTag:carselectModel];
-            modelBtn.selected = YES;
+        if (!self.isMultipleSelected) {
+            // 把操作按钮对应的model按钮选上
+            NSInteger carselectModel = [[self.carSelectedModelDic objectForKey:@(self.carBtn1.tag)] integerValue];
+            if (carselectModel > 0) {
+                UIButton *modelBtn = [self.eightBtnView viewWithTag:carselectModel];
+                modelBtn.selected = YES;
+            }
         }
+        
         
     } else {
         [self.carBtn1.layer setBorderWidth:0.0]; //边框宽度
@@ -675,12 +690,15 @@ static NSString *const kTransferCodeKey = @"transferCodeKey";
         [self.carSelectedBtnArray addObject:self.carBtn2];
         [self.carBtn2.layer setBorderWidth:2.0]; //边框宽度
         [self.carBtn2.layer setBorderColor:[UIColor whiteColor].CGColor];//边框颜色
-        // 把操作按钮对应的model按钮选上
-        NSInteger carselectModel = [[self.carSelectedModelDic objectForKey:@(self.carBtn2.tag)] integerValue];
-        if (carselectModel > 0) {
-            UIButton *modelBtn = [self.eightBtnView viewWithTag:carselectModel];
-            modelBtn.selected = YES;
+        if (!self.isMultipleSelected) {
+            // 把操作按钮对应的model按钮选上
+            NSInteger carselectModel = [[self.carSelectedModelDic objectForKey:@(self.carBtn2.tag)] integerValue];
+            if (carselectModel > 0) {
+                UIButton *modelBtn = [self.eightBtnView viewWithTag:carselectModel];
+                modelBtn.selected = YES;
+            }
         }
+        
     } else {
         [self.carBtn2.layer setBorderWidth:0.0]; //边框宽度
         [self.carBtn2.layer setBorderColor:[UIColor clearColor].CGColor];//边框颜色
@@ -691,12 +709,15 @@ static NSString *const kTransferCodeKey = @"transferCodeKey";
         [self.carSelectedBtnArray addObject:self.carBtn3];
         [self.carBtn3.layer setBorderWidth:2.0]; //边框宽度
         [self.carBtn3.layer setBorderColor:[UIColor whiteColor].CGColor];//边框颜色
-        // 把操作按钮对应的model按钮选上
-        NSInteger carselectModel = [[self.carSelectedModelDic objectForKey:@(self.carBtn3.tag)] integerValue];
-        if (carselectModel > 0) {
-            UIButton *modelBtn = [self.eightBtnView viewWithTag:carselectModel];
-            modelBtn.selected = YES;
+        if (!self.isMultipleSelected) {
+            // 把操作按钮对应的model按钮选上
+            NSInteger carselectModel = [[self.carSelectedModelDic objectForKey:@(self.carBtn3.tag)] integerValue];
+            if (carselectModel > 0) {
+                UIButton *modelBtn = [self.eightBtnView viewWithTag:carselectModel];
+                modelBtn.selected = YES;
+            }
         }
+        
         
     } else {
         [self.carBtn3.layer setBorderWidth:0.0]; //边框宽度
@@ -708,12 +729,16 @@ static NSString *const kTransferCodeKey = @"transferCodeKey";
         [self.carSelectedBtnArray addObject:self.carBtn4];
         [self.carBtn4.layer setBorderWidth:2.0]; //边框宽度
         [self.carBtn4.layer setBorderColor:[UIColor whiteColor].CGColor];//边框颜色
-        // 把操作按钮对应的model按钮选上
-        NSInteger carselectModel = [[self.carSelectedModelDic objectForKey:@(self.carBtn4.tag)] integerValue];
-        if (carselectModel > 0) {
-            UIButton *modelBtn = [self.eightBtnView viewWithTag:carselectModel];
-            modelBtn.selected = YES;
+        
+        if (!self.isMultipleSelected) {
+            // 把操作按钮对应的model按钮选上
+            NSInteger carselectModel = [[self.carSelectedModelDic objectForKey:@(self.carBtn4.tag)] integerValue];
+            if (carselectModel > 0) {
+                UIButton *modelBtn = [self.eightBtnView viewWithTag:carselectModel];
+                modelBtn.selected = YES;
+            }
         }
+        
     } else {
         [self.carBtn4.layer setBorderWidth:0.0]; //边框宽度
         [self.carBtn4.layer setBorderColor:[UIColor clearColor].CGColor];//边框颜色
@@ -724,12 +749,15 @@ static NSString *const kTransferCodeKey = @"transferCodeKey";
         [self.carSelectedBtnArray addObject:self.carBtn5];
         [self.carBtn5.layer setBorderWidth:2.0]; //边框宽度
         [self.carBtn5.layer setBorderColor:[UIColor whiteColor].CGColor];//边框颜色
-        // 把操作按钮对应的model按钮选上
-        NSInteger carselectModel = [[self.carSelectedModelDic objectForKey:@(self.carBtn5.tag)] integerValue];
-        if (carselectModel > 0) {
-            UIButton *modelBtn = [self.eightBtnView viewWithTag:carselectModel];
-            modelBtn.selected = YES;
+        if (!self.isMultipleSelected) {
+            // 把操作按钮对应的model按钮选上
+            NSInteger carselectModel = [[self.carSelectedModelDic objectForKey:@(self.carBtn5.tag)] integerValue];
+            if (carselectModel > 0) {
+                UIButton *modelBtn = [self.eightBtnView viewWithTag:carselectModel];
+                modelBtn.selected = YES;
+            }
         }
+        
     } else {
         [self.carBtn5.layer setBorderWidth:0.0]; //边框宽度
         [self.carBtn5.layer setBorderColor:[UIColor clearColor].CGColor];//边框颜色
@@ -740,15 +768,30 @@ static NSString *const kTransferCodeKey = @"transferCodeKey";
         [self.carSelectedBtnArray addObject:self.carBtn6];
         [self.carBtn6.layer setBorderWidth:2.0]; //边框宽度
         [self.carBtn6.layer setBorderColor:[UIColor whiteColor].CGColor];//边框颜色
-        // 把操作按钮对应的model按钮选上
-        NSInteger carselectModel = [[self.carSelectedModelDic objectForKey:@(self.carBtn6.tag)] integerValue];
-        if (carselectModel > 0) {
-            UIButton *modelBtn = [self.eightBtnView viewWithTag:carselectModel];
-            modelBtn.selected = YES;
+        if (!self.isMultipleSelected) {
+            // 把操作按钮对应的model按钮选上
+            NSInteger carselectModel = [[self.carSelectedModelDic objectForKey:@(self.carBtn6.tag)] integerValue];
+            if (carselectModel > 0) {
+                UIButton *modelBtn = [self.eightBtnView viewWithTag:carselectModel];
+                modelBtn.selected = YES;
+            }
         }
     } else {
         [self.carBtn6.layer setBorderWidth:0.0]; //边框宽度
         [self.carBtn6.layer setBorderColor:[UIColor clearColor].CGColor];//边框颜色
+    }
+    
+    // 如果是多选状态，没有一起选择状态前，按钮状态默认是第一个按钮的状态
+    if (self.isMultipleSelected) {
+        // 全部model取消选中
+        [self.eightModelBtnArray makeObjectsPerformSelector:@selector(setSelected:) withObject:NO];
+        
+        UIButton *firstBtn = [self.carSelectedBtnArray firstObject];
+        NSInteger carselectModel = [[self.carSelectedModelDic objectForKey:@(firstBtn.tag)] integerValue];
+        if (carselectModel > 0) {
+            UIButton *modelBtn = [self.eightBtnView viewWithTag:carselectModel];
+            modelBtn.selected = YES;
+        }
     }
 }
 
