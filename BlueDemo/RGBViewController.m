@@ -41,7 +41,6 @@ static NSString *const kStartNotifyCharacteristicUUID = @"0xFFFB";
 static NSString *const kTransferCodeKey = @"transferCodeKey";
 
 
-
 @interface RGBViewController () <CBPeripheralDelegate, UIAlertViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIButton *backBtn;
@@ -113,6 +112,8 @@ static NSString *const kTransferCodeKey = @"transferCodeKey";
 @property (nonatomic, assign, getter=isMultipleSelected) BOOL multipleSelected;
 // 多选View
 @property (nonatomic, weak) JHGroupButtonView *groupView;
+// 多选状态时，保存第3个字节(数据的第四位)，否则当操作多选按钮中某个按钮时，会把那个值覆盖，再进入多选界面时无法正确回显
+@property (nonatomic, assign) NSInteger multipleSelectedValue;
 
 @end
 
@@ -878,6 +879,10 @@ static NSString *const kTransferCodeKey = @"transferCodeKey";
             [selectedBtn.layer setBorderWidth:0.0]; //边框宽度
             [selectedBtn.layer setBorderColor:[UIColor clearColor].CGColor];//边框颜色
         }];
+        
+        // 关闭多选状态
+        self.multipleSelected = NO;
+        
         // 移除所有按钮
         [self.carSelectedBtnArray removeAllObjects];
         
@@ -1056,6 +1061,8 @@ static NSString *const kTransferCodeKey = @"transferCodeKey";
         [weakSelf writePeripheral:_mPeripheral characteristic:_FFFAcharacteristic value:[self converToCharArrayWithIntegerArray:[integerArray mutableCopy]]];
     }
     
+    // 第三个字节
+    self.multipleSelectedValue = [integerArray[3] integerValue];
     
     // 恢复存储数据
     NSArray *recoveryCode = [[self recoveryBlueDeviceStatusWithKeyName:kTransferCodeKey] copy];
@@ -1194,10 +1201,18 @@ static NSString *const kTransferCodeKey = @"transferCodeKey";
 - (void) longPressClick:(UILongPressGestureRecognizer *)gesture {
     if (gesture.state == UIGestureRecognizerStateBegan) {
         
+        NSString *multipleText = @"";
+        // 判断是否多选
+        if (self.carSelectedBtnArray.count >= self.carBtnValueArray.count) {
+            multipleText = @"Ungroup";
+        } else  {
+            multipleText = @"Select Multiple";
+        }
+        
         UIButton *btn = [self.view viewWithTag:gesture.view.tag];
         _longPressBtn = btn;
         NSString *onOff = btn.isSelected ? @"off" : @"on";
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:nil delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:onOff, @"Select Multiple", nil];
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:nil delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:onOff, multipleText, nil];
         alertView.tag = 50001;
         [alertView show];
     }
@@ -1314,6 +1329,9 @@ static NSString *const kTransferCodeKey = @"transferCodeKey";
             case 2:// Select Multiple
             {
                 JHGroupButtonView *groupView = [JHGroupButtonView showView];
+                if (self.isMultipleSelected) {
+                    self.transferCode[3] = @(self.multipleSelectedValue);
+                }
                 groupView.recoveryCode = self.transferCode;
                 __weak typeof(self) weakSelf = self;
                 groupView.multipleSelectedClickBlock = ^(NSArray *integerArray) {
