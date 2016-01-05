@@ -172,6 +172,9 @@ typedef enum {
         [self recoveryOnOffBtnValueWithIntegerArray:recoveryCode];
         // 恢复模式按钮状态
         [self recoveryModelBtnValueWithIntegerArray:recoveryCode];
+        
+        // 解析数据第三位，发送数据
+        [self parsedWithIntegerArray:recoveryCode];
     }
     
 }
@@ -378,8 +381,12 @@ typedef enum {
 /**
  *  把发送的给蓝牙设备的数据从integer数组转为char数据，并把char数据转为NSData
  *
+ *  @param integerArray 转换数组
+ *  @param isSave       是否保存
+ *
+ *  @return 转换后数据
  */
-- (NSData *) converToCharArrayWithIntegerArray:(NSMutableArray *) integerArray {
+- (NSData *) converToCharArrayWithIntegerArray:(NSMutableArray *) integerArray isSave:(BOOL)isSave {
     
     char charArray[] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 , 0x00, 0x00, 0x00};
     
@@ -396,11 +403,15 @@ typedef enum {
         }
     }
     
-    // 保存发送数值到偏好设置
-    [self saveBlueDeviceStatusWithCode:integerArray];
-    
+    if (isSave) {
+        // 保存发送数值到偏好设置
+        [self saveBlueDeviceStatusWithCode:integerArray];
+    }
+
     return [NSData dataWithBytes:charArray length:integerArray.count];
 }
+
+
 
 
 /**
@@ -576,6 +587,60 @@ typedef enum {
     }
 }
 
+/**
+ *  解析数组，回显数据时每打开一个灯，发送一次数据
+ *
+ *  @param integerArray 数据
+ */
+- (void) parsedWithIntegerArray:(NSArray *)integerArray {
+    NSInteger onOffValue = [integerArray[3] integerValue];
+    
+    // 1+2+4+8+16+32
+    // 灯1 打开就发送灯1打开数据
+    if ((onOffValue / 1) % 2 == 1) {
+        NSMutableArray *temp = [integerArray mutableCopy];
+        temp[3] = @1;
+        [self writePeripheral:self.mPeripheral characteristic:self.FFFAcharacteristic value:[self converToCharArrayWithIntegerArray:temp isSave:NO]];
+    }
+    
+    // 灯2 打开就发送灯2打开数据
+    if ((onOffValue / 2) % 2 == 1) {
+        NSMutableArray *temp = [integerArray mutableCopy];
+        temp[3] = @3;
+        [self writePeripheral:self.mPeripheral characteristic:self.FFFAcharacteristic value:[self converToCharArrayWithIntegerArray:temp isSave:NO]];
+    }
+    
+
+    // 灯3 打开就发送灯3打开数据
+    if ((onOffValue / 4) % 2 == 1) {
+        NSMutableArray *temp = [integerArray mutableCopy];
+        temp[3] = @7;
+        [self writePeripheral:self.mPeripheral characteristic:self.FFFAcharacteristic value:[self converToCharArrayWithIntegerArray:temp isSave:NO]];
+    }
+    
+    // 灯4 打开就发送灯4打开数据
+    if ((onOffValue / 8) % 2 == 1) {
+        NSMutableArray *temp = [integerArray mutableCopy];
+        temp[3] = @15;
+        [self writePeripheral:self.mPeripheral characteristic:self.FFFAcharacteristic value:[self converToCharArrayWithIntegerArray:temp isSave:NO]];
+    }
+    
+
+    // 灯5 打开就发送灯5打开数据
+    if ((onOffValue / 16) % 2 == 1) {
+        NSMutableArray *temp = [integerArray mutableCopy];
+        temp[3] = @31;
+        [self writePeripheral:self.mPeripheral characteristic:self.FFFAcharacteristic value:[self converToCharArrayWithIntegerArray:temp isSave:NO]];
+    }
+    
+    // 灯6 打开就发送灯6打开数据
+    if ((onOffValue / 32) % 2 == 1) {
+        NSMutableArray *temp = [integerArray mutableCopy];
+        temp[3] = @63;
+        [self writePeripheral:self.mPeripheral characteristic:self.FFFAcharacteristic value:[self converToCharArrayWithIntegerArray:temp isSave:NO]];
+    }
+}
+
 
 
 - (IBAction)backClick:(id)sender {
@@ -612,7 +677,7 @@ typedef enum {
                 self.offOnAndStatusbtnSendCode[4 + 0] = self.statusHex[kMomenyary + 1];
                 
                 // 发送数据
-                [self writePeripheral:self.mPeripheral characteristic:self.FFFAcharacteristic value:[self converToCharArrayWithIntegerArray:self.offOnAndStatusbtnSendCode]];
+                [self writePeripheral:self.mPeripheral characteristic:self.FFFAcharacteristic value:[self converToCharArrayWithIntegerArray:self.offOnAndStatusbtnSendCode isSave:YES]];
 
             }
             
@@ -632,7 +697,7 @@ typedef enum {
                 
                 self.offOnAndStatusbtnSendCode[4 + 1] = self.statusHex[kMomenyary + 1];
             
-                [self writePeripheral:self.mPeripheral characteristic:self.FFFAcharacteristic value:[self converToCharArrayWithIntegerArray:self.offOnAndStatusbtnSendCode]];
+                [self writePeripheral:self.mPeripheral characteristic:self.FFFAcharacteristic value:[self converToCharArrayWithIntegerArray:self.offOnAndStatusbtnSendCode isSave:YES]];
             }
             
             break;
@@ -649,7 +714,7 @@ typedef enum {
                 
                 self.offOnAndStatusbtnSendCode[4 + 2] = self.statusHex[kMomenyary + 1];
                 
-                [self writePeripheral:self.mPeripheral characteristic:self.FFFAcharacteristic value:[self converToCharArrayWithIntegerArray:self.offOnAndStatusbtnSendCode]];
+                [self writePeripheral:self.mPeripheral characteristic:self.FFFAcharacteristic value:[self converToCharArrayWithIntegerArray:self.offOnAndStatusbtnSendCode isSave:YES]];
             }
             break;
         case 4:
@@ -665,7 +730,7 @@ typedef enum {
                 
                 self.offOnAndStatusbtnSendCode[4 + 3] = self.statusHex[kMomenyary + 1];
                 
-                [self writePeripheral:self.mPeripheral characteristic:self.FFFAcharacteristic value:[self converToCharArrayWithIntegerArray:self.offOnAndStatusbtnSendCode]];
+                [self writePeripheral:self.mPeripheral characteristic:self.FFFAcharacteristic value:[self converToCharArrayWithIntegerArray:self.offOnAndStatusbtnSendCode isSave:YES]];
             }
             break;
         case 5:
@@ -681,7 +746,7 @@ typedef enum {
                 
                 self.offOnAndStatusbtnSendCode[4 + 4] = self.statusHex[kMomenyary + 1];
                 
-                [self writePeripheral:self.mPeripheral characteristic:self.FFFAcharacteristic value:[self converToCharArrayWithIntegerArray:self.offOnAndStatusbtnSendCode]];
+                [self writePeripheral:self.mPeripheral characteristic:self.FFFAcharacteristic value:[self converToCharArrayWithIntegerArray:self.offOnAndStatusbtnSendCode isSave:YES]];
             }
             break;
         case 6:
@@ -697,7 +762,7 @@ typedef enum {
                 
                 self.offOnAndStatusbtnSendCode[4 + 5] = self.statusHex[kMomenyary + 1];
                 
-                [self writePeripheral:self.mPeripheral characteristic:self.FFFAcharacteristic value:[self converToCharArrayWithIntegerArray:self.offOnAndStatusbtnSendCode]];
+                [self writePeripheral:self.mPeripheral characteristic:self.FFFAcharacteristic value:[self converToCharArrayWithIntegerArray:self.offOnAndStatusbtnSendCode isSave:YES]];
             }
             break;
         default:
@@ -780,7 +845,7 @@ typedef enum {
             }
             
             // 发送数据
-            [self writePeripheral:self.mPeripheral characteristic:self.FFFAcharacteristic value:[self converToCharArrayWithIntegerArray:self.offOnAndStatusbtnSendCode]];
+            [self writePeripheral:self.mPeripheral characteristic:self.FFFAcharacteristic value:[self converToCharArrayWithIntegerArray:self.offOnAndStatusbtnSendCode isSave:YES]];
             break;
         case 2:
             
@@ -854,7 +919,7 @@ typedef enum {
             }
             
             
-            [self writePeripheral:self.mPeripheral characteristic:self.FFFAcharacteristic value:[self converToCharArrayWithIntegerArray:self.offOnAndStatusbtnSendCode]];
+            [self writePeripheral:self.mPeripheral characteristic:self.FFFAcharacteristic value:[self converToCharArrayWithIntegerArray:self.offOnAndStatusbtnSendCode isSave:YES]];
             break;
         case 3:
             
@@ -928,7 +993,7 @@ typedef enum {
                 }
             }
             
-            [self writePeripheral:self.mPeripheral characteristic:self.FFFAcharacteristic value:[self converToCharArrayWithIntegerArray:self.offOnAndStatusbtnSendCode]];
+            [self writePeripheral:self.mPeripheral characteristic:self.FFFAcharacteristic value:[self converToCharArrayWithIntegerArray:self.offOnAndStatusbtnSendCode isSave:YES]];
             break;
         case 4:
             
@@ -1003,7 +1068,7 @@ typedef enum {
             }
             
             
-            [self writePeripheral:self.mPeripheral characteristic:self.FFFAcharacteristic value:[self converToCharArrayWithIntegerArray:self.offOnAndStatusbtnSendCode]];
+            [self writePeripheral:self.mPeripheral characteristic:self.FFFAcharacteristic value:[self converToCharArrayWithIntegerArray:self.offOnAndStatusbtnSendCode isSave:YES]];
             break;
         case 5:
             
@@ -1076,7 +1141,7 @@ typedef enum {
                 }
             }
             
-            [self writePeripheral:self.mPeripheral characteristic:self.FFFAcharacteristic value:[self converToCharArrayWithIntegerArray:self.offOnAndStatusbtnSendCode]];
+            [self writePeripheral:self.mPeripheral characteristic:self.FFFAcharacteristic value:[self converToCharArrayWithIntegerArray:self.offOnAndStatusbtnSendCode isSave:YES]];
             break;
         case 6:
             
@@ -1149,7 +1214,7 @@ typedef enum {
                 }
             }
             
-            [self writePeripheral:self.mPeripheral characteristic:self.FFFAcharacteristic value:[self converToCharArrayWithIntegerArray:self.offOnAndStatusbtnSendCode]];
+            [self writePeripheral:self.mPeripheral characteristic:self.FFFAcharacteristic value:[self converToCharArrayWithIntegerArray:self.offOnAndStatusbtnSendCode isSave:YES]];
             break;
         default:
             break;
@@ -1194,7 +1259,7 @@ typedef enum {
                     [self onOffBtnTouchDown:self.onOffBtn1];
                 } else {
                     // 其他模式正常发送数据
-                    [self writePeripheral:self.mPeripheral characteristic:self.FFFAcharacteristic value:[self converToCharArrayWithIntegerArray:self.offOnAndStatusbtnSendCode]];
+                    [self writePeripheral:self.mPeripheral characteristic:self.FFFAcharacteristic value:[self converToCharArrayWithIntegerArray:self.offOnAndStatusbtnSendCode isSave:YES]];
                 }
             }
             
@@ -1238,7 +1303,7 @@ typedef enum {
                     [self onOffBtnTouchDown:self.onOffBtn2];
                 } else {
                     // 其他模式正常发送数据
-                    [self writePeripheral:self.mPeripheral characteristic:self.FFFAcharacteristic value:[self converToCharArrayWithIntegerArray:self.offOnAndStatusbtnSendCode]];
+                    [self writePeripheral:self.mPeripheral characteristic:self.FFFAcharacteristic value:[self converToCharArrayWithIntegerArray:self.offOnAndStatusbtnSendCode isSave:YES]];
                 }
             }
             
@@ -1281,7 +1346,7 @@ typedef enum {
                     [self onOffBtnTouchDown:self.onOffBtn3];
                 } else {
                     // 其他模式正常发送数据
-                    [self writePeripheral:self.mPeripheral characteristic:self.FFFAcharacteristic value:[self converToCharArrayWithIntegerArray:self.offOnAndStatusbtnSendCode]];
+                    [self writePeripheral:self.mPeripheral characteristic:self.FFFAcharacteristic value:[self converToCharArrayWithIntegerArray:self.offOnAndStatusbtnSendCode isSave:YES]];
                 }
             }
             
@@ -1325,7 +1390,7 @@ typedef enum {
                     [self onOffBtnTouchDown:self.onOffBtn4];
                 } else {
                     // 其他模式正常发送数据
-                    [self writePeripheral:self.mPeripheral characteristic:self.FFFAcharacteristic value:[self converToCharArrayWithIntegerArray:self.offOnAndStatusbtnSendCode]];
+                    [self writePeripheral:self.mPeripheral characteristic:self.FFFAcharacteristic value:[self converToCharArrayWithIntegerArray:self.offOnAndStatusbtnSendCode isSave:YES]];
                 }
             }
             
@@ -1367,7 +1432,7 @@ typedef enum {
                     [self onOffBtnTouchDown:self.onOffBtn5];
                 } else {
                     // 其他模式正常发送数据
-                    [self writePeripheral:self.mPeripheral characteristic:self.FFFAcharacteristic value:[self converToCharArrayWithIntegerArray:self.offOnAndStatusbtnSendCode]];
+                    [self writePeripheral:self.mPeripheral characteristic:self.FFFAcharacteristic value:[self converToCharArrayWithIntegerArray:self.offOnAndStatusbtnSendCode isSave:YES]];
                 }
             }
             
@@ -1409,7 +1474,7 @@ typedef enum {
                     [self onOffBtnTouchDown:self.onOffBtn6];
                 } else {
                     // 其他模式正常发送数据
-                    [self writePeripheral:self.mPeripheral characteristic:self.FFFAcharacteristic value:[self converToCharArrayWithIntegerArray:self.offOnAndStatusbtnSendCode]];
+                    [self writePeripheral:self.mPeripheral characteristic:self.FFFAcharacteristic value:[self converToCharArrayWithIntegerArray:self.offOnAndStatusbtnSendCode isSave:YES]];
                 }
             }
             
@@ -1475,7 +1540,7 @@ typedef enum {
                 self.FFFAcharacteristic = characteristic;
                 
                 // 发送回显数据
-                [self writePeripheral:peripheral characteristic:self.FFFAcharacteristic value:[self converToCharArrayWithIntegerArray:self.offOnAndStatusbtnSendCode]];
+                [self writePeripheral:peripheral characteristic:self.FFFAcharacteristic value:[self converToCharArrayWithIntegerArray:self.offOnAndStatusbtnSendCode isSave:YES]];
                 
             } else if ([characteristic.UUID isEqual:notifyCharacteristicUUID]) {
                 //情景一：通知
