@@ -104,6 +104,9 @@ typedef enum {
 @property (weak, nonatomic) IBOutlet UIImageView *momentaryIv5;
 @property (weak, nonatomic) IBOutlet UIImageView *momentaryIv6;
 
+@property (weak, nonatomic) IBOutlet UILabel *versionLabel;
+
+
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *stackViewTopCons;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *logoIvTopCons;
 
@@ -155,6 +158,8 @@ typedef enum {
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.versionLabel.text = kVersion_App;
  
     // 恢复存储数据
     NSArray *recoveryCode = [self recoveryBlueDeviceStatus];

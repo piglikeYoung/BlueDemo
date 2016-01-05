@@ -16,6 +16,10 @@
 
 #define JHNotificationCenter [NSNotificationCenter defaultCenter]
 
+/*****版本号***/
+#define kVersion_App [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]
+#define kVersionBuild_App [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleVersion"]
+
 extern NSString *const JHSelectPresetDidChangeNotification;
 extern NSString *const JHSelectPresetObjKey;
 

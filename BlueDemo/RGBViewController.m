@@ -56,6 +56,9 @@ static NSString *const kMultipleSelectedKey = @"multipleSelectedKey";
 @property (weak, nonatomic) IBOutlet UIButton *carBtn6;
 @property (weak, nonatomic) IBOutlet UIView *eightBtnView;
 
+@property (weak, nonatomic) IBOutlet UILabel *versionLabel;
+
+
 @property (weak, nonatomic) IBOutlet UISwitch *masterSwitch;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *selectCarViewBottomCons;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *threeBtnViewBottomCons;
@@ -164,6 +167,8 @@ static NSString *const kMultipleSelectedKey = @"multipleSelectedKey";
 #pragma mark - 生命周期
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.versionLabel.text = kVersion_App;
     
     [self setUpBackgroundIv];
     
