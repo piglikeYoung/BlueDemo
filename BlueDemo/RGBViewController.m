@@ -195,6 +195,16 @@ static NSString *const kMultipleSelectedKey = @"multipleSelectedKey";
         // 恢复Slider的状态
         [self recoverySliderValueWithIntegerArray:recoveryCode];
     }
+    // 如果没有数据恢复，所有的carBtn默认选中第一个模态
+    else {
+        // 所有的carBtn默认都是模态1
+        [self setupNoRecoveryModelBtnStatusWithCarButton:self.carBtn1];
+        [self setupNoRecoveryModelBtnStatusWithCarButton:self.carBtn2];
+        [self setupNoRecoveryModelBtnStatusWithCarButton:self.carBtn3];
+        [self setupNoRecoveryModelBtnStatusWithCarButton:self.carBtn4];
+        [self setupNoRecoveryModelBtnStatusWithCarButton:self.carBtn5];
+        [self setupNoRecoveryModelBtnStatusWithCarButton:self.carBtn6];
+    }
     
     
     
@@ -464,6 +474,11 @@ static NSString *const kMultipleSelectedKey = @"multipleSelectedKey";
             make.left.equalTo(self.eightBtnView.mas_left);
             make.top.equalTo(self.eightBtnView.mas_top);
         }];
+        
+        // 第一个按钮默认选中
+        if (i == 0) {
+            btn.selected = YES;
+        }
     }
 }
 
@@ -1138,6 +1153,58 @@ static NSString *const kMultipleSelectedKey = @"multipleSelectedKey";
         // 恢复Slider的状态
         [self recoverySliderValueWithIntegerArray:recoveryCode];
     }
+}
+
+/**
+ *  设置第一次使用APP，没有可恢复数据的模态按钮的状态（默认都选中第一个状态）
+ */
+- (void) setupNoRecoveryModelBtnStatusWithCarButton:(UIButton *)carBtn {
+  
+    // 所有的carBtn默认都是模态1
+    // 存储选中carBtn的model，key是carBtn的tag，value是modelBtn的tag
+    [self.carSelectedModelDic setObject:@(40001) forKey:@(carBtn.tag)];
+
+    // 计算公式：X * 16 + Y (X是第一个按钮的状态，Y是第二个按钮的状态)，以此类推
+    switch (carBtn.tag - 30000) {
+        case 1:
+
+            _firstTmp = 1 * 16;
+            break;
+        case 2:
+ 
+            _secondTmp = 1;
+            break;
+        case 3:
+
+            _thirdTmp = 1 * 16;
+            
+            break;
+        case 4:
+
+            _fourthTmp = 1;
+            
+            break;
+        case 5:
+
+            _fifthTmp = 1 * 16;
+            break;
+        case 6:
+
+            _sixthTmp = 1;
+            
+            break;
+        default:
+            break;
+    }
+    
+    // 写数据
+    self.transferCode[10] = @(_firstTmp + _secondTmp);
+    self.transferCode[11] = @(_thirdTmp + _fourthTmp);
+    self.transferCode[12] = @(_fifthTmp + _sixthTmp);
+//    if (self.masterSwitch.isOn) {
+//        [self writePeripheral:_mPeripheral characteristic:_FFFAcharacteristic value:[self converToCharArrayWithIntegerArray:self.transferCode]];
+//    }
+    
 }
 
 
