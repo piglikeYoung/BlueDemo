@@ -199,14 +199,14 @@ typedef enum {
     [super viewDidAppear:animated];
     
     // 恢复存储数据
-    NSArray *recoveryCode = [self recoveryBlueDeviceStatus];
-    
-    if (recoveryCode.count > 0) {
-        
-        // viewDidAppear在这个方法里才能发送数据成功，别的生命周期方法里由于蓝牙没有连接每次发送都失败
-        // 解析数组，回显数据时每打开一个灯，发送一次数据(解析数组的下标为3的)
-        [self parsedWithIntegerArray:recoveryCode];
-    }
+//    NSArray *recoveryCode = [self recoveryBlueDeviceStatus];
+//    
+//    if (recoveryCode.count > 0) {
+//        
+//        // viewDidAppear在这个方法里才能发送数据成功，别的生命周期方法里由于蓝牙没有连接每次发送都失败
+//        // 解析数组，回显数据时每打开一个灯，发送一次数据(解析数组的下标为3的)
+//        [self parsedWithIntegerArray:recoveryCode];
+//    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
