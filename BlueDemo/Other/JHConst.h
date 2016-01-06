@@ -8,11 +8,12 @@
 
 #import <Foundation/Foundation.h>
 
-#ifdef DEBUG
-#define JHLog(...) NSLog(__VA_ARGS__)
-#else
+#ifdef DEBUG // 调试状态, 打开LOG功能
+#define JHLog(s, ...) NSLog(@"%s(%d): %@", __FUNCTION__, __LINE__, [NSString stringWithFormat:(s), ##__VA_ARGS__])
+#else // 发布状态, 关闭LOG功能
 #define JHLog(...)
 #endif
+
 
 #define JHNotificationCenter [NSNotificationCenter defaultCenter]
 

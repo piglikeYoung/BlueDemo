@@ -160,7 +160,7 @@ typedef enum {
     [super viewDidLoad];
     
     self.versionLabel.text = kVersion_App;
- 
+    
     // 恢复存储数据
     NSArray *recoveryCode = [self recoveryBlueDeviceStatus];
     
@@ -172,13 +172,8 @@ typedef enum {
         [self recoveryOnOffBtnValueWithIntegerArray:recoveryCode];
         // 恢复模式按钮状态
         [self recoveryModelBtnValueWithIntegerArray:recoveryCode];
-        
-        // 解析数据第三位，发送数据
-        [self parsedWithIntegerArray:recoveryCode];
     }
-    
 }
-
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
@@ -196,6 +191,22 @@ typedef enum {
         self.stackViewTopCons.constant = 76;
     }
 
+}
+
+
+- (void)viewDidAppear:(BOOL)animated {
+    
+    [super viewDidAppear:animated];
+    
+    // 恢复存储数据
+    NSArray *recoveryCode = [self recoveryBlueDeviceStatus];
+    
+    if (recoveryCode.count > 0) {
+        
+        // viewDidAppear在这个方法里才能发送数据成功，别的生命周期方法里由于蓝牙没有连接每次发送都失败
+        // 解析数组，回显数据时每打开一个灯，发送一次数据(解析数组的下标为3的)
+        [self parsedWithIntegerArray:recoveryCode];
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -267,7 +278,7 @@ typedef enum {
      };
      
      */
-    JHLog(@"%lu", (unsigned long)characteristic.properties);
+//    JHLog(@"%lu", (unsigned long)characteristic.properties);
     
     
     //只有 characteristic.properties 有write的权限才可以写
@@ -450,7 +461,6 @@ typedef enum {
 - (void)recoveryOnOffBtnValueWithIntegerArray:(NSArray *)integerArray {
     
     NSInteger onOffValue = [integerArray[3] integerValue];
-    JHLog(@"%zd", (onOffValue / 1) % 2);
     
     // 判断灯1
     self.onOffBtn1.selected = ((onOffValue / 1) % 2) == 1 ? YES : NO;
@@ -595,14 +605,13 @@ typedef enum {
 - (void) parsedWithIntegerArray:(NSArray *)integerArray {
     NSInteger onOffValue = [integerArray[3] integerValue];
     
-    // 1+2+4+8+16+32
     // 灯1 打开就发送灯1打开数据
     if ((onOffValue / 1) % 2 == 1) {
         NSMutableArray *temp = [integerArray mutableCopy];
         temp[3] = @1;
         [self writePeripheral:self.mPeripheral characteristic:self.FFFAcharacteristic value:[self converToCharArrayWithIntegerArray:temp isSave:NO]];
     }
-    
+
     // 灯2 打开就发送灯2打开数据
     if ((onOffValue / 2) % 2 == 1) {
         NSMutableArray *temp = [integerArray mutableCopy];
@@ -1540,7 +1549,8 @@ typedef enum {
                 self.FFFAcharacteristic = characteristic;
                 
                 // 发送回显数据
-                [self writePeripheral:peripheral characteristic:self.FFFAcharacteristic value:[self converToCharArrayWithIntegerArray:self.offOnAndStatusbtnSendCode isSave:YES]];
+//                [self writePeripheral:peripheral characteristic:self.FFFAcharacteristic value:[self converToCharArrayWithIntegerArray:self.offOnAndStatusbtnSendCode isSave:YES]];
+                
                 
             } else if ([characteristic.UUID isEqual:notifyCharacteristicUUID]) {
                 //情景一：通知
