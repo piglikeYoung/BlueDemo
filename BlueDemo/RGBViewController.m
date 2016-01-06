@@ -43,6 +43,9 @@ static NSString *const kTransferCodeKey = @"transferCodeKey";
 // 是否多选状态偏好设置key
 static NSString *const kMultipleSelectedKey = @"multipleSelectedKey";
 
+// 总开关的偏好设置key
+static NSString *const kMasterOnOffKey = @"masterOnOffKey";
+
 
 @interface RGBViewController () <CBPeripheralDelegate, UIAlertViewDelegate>
 
@@ -60,6 +63,11 @@ static NSString *const kMultipleSelectedKey = @"multipleSelectedKey";
 
 
 @property (weak, nonatomic) IBOutlet UISwitch *masterSwitch;
+@property (weak, nonatomic) IBOutlet UIButton *savePresetBtn;
+@property (weak, nonatomic) IBOutlet UIButton *selectPresetBtn;
+@property (weak, nonatomic) IBOutlet UIButton *selectColorBtn;
+
+
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *selectCarViewBottomCons;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *threeBtnViewBottomCons;
 
@@ -194,6 +202,16 @@ static NSString *const kMultipleSelectedKey = @"multipleSelectedKey";
         [self recoveryOperationBtnValueWithIntegerArray:recoveryCode];
         // 恢复Slider的状态
         [self recoverySliderValueWithIntegerArray:recoveryCode];
+        
+        NSString *master = (NSString *)[self recoveryBlueDeviceStatusWithKeyName:kMasterOnOffKey];
+        if (master) {
+            // 恢复总开关状态
+            [self recoveryMasterValue];
+        } else {
+            // 保存总开关状态到偏好设置
+            [self saveBlueDeviceStatusWithCode:@"open" keyName:kMasterOnOffKey];
+        }
+        
     }
     // 如果没有数据恢复，所有的carBtn默认选中第一个模态
     else {
@@ -286,7 +304,7 @@ static NSString *const kMultipleSelectedKey = @"multipleSelectedKey";
         }];
         
         if (self.masterSwitch.isOn) {
-            [self writePeripheral:_mPeripheral characteristic:_FFFAcharacteristic value:[self converToCharArrayWithIntegerArray:self.transferCode]];
+            [self writePeripheral:_mPeripheral characteristic:_FFFAcharacteristic value:[self converToCharArrayWithIntegerArray:self.transferCode isSave:YES]];
         }
     };
 }
@@ -313,7 +331,7 @@ static NSString *const kMultipleSelectedKey = @"multipleSelectedKey";
             [self recoverySliderValueWithIntegerArray:savePresetCode];
         }
         
-        [self writePeripheral:_mPeripheral characteristic:_FFFAcharacteristic value:[self converToCharArrayWithIntegerArray:self.transferCode]];
+        [self writePeripheral:_mPeripheral characteristic:_FFFAcharacteristic value:[self converToCharArrayWithIntegerArray:self.transferCode isSave:YES]];
     }
     
     [self.selectPreset removeFromSuperview];
@@ -564,7 +582,7 @@ static NSString *const kMultipleSelectedKey = @"multipleSelectedKey";
  *  把发送的给蓝牙设备的数据从integer数组转为char数据，并把char数据转为NSData
  *
  */
-- (NSData *) converToCharArrayWithIntegerArray:(NSMutableArray *) integerArray {
+- (NSData *) converToCharArrayWithIntegerArray:(NSMutableArray *) integerArray isSave:(BOOL)isSave{
     
     char charArray[] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 , 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
 
@@ -581,11 +599,13 @@ static NSString *const kMultipleSelectedKey = @"multipleSelectedKey";
         }
     }
     
-    // 保存发送数值到偏好设置
-    [self saveBlueDeviceStatusWithCode:integerArray keyName:kTransferCodeKey];
-    
-    // 保存多选状态到偏好设置
-    [self saveBlueDeviceStatusWithCode:[NSNumber numberWithBool:self.isMultipleSelected] keyName:kMultipleSelectedKey];
+    if (isSave) {
+        // 保存发送数值到偏好设置
+        [self saveBlueDeviceStatusWithCode:integerArray keyName:kTransferCodeKey];
+        
+        // 保存多选状态到偏好设置
+        [self saveBlueDeviceStatusWithCode:[NSNumber numberWithBool:self.isMultipleSelected] keyName:kMultipleSelectedKey];
+    }
     
     return [NSData dataWithBytes:charArray length:integerArray.count];
 }
@@ -626,7 +646,7 @@ static NSString *const kMultipleSelectedKey = @"multipleSelectedKey";
     NSInteger carBtnValue = [integerArray[2] integerValue];
     
     // 判断总开关
-    self.masterSwitch.on = ((carBtnValue / 128) % 2) == 1 ? YES : NO;
+//    self.masterSwitch.on = ((carBtnValue / 128) % 2) == 1 ? YES : NO;
     
     
     // 判断灯1
@@ -688,6 +708,8 @@ static NSString *const kMultipleSelectedKey = @"multipleSelectedKey";
     
     // 恢复前先移除所有的btn
     [self.carSelectedBtnArray removeAllObjects];
+    // 全部model取消选中
+    [self.eightModelBtnArray makeObjectsPerformSelector:@selector(setSelected:) withObject:NO];
     
     NSInteger value = [integerArray[3] integerValue];
     
@@ -840,7 +862,8 @@ static NSString *const kMultipleSelectedKey = @"multipleSelectedKey";
     NSInteger value1 = [integerArray[10] integerValue];
     x = value1 / 16;
     y = value1 % 16;
-    
+    _firstTmp = x * 16;
+    _secondTmp = y;
     // 存储carBtn选中按钮的model值，key是carBtn的tag，value是modelBtn的tag
     [self.carSelectedModelDic setObject:@(40000 + x) forKey:@(self.carBtn1.tag)];
     [self.carSelectedModelDic setObject:@(40000 + y) forKey:@(self.carBtn2.tag)];
@@ -848,12 +871,17 @@ static NSString *const kMultipleSelectedKey = @"multipleSelectedKey";
     NSInteger value2 = [integerArray[11] integerValue];
     x = value2 / 16;
     y = value2 % 16;
+    _thirdTmp = x * 16;
+    _fourthTmp = y;
     [self.carSelectedModelDic setObject:@(40000 + x) forKey:@(self.carBtn3.tag)];
     [self.carSelectedModelDic setObject:@(40000 + y) forKey:@(self.carBtn4.tag)];
+    
     
     NSInteger value3 = [integerArray[12] integerValue];
     x = value3 / 16;
     y = value3 % 16;
+    _fifthTmp = x * 16;
+    _sixthTmp = y;
     [self.carSelectedModelDic setObject:@(40000 + x) forKey:@(self.carBtn5.tag)];
     [self.carSelectedModelDic setObject:@(40000 + y) forKey:@(self.carBtn6.tag)];
     
@@ -875,6 +903,21 @@ static NSString *const kMultipleSelectedKey = @"multipleSelectedKey";
         self.rightSlider.value = allValue % 16;
     }
     
+}
+
+/**
+ *  恢复总开关的状态
+ */
+- (void)recoveryMasterValue {
+    NSString *isOnOff = (NSString *)[self recoveryBlueDeviceStatusWithKeyName:kMasterOnOffKey];
+    
+    if ([isOnOff isEqualToString:@"open"]) {
+        self.masterSwitch.on = YES;
+        [self masterEnableAllBtn:YES];
+    } else {
+        self.masterSwitch.on = NO;
+        [self masterEnableAllBtn:NO];
+    }
 }
 
 /**
@@ -995,7 +1038,7 @@ static NSString *const kMultipleSelectedKey = @"multipleSelectedKey";
     _speedTmpVal = self.rightSlider.value;
     
     if (self.masterSwitch.isOn) {
-        [self writePeripheral:_mPeripheral characteristic:_FFFAcharacteristic value:[self converToCharArrayWithIntegerArray:self.transferCode]];
+        [self writePeripheral:_mPeripheral characteristic:_FFFAcharacteristic value:[self converToCharArrayWithIntegerArray:self.transferCode isSave:YES]];
     }
     
 }
@@ -1052,7 +1095,7 @@ static NSString *const kMultipleSelectedKey = @"multipleSelectedKey";
                 }
                 // 未选中，赋为0
                 else {
-                    _firstTmp = 0 * 16;
+                    _firstTmp = 1 * 16;
                 }
                 break;
             case 2:
@@ -1062,7 +1105,7 @@ static NSString *const kMultipleSelectedKey = @"multipleSelectedKey";
                 }
                 // 未选中，赋为0
                 else {
-                    _secondTmp = 0;
+                    _secondTmp = 1;
                 }
                 break;
             case 3:
@@ -1072,7 +1115,7 @@ static NSString *const kMultipleSelectedKey = @"multipleSelectedKey";
                 }
                 // 未选中，赋为0
                 else {
-                    _thirdTmp = 0 * 16;
+                    _thirdTmp = 1 * 16;
                 }
                 break;
             case 4:
@@ -1082,7 +1125,7 @@ static NSString *const kMultipleSelectedKey = @"multipleSelectedKey";
                 }
                 // 未选中，赋为0
                 else {
-                    _fourthTmp = 0;
+                    _fourthTmp = 1;
                 }
                 break;
             case 5:
@@ -1092,7 +1135,7 @@ static NSString *const kMultipleSelectedKey = @"multipleSelectedKey";
                 }
                 // 未选中，赋为0
                 else {
-                    _fifthTmp = 0 * 16;
+                    _fifthTmp = 1 * 16;
                 }
                 break;
             case 6:
@@ -1102,7 +1145,7 @@ static NSString *const kMultipleSelectedKey = @"multipleSelectedKey";
                 }
                 // 未选中，赋为0
                 else {
-                    _sixthTmp = 0;
+                    _sixthTmp = 1;
                 }
                 break;
             default:
@@ -1114,7 +1157,7 @@ static NSString *const kMultipleSelectedKey = @"multipleSelectedKey";
         self.transferCode[11] = @(_thirdTmp + _fourthTmp);
         self.transferCode[12] = @(_fifthTmp + _sixthTmp);
         if (self.masterSwitch.isOn) {
-            [self writePeripheral:_mPeripheral characteristic:_FFFAcharacteristic value:[self converToCharArrayWithIntegerArray:self.transferCode]];
+            [self writePeripheral:_mPeripheral characteristic:_FFFAcharacteristic value:[self converToCharArrayWithIntegerArray:self.transferCode isSave:YES]];
         }
     }
     
@@ -1132,7 +1175,7 @@ static NSString *const kMultipleSelectedKey = @"multipleSelectedKey";
     
     // 发送数据，数据转换的适合保存到了偏好设置
     if (weakSelf.masterSwitch.isOn) {
-        [weakSelf writePeripheral:_mPeripheral characteristic:_FFFAcharacteristic value:[self converToCharArrayWithIntegerArray:[integerArray mutableCopy]]];
+        [weakSelf writePeripheral:_mPeripheral characteristic:_FFFAcharacteristic value:[self converToCharArrayWithIntegerArray:[integerArray mutableCopy] isSave:YES]];
     }
     
     // 第三个字节
@@ -1201,12 +1244,32 @@ static NSString *const kMultipleSelectedKey = @"multipleSelectedKey";
     self.transferCode[10] = @(_firstTmp + _secondTmp);
     self.transferCode[11] = @(_thirdTmp + _fourthTmp);
     self.transferCode[12] = @(_fifthTmp + _sixthTmp);
-//    if (self.masterSwitch.isOn) {
-//        [self writePeripheral:_mPeripheral characteristic:_FFFAcharacteristic value:[self converToCharArrayWithIntegerArray:self.transferCode]];
-//    }
+
     
 }
 
+/**
+ *  当总开关开启或关闭时，修改所有按钮是否可点击
+ */
+- (void) masterEnableAllBtn:(BOOL) isEnables {
+    self.leftSlider.enabled = isEnables;
+    self.rightSlider.enabled = isEnables;
+    
+    self.carBtn1.enabled = isEnables;
+    self.carBtn2.enabled = isEnables;
+    self.carBtn3.enabled = isEnables;
+    self.carBtn4.enabled = isEnables;
+    self.carBtn5.enabled = isEnables;
+    self.carBtn6.enabled = isEnables;
+
+    for (UIButton *btn in self.eightModelBtnArray) {
+        btn.enabled = isEnables;
+    }
+    
+    self.selectPresetBtn.enabled = isEnables;
+    self.selectColorBtn.enabled = isEnables;
+    self.savePresetBtn.enabled = isEnables;
+}
 
 #pragma mark - 按钮点击处理
 /**
@@ -1216,13 +1279,26 @@ static NSString *const kMultipleSelectedKey = @"multipleSelectedKey";
 - (IBAction)masterSwitchClick:(UISwitch *)sender {
     // 第2个字节(数组的第三位)，决定开或关
     if (sender.isOn) {
-        self.transferCode[2] = @(masterSwitchVal);
+        // 开 128
+        NSMutableArray *temp = [self.transferCode mutableCopy];
+        temp[2] = @(masterSwitchVal);
+        // 发送开启数据
+        [self writePeripheral:self.mPeripheral characteristic:_FFFAcharacteristic value:[self converToCharArrayWithIntegerArray:temp isSave:NO]];
+        // 发送按钮状态数据
+        [self writePeripheral:_mPeripheral characteristic:_FFFAcharacteristic value:[self converToCharArrayWithIntegerArray:self.transferCode isSave:YES]];
+        // 保存总开关状态到偏好设置
+        [self saveBlueDeviceStatusWithCode:@"open" keyName:kMasterOnOffKey];
     } else {
-        self.transferCode[2] = @([self.transferCode[2] integerValue] - masterSwitchVal);
+        // 关 0
+        NSMutableArray *temp = [self.transferCode mutableCopy];
+        temp[2] = @(0);
+        [self writePeripheral:self.mPeripheral characteristic:_FFFAcharacteristic value:[self converToCharArrayWithIntegerArray:temp isSave:NO]];
+        
+        // 保存总开关状态到偏好设置
+        [self saveBlueDeviceStatusWithCode:@"close" keyName:kMasterOnOffKey];
     }
     
-    // 保存数据，并发送数据
-    [self writePeripheral:_mPeripheral characteristic:_FFFAcharacteristic value:[self converToCharArrayWithIntegerArray:self.transferCode]];
+    [self masterEnableAllBtn:sender.isOn];
 }
 
 
@@ -1287,7 +1363,7 @@ static NSString *const kMultipleSelectedKey = @"multipleSelectedKey";
 
             }];
             
-            [self writePeripheral:_mPeripheral characteristic:_FFFAcharacteristic value:[self converToCharArrayWithIntegerArray:self.transferCode]];
+            [self writePeripheral:_mPeripheral characteristic:_FFFAcharacteristic value:[self converToCharArrayWithIntegerArray:self.transferCode isSave:YES]];
             
             self.sliderFirstSend = NO;
         }
@@ -1305,7 +1381,7 @@ static NSString *const kMultipleSelectedKey = @"multipleSelectedKey";
                 self.transferCode[selectedBtn.tag - 30000 + 3] = @(allVal);
             }];
 
-            [self writePeripheral:_mPeripheral characteristic:_FFFAcharacteristic value:[self converToCharArrayWithIntegerArray:self.transferCode]];
+            [self writePeripheral:_mPeripheral characteristic:_FFFAcharacteristic value:[self converToCharArrayWithIntegerArray:self.transferCode isSave:YES]];
         }
     }
 }
@@ -1471,7 +1547,7 @@ static NSString *const kMultipleSelectedKey = @"multipleSelectedKey";
                     
                     [self.carSelectedBtnArray removeAllObjects];
                     // 发送数据
-                    [self writePeripheral:_mPeripheral characteristic:_FFFAcharacteristic value:[self converToCharArrayWithIntegerArray:self.transferCode]];
+                    [self writePeripheral:_mPeripheral characteristic:_FFFAcharacteristic value:[self converToCharArrayWithIntegerArray:self.transferCode isSave:YES]];
                     
                 } else  {
                     JHGroupButtonView *groupView = [JHGroupButtonView showView];
@@ -1597,7 +1673,7 @@ static NSString *const kMultipleSelectedKey = @"multipleSelectedKey";
             if ([characteristic.UUID isEqual:characteristicUUID]) {
                 
                 if (self.masterSwitch.isOn) {
-                    [self writePeripheral:peripheral characteristic:characteristic value:[self converToCharArrayWithIntegerArray:self.transferCode]];
+                    [self writePeripheral:peripheral characteristic:characteristic value:[self converToCharArrayWithIntegerArray:self.transferCode isSave:YES]];
                 }
                 
                 self.FFFAcharacteristic = characteristic;
