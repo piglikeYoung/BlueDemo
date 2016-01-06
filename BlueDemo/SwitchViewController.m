@@ -121,7 +121,7 @@ typedef enum {
 
 - (NSMutableArray *)offOnAndStatusbtnSendCode {
     if (!_offOnAndStatusbtnSendCode) {
-        _offOnAndStatusbtnSendCode = [NSMutableArray arrayWithObjects:@76, @0, @0, @0, @0, @0, @0, @0 , @0, @0, @0, nil];
+        _offOnAndStatusbtnSendCode = [NSMutableArray arrayWithObjects:@76, @0, @0, @0, @4, @4, @4, @4 , @4, @4, @0, nil];
     }
     
     return _offOnAndStatusbtnSendCode;
