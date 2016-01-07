@@ -214,11 +214,21 @@ static NSString *const kMasterOnOffKey = @"masterOnOffKey";
             [self saveBlueDeviceStatusWithCode:@"open" keyName:kMasterOnOffKey];
         }
         
-        if ([self.transferCode[2] integerValue] == masterSwitchVal) {
-            // 第一个按钮默认选中
-            UIButton *modelBtn1 = [self.eightBtnView viewWithTag:40001];
+        UIButton *modelBtn1 = [self.eightBtnView viewWithTag:40001];
+        UIButton *modelBtn2 = [self.eightBtnView viewWithTag:40002];
+        UIButton *modelBtn3 = [self.eightBtnView viewWithTag:40003];
+        UIButton *modelBtn4 = [self.eightBtnView viewWithTag:40004];
+        UIButton *modelBtn5 = [self.eightBtnView viewWithTag:40005];
+        UIButton *modelBtn6 = [self.eightBtnView viewWithTag:40006];
+        UIButton *modelBtn7 = [self.eightBtnView viewWithTag:40007];
+        UIButton *modelBtn8 = [self.eightBtnView viewWithTag:40008];
+        
+        // 总开关开启，或者八个按钮都没有选中，默认选第一个
+        if ([self.transferCode[2] integerValue] == masterSwitchVal || (!modelBtn1.isSelected && !modelBtn2.isSelected && !modelBtn3.isSelected && !modelBtn4.isSelected && !modelBtn5.isSelected && !modelBtn6.isSelected && !modelBtn7.isSelected && !modelBtn8.isSelected)) {
             modelBtn1.selected = YES;
         }
+        
+        
 
         
     }
