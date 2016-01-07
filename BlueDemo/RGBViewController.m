@@ -191,6 +191,8 @@ static NSString *const kMasterOnOffKey = @"masterOnOffKey";
     // 恢复存储数据
     NSArray *recoveryCode = [[self recoveryBlueDeviceStatusWithKeyName:kTransferCodeKey] copy];
     
+    
+    
     if (recoveryCode.count > 0) {
         self.transferCode = [recoveryCode mutableCopy];
         // 恢复car按钮状态
@@ -212,9 +214,21 @@ static NSString *const kMasterOnOffKey = @"masterOnOffKey";
             [self saveBlueDeviceStatusWithCode:@"open" keyName:kMasterOnOffKey];
         }
         
+        if ([self.transferCode[2] integerValue] == masterSwitchVal) {
+            // 第一个按钮默认选中
+            UIButton *modelBtn1 = [self.eightBtnView viewWithTag:40001];
+            modelBtn1.selected = YES;
+        }
+
+        
     }
     // 如果没有数据恢复，所有的carBtn默认选中第一个模态
     else {
+        
+        // 第一个按钮默认选中
+        UIButton *modelBtn1 = [self.eightBtnView viewWithTag:40001];
+        modelBtn1.selected = YES;
+        
         // 所有的carBtn默认都是模态1
         [self setupNoRecoveryModelBtnStatusWithCarButton:self.carBtn1];
         [self setupNoRecoveryModelBtnStatusWithCarButton:self.carBtn2];
@@ -493,11 +507,9 @@ static NSString *const kMasterOnOffKey = @"masterOnOffKey";
             make.top.equalTo(self.eightBtnView.mas_top);
         }];
         
-        // 第一个按钮默认选中
-        if (i == 0) {
-            btn.selected = YES;
-        }
+        
     }
+
 }
 
 /**
@@ -1021,7 +1033,49 @@ static NSString *const kMasterOnOffKey = @"masterOnOffKey";
             NSInteger carselectModel = [[self.carSelectedModelDic objectForKey:carSelectBtnTag] integerValue];
             if (carselectModel > 0) {
                 UIButton *modelBtn = [self.eightBtnView viewWithTag:carselectModel];
-                modelBtn.selected = !modelBtn.selected;
+                if (modelBtn) {
+                    modelBtn.selected = !modelBtn.selected;
+                } else {
+                    UIButton *modelBtn1 = [self.eightBtnView viewWithTag:40001];
+                    modelBtn1.selected = YES;
+                    
+                    switch ([carSelectBtnTag integerValue] - 30000) {
+                        case 1:
+
+                            _firstTmp = 1 * 16;
+                            break;
+                        case 2:
+                            _secondTmp = 1;
+                            
+                            break;
+                        case 3:
+                            _thirdTmp = 1 * 16;
+                            
+                            break;
+                        case 4:
+
+                            _fourthTmp = 1;
+                            
+                            break;
+                        case 5:
+
+                            _fifthTmp = 1 * 16;
+                            
+                            break;
+                        case 6:
+                            _sixthTmp = 1;
+                            
+                            break;
+                        default:
+                            break;
+                    }
+                    
+                    // 写数据
+                    self.transferCode[10] = @(_firstTmp + _secondTmp);
+                    self.transferCode[11] = @(_thirdTmp + _fourthTmp);
+                    self.transferCode[12] = @(_fifthTmp + _sixthTmp);
+                }
+                
             }
             
         }
@@ -1206,46 +1260,6 @@ static NSString *const kMasterOnOffKey = @"masterOnOffKey";
     // 所有的carBtn默认都是模态1
     // 存储选中carBtn的model，key是carBtn的tag，value是modelBtn的tag
     [self.carSelectedModelDic setObject:@(40001) forKey:@(carBtn.tag)];
-
-    // 计算公式：X * 16 + Y (X是第一个按钮的状态，Y是第二个按钮的状态)，以此类推
-    switch (carBtn.tag - 30000) {
-        case 1:
-
-            _firstTmp = 1 * 16;
-            break;
-        case 2:
- 
-            _secondTmp = 1;
-            break;
-        case 3:
-
-            _thirdTmp = 1 * 16;
-            
-            break;
-        case 4:
-
-            _fourthTmp = 1;
-            
-            break;
-        case 5:
-
-            _fifthTmp = 1 * 16;
-            break;
-        case 6:
-
-            _sixthTmp = 1;
-            
-            break;
-        default:
-            break;
-    }
-    
-    // 写数据
-    self.transferCode[10] = @(_firstTmp + _secondTmp);
-    self.transferCode[11] = @(_thirdTmp + _fourthTmp);
-    self.transferCode[12] = @(_fifthTmp + _sixthTmp);
-
-    
 }
 
 /**
