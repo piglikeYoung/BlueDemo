@@ -213,8 +213,41 @@ typedef enum {
     
     // 由于跳到模式三的时候，offOnAndStatusbtnSendCode[3] 会变成模式四，这样回显状态会不准确
     // 所以offOnAndStatusbtnSendCode的model按钮位置替换为allLabelStatus的值
-    for (int i = 0; i < 6; i++) {
-        self.offOnAndStatusbtnSendCode[i + 4] = self.allLabelStatus[i];
+    // 防止回显数据时，灯全部打开
+    if (!self.onOffBtn1.isSelected && [self.allLabelStatus[0] integerValue] == 0) {
+        self.offOnAndStatusbtnSendCode[0 + 4] = @4;
+    } else {
+        self.offOnAndStatusbtnSendCode[0 + 4] = self.allLabelStatus[0];
+    }
+    
+    if (!self.onOffBtn2.isSelected && [self.allLabelStatus[1] integerValue] == 0) {
+        self.offOnAndStatusbtnSendCode[1 + 4] = @4;
+    } else {
+        self.offOnAndStatusbtnSendCode[1 + 4] = self.allLabelStatus[1];
+    }
+    
+    if (!self.onOffBtn3.isSelected && [self.allLabelStatus[2] integerValue] == 0) {
+        self.offOnAndStatusbtnSendCode[2 + 4] = @4;
+    } else {
+        self.offOnAndStatusbtnSendCode[2 + 4] = self.allLabelStatus[2];
+    }
+    
+    if (!self.onOffBtn4.isSelected && [self.allLabelStatus[3] integerValue] == 0) {
+        self.offOnAndStatusbtnSendCode[3 + 4] = @4;
+    } else {
+        self.offOnAndStatusbtnSendCode[3 + 4] = self.allLabelStatus[3];
+    }
+    
+    if (!self.onOffBtn5.isSelected && [self.allLabelStatus[4] integerValue] == 0) {
+        self.offOnAndStatusbtnSendCode[4 + 4] = @4;
+    } else {
+        self.offOnAndStatusbtnSendCode[4 + 4] = self.allLabelStatus[4];
+    }
+    
+    if (!self.onOffBtn6.isSelected && [self.allLabelStatus[5] integerValue] == 0) {
+        self.offOnAndStatusbtnSendCode[5 + 4] = @4;
+    } else {
+        self.offOnAndStatusbtnSendCode[5 + 4] = self.allLabelStatus[5];
     }
     
     // 界面消失之前把发送的数组第四个字节，数组第三位改为亮了几个灯的值
@@ -322,7 +355,7 @@ typedef enum {
     
     // 大于等于4重置
     if (num >= self.statusHex.count - 1) {
-        num = 1;
+        num = 0;
     }
     
     // 保存当前状态
@@ -803,8 +836,6 @@ typedef enum {
                     // 修改model按钮
                     self.modelBtn1.selected = btn.isSelected;
                     
-                    self.allLabelStatus[0] = self.statusHex[4];
-                    
                 } else {
                     // 是模式三，是根据开关高亮来修改标识和Model按钮
                     if (!btn.highlighted) {
@@ -883,8 +914,6 @@ typedef enum {
                     self.offFlay2.highlighted = btn.isSelected;
                     // 修改model按钮
                     self.modelBtn2.selected = btn.isSelected;
-                    
-                    self.allLabelStatus[1] = self.statusHex[4];
                     
                 } else {
                     // 是模式三，是根据开关高亮来修改标识和Model按钮
@@ -966,8 +995,6 @@ typedef enum {
                     // 修改model按钮
                     self.modelBtn3.selected = btn.isSelected;
                     
-                    self.allLabelStatus[2] = self.statusHex[4];
-                    
                 } else {
                     // 是模式三，是根据开关高亮来修改标识和Model按钮
                     if (!btn.highlighted) {
@@ -1046,8 +1073,6 @@ typedef enum {
                     self.offFlay4.highlighted = btn.isSelected;
                     // 修改model按钮
                     self.modelBtn4.selected = btn.isSelected;
-                    
-                    // 灯对应的模式位默认是0x01，不用修改
                     
                 } else {
                     // 是模式三，是根据开关高亮来修改标识和Model按钮
@@ -1128,8 +1153,6 @@ typedef enum {
                     // 修改model按钮
                     self.modelBtn5.selected = btn.isSelected;
                     
-                    // 灯对应的模式位默认是0x01，不用修改
-                    
                 } else {
                     // 是模式三，是根据开关高亮来修改标识和Model按钮
                     if (!btn.highlighted) {
@@ -1206,8 +1229,6 @@ typedef enum {
                     self.offFlay6.highlighted = btn.isSelected;
                     // 修改model按钮
                     self.modelBtn6.selected = btn.isSelected;
-                    
-                    // 灯对应的模式位默认是0x01，不用修改
                     
                 } else {
                     // 是模式三，是根据开关高亮来修改标识和Model按钮
