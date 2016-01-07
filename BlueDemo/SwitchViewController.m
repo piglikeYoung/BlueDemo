@@ -432,18 +432,44 @@ typedef enum {
  */
 - (NSData *) converToCharArrayWithIntegerArray:(NSMutableArray *) integerArray isSave:(BOOL)isSave {
     
+    // 拷贝一份，判断当开关是关闭的，把开关对应的状态改为4
+    NSMutableArray *tempArray = [integerArray mutableCopy];
+    if (!self.onOffBtn1.isSelected) {
+        tempArray[0 + 4] = @4;
+    }
+    
+    if (!self.onOffBtn2.isSelected) {
+        tempArray[1 + 4] = @4;
+    }
+    
+    if (!self.onOffBtn3.isSelected) {
+        tempArray[2 + 4] = @4;
+    }
+    
+    if (!self.onOffBtn4.isSelected) {
+        tempArray[3 + 4] = @4;
+    }
+    
+    if (!self.onOffBtn5.isSelected) {
+        tempArray[4 + 4] = @4;
+    }
+    
+    if (!self.onOffBtn6.isSelected) {
+        tempArray[5 + 4] = @4;
+    }
+    
     char charArray[] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 , 0x00, 0x00, 0x00};
     
     char crcVal = 0;
     
-    for (int i = 0; i < integerArray.count; i++) {
+    for (int i = 0; i < tempArray.count; i++) {
         
-        crcVal += [integerArray[i] charValue];
+        crcVal += [tempArray[i] charValue];
         // 最后一位是把前面19位加起来的CRC位
-        if (i == integerArray.count - 1) {
+        if (i == tempArray.count - 1) {
             charArray[i] = crcVal;
         } else {
-            charArray[i] = [integerArray[i] charValue];
+            charArray[i] = [tempArray[i] charValue];
         }
     }
     
@@ -452,7 +478,7 @@ typedef enum {
         [self saveBlueDeviceStatusWithCode:integerArray];
     }
 
-    return [NSData dataWithBytes:charArray length:integerArray.count];
+    return [NSData dataWithBytes:charArray length:tempArray.count];
 }
 
 
