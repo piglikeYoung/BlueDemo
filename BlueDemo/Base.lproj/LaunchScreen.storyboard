@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8150" systemVersion="15A204g" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" initialViewController="01J-lp-oVM">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9060" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" initialViewController="01J-lp-oVM">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8122"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
         <scene sceneID="EHf-IW-A2E">
             <objects>
-                <viewController id="01J-lp-oVM" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LaunchScreen" id="01J-lp-oVM" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Llm-lL-Icb"/>
                         <viewControllerLayoutGuide type="bottom" id="xb3-aO-Qok"/>
@@ -15,13 +17,95 @@
                     <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="viewBg" translatesAutoresizingMaskIntoConstraints="NO" id="JSt-wU-hIm">
+                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                <animations/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" tag="1220" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="loading" translatesAutoresizingMaskIntoConstraints="NO" id="v4u-L0-7TK">
+                                <rect key="frame" x="187" y="187" width="226" height="226"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="226" id="qrk-HU-7lc"/>
+                                    <constraint firstAttribute="width" secondItem="v4u-L0-7TK" secondAttribute="height" multiplier="1:1" id="wnO-Ui-1ef"/>
+                                </constraints>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="conn_logo" translatesAutoresizingMaskIntoConstraints="NO" id="dwW-9R-UZ0">
+                                <rect key="frame" x="250" y="287" width="100" height="26"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="dwW-9R-UZ0" secondAttribute="height" multiplier="235:61" id="hIW-61-iMO"/>
+                                    <constraint firstAttribute="width" constant="100" id="hJ3-cq-iK8"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="JSt-wU-hIm" secondAttribute="bottom" id="BGP-0r-rzw"/>
+                            <constraint firstItem="dwW-9R-UZ0" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="EhP-3x-8Mx"/>
+                            <constraint firstItem="v4u-L0-7TK" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="dEz-PN-aDW"/>
+                            <constraint firstItem="v4u-L0-7TK" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="dd3-gA-oaU"/>
+                            <constraint firstItem="JSt-wU-hIm" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" id="gvu-dH-mWb"/>
+                            <constraint firstItem="dwW-9R-UZ0" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="j8X-ka-g8b"/>
+                            <constraint firstItem="JSt-wU-hIm" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="kWX-lo-hz4"/>
+                            <constraint firstAttribute="trailing" secondItem="JSt-wU-hIm" secondAttribute="trailing" id="rPe-JV-DIw"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="subviews">
+                                <exclude reference="JSt-wU-hIm"/>
+                            </mask>
+                            <mask key="constraints">
+                                <exclude reference="BGP-0r-rzw"/>
+                                <exclude reference="gvu-dH-mWb"/>
+                                <exclude reference="kWX-lo-hz4"/>
+                                <exclude reference="rPe-JV-DIw"/>
+                            </mask>
+                        </variation>
+                        <variation key="widthClass=regular">
+                            <mask key="subviews">
+                                <include reference="JSt-wU-hIm"/>
+                            </mask>
+                            <mask key="constraints">
+                                <include reference="BGP-0r-rzw"/>
+                                <include reference="gvu-dH-mWb"/>
+                                <include reference="kWX-lo-hz4"/>
+                                <include reference="rPe-JV-DIw"/>
+                            </mask>
+                        </variation>
+                        <variation key="heightClass=compact-widthClass=compact">
+                            <mask key="subviews">
+                                <include reference="JSt-wU-hIm"/>
+                            </mask>
+                            <mask key="constraints">
+                                <include reference="BGP-0r-rzw"/>
+                                <include reference="gvu-dH-mWb"/>
+                                <include reference="kWX-lo-hz4"/>
+                                <include reference="rPe-JV-DIw"/>
+                            </mask>
+                        </variation>
+                        <variation key="heightClass=compact-widthClass=regular">
+                            <mask key="subviews">
+                                <include reference="JSt-wU-hIm"/>
+                            </mask>
+                            <mask key="constraints">
+                                <include reference="BGP-0r-rzw"/>
+                                <include reference="gvu-dH-mWb"/>
+                                <include reference="kWX-lo-hz4"/>
+                                <include reference="rPe-JV-DIw"/>
+                            </mask>
+                        </variation>
                     </view>
+                    <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="53" y="375"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="conn_logo" width="235" height="61"/>
+        <image name="loading" width="227" height="226"/>
+        <image name="viewBg" width="2001" height="1125"/>
+    </resources>
 </document>
